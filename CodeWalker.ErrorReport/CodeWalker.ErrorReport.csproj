@@ -6,6 +6,15 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>CW.ico</ApplicationIcon>
     <AssemblyName>CodeWalker Error Report Tool</AssemblyName>
+	<LangVersion>latest</LangVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FCTB" Version="2.16.24" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
 </Project>

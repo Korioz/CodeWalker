@@ -1,4 +1,5 @@
-﻿using CodeWalker.GameFiles;
+﻿using CodeWalker.Core.Utils;
+using CodeWalker.GameFiles;
 using SharpDX;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace CodeWalker.World
 
         public void Init(GameFileCache gameFileCache, Action<string> updateStatus)
         {
+            using var _ = new DisposableTimer("AudioZones Init");
             Inited = false;
 
             GameFileCache = gameFileCache;
@@ -30,18 +32,20 @@ namespace CodeWalker.World
             Emitters.Clear();
             AllItems.Clear();
 
-
-            List<AudioPlacement> placements = new List<AudioPlacement>();
-
-            foreach (var relfile in GameFileCache.AudioDatRelFiles)
+            if (GameFileCache.AudioDatRelFiles is not null && GameFileCache.AudioDatRelFiles.Count > 0)
             {
-                if (relfile == null) continue;
+                List<AudioPlacement> placements = new List<AudioPlacement>();
+                foreach (var relfile in GameFileCache.AudioDatRelFiles)
+                {
+                    if (relfile is null)
+                        continue;
 
-                placements.Clear();
+                    placements.Clear();
 
-                CreatePlacements(relfile, placements, true);
+                    CreatePlacements(relfile, placements, true);
 
-                PlacementsDict[relfile] = placements.ToArray();
+                    PlacementsDict[relfile] = placements.ToArray();
+                }
             }
 
             AllItems.AddRange(Zones);
@@ -55,18 +59,20 @@ namespace CodeWalker.World
         {
             foreach (var reldata in relfile.RelDatas)
             {
-                AudioPlacement placement = null;
-                if (reldata is Dat151AmbientZone)
+                AudioPlacement? placement = null;
+                if (reldata is Dat151AmbientZone dat151AmbientZone)
                 {
-                    placement = new AudioPlacement(relfile, reldata as Dat151AmbientZone);
-                    if (addtoLists) Zones.Add(placement);
+                    placement = new AudioPlacement(relfile, dat151AmbientZone);
+                    if (addtoLists)
+                        Zones.Add(placement);
                 }
-                else if (reldata is Dat151AmbientRule)
+                else if (reldata is Dat151AmbientRule dat151AmbientRule)
                 {
-                    placement = new AudioPlacement(relfile, reldata as Dat151AmbientRule);
-                    if (addtoLists) Emitters.Add(placement);
+                    placement = new AudioPlacement(relfile, dat151AmbientRule);
+                    if (addtoLists)
+                        Emitters.Add(placement);
                 }
-                if (placement != null)
+                if (placement is not null)
                 {
                     placements.Add(placement);
                 }
@@ -79,7 +85,7 @@ namespace CodeWalker.World
 
             foreach (var relfile in relfiles)
             {
-                AudioPlacement[] fileplacements = null;
+                AudioPlacement[]? fileplacements = null;
                 if (!PlacementsDict.TryGetValue(relfile, out fileplacements))
                 {
                     List<AudioPlacement> newplacements = new List<AudioPlacement>();
@@ -87,7 +93,7 @@ namespace CodeWalker.World
                     fileplacements = newplacements.ToArray();
                     PlacementsDict[relfile] = fileplacements;
                 }
-                if (fileplacements != null)
+                if (fileplacements is not null)
                 {
                     placements.AddRange(fileplacements);
                 }
@@ -162,29 +168,29 @@ namespace CodeWalker.World
             switch (zone.Shape)
             {
                 case Dat151ZoneShape.Box:
-                    InnerPos = zone.PlaybackZonePosition;
-                    InnerMax = zone.PlaybackZoneSize * 0.5f;
+                    InnerPos = zone.PositioningZoneCentre;
+                    InnerMax = zone.PositioningZoneSize * 0.5f;
                     InnerMin = -InnerMax;
-                    InnerOri = Quaternion.RotationAxis(Vector3.UnitZ, zone.PlaybackZoneAngle * deg2rad);
+                    InnerOri = Quaternion.RotationAxis(Vector3.UnitZ, zone.PositioningZoneRotationAngle * deg2rad);
                     break;
                 case Dat151ZoneShape.Sphere:
-                    InnerPos = zone.PlaybackZonePosition;
+                    InnerPos = zone.PositioningZoneCentre;
                     InnerOri = Quaternion.Identity;
-                    InnerRadius = zone.PlaybackZoneSize.X;
+                    InnerRadius = zone.PositioningZoneSize.X;
                     OuterRadius = zone.ActivationZoneSize.X;
                     break;
                 case Dat151ZoneShape.Line:
-                    InnerPos = zone.PlaybackZonePosition;
+                    InnerPos = zone.PositioningZoneCentre;
                     InnerMin = new Vector3(-1.0f, -1.0f, 0.0f);
-                    InnerMax = new Vector3(1.0f, 1.0f, (zone.PlaybackZoneSize - zone.PlaybackZonePosition).Length());
-                    InnerOri = Quaternion.Invert(Quaternion.LookAtLH(zone.PlaybackZonePosition, zone.PlaybackZoneSize, Vector3.UnitZ));
+                    InnerMax = new Vector3(1.0f, 1.0f, (zone.PositioningZoneSize - zone.PositioningZoneCentre).Length());
+                    InnerOri = Quaternion.Invert(Quaternion.LookAtLH(zone.PositioningZoneCentre, zone.PositioningZoneSize, Vector3.UnitZ));
                     break;
             }
 
-            OuterPos = zone.ActivationZonePosition;
+            OuterPos = zone.ActivationZoneCentre;
             OuterMax = zone.ActivationZoneSize * 0.5f;
             OuterMin = -OuterMax;
-            OuterOri = Quaternion.RotationAxis(Vector3.UnitZ, zone.ActivationZoneAngle * deg2rad);
+            OuterOri = Quaternion.RotationAxis(Vector3.UnitZ, zone.ActivationZoneRotationAngle * deg2rad);
 
             bool useouter = ((InnerMax.X == 0) || (InnerMax.Y == 0) || (InnerMax.Z == 0));
             if (useouter && (zone.Shape != Dat151ZoneShape.Sphere))
@@ -215,8 +221,8 @@ namespace CodeWalker.World
             OrientationInv = Quaternion.Identity;
             InnerPos = emitter.Position;
             OuterPos = InnerPos;
-            InnerRadius = emitter.InnerRadius;
-            OuterRadius = emitter.OuterRadius;
+            InnerRadius = emitter.MinDist;
+            OuterRadius = emitter.MaxDist;
 
             bool useouter = (InnerRadius == 0);
             if (useouter)
@@ -239,8 +245,8 @@ namespace CodeWalker.World
 
             if (AudioZone != null)
             {
-                AudioZone.PlaybackZonePosition = InnerPos;
-                AudioZone.ActivationZonePosition = OuterPos;
+                AudioZone.PositioningZoneCentre = InnerPos;
+                AudioZone.ActivationZoneCentre = OuterPos;
             }
             if (AudioEmitter != null)
             {
@@ -266,8 +272,8 @@ namespace CodeWalker.World
                 OuterOri = Orientation;
                 if (AudioZone != null)
                 {
-                    AudioZone.PlaybackZoneAngle = uangl;
-                    AudioZone.ActivationZoneAngle = uangl;
+                    AudioZone.PositioningZoneRotationAngle = (ushort)uangl;
+                    AudioZone.ActivationZoneRotationAngle = (ushort)uangl;
                 }
             }
             else
@@ -280,7 +286,7 @@ namespace CodeWalker.World
                     OuterOri = Orientation;
                     if (AudioZone != null)
                     {
-                        AudioZone.ActivationZoneAngle = uangl;
+                        AudioZone.ActivationZoneRotationAngle = (ushort)uangl;
                     }
                 }
                 else
@@ -288,7 +294,7 @@ namespace CodeWalker.World
                     InnerOri = Orientation;
                     if (AudioZone != null)
                     {
-                        AudioZone.PlaybackZoneAngle = uangl;
+                        AudioZone.PositioningZoneRotationAngle = (ushort)uangl;
                     }
                 }
             }

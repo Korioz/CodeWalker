@@ -315,6 +315,7 @@
     <None Include="LightPS.hlsli">
       <Filter>Lights</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Basic">
