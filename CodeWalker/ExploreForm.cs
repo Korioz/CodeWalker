@@ -2391,7 +2391,7 @@ namespace CodeWalker
                             try
                             {
                                 await File.WriteAllTextAsync(path, xml);
-                                if (CurrentFolder.FullPath.Equals(Path.GetDirectoryName(path), StringComparison.OrdinalIgnoreCase))
+                                if (CurrentFolder?.FullPath != null && CurrentFolder.FullPath.Equals(Path.GetDirectoryName(path), StringComparison.OrdinalIgnoreCase))
                                 {
                                     CurrentFolder.EnsureFile(path);
                                     refreshNeeded = true;
