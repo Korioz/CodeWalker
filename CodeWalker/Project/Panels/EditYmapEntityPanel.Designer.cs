@@ -29,779 +29,783 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditYmapEntityPanel));
-            this.EntityTabControl = new System.Windows.Forms.TabControl();
-            this.EntityGeneralTabPage = new System.Windows.Forms.TabPage();
-            this.EntityRotationQuatBox = new CodeWalker.WinForms.QuaternionBox();
-            this.EntityEditArchetypeButton = new System.Windows.Forms.Button();
-            this.EntityFlagsCheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.EntityDeleteButton = new System.Windows.Forms.Button();
-            this.EntityTintValueTextBox = new System.Windows.Forms.TextBox();
-            this.EntityAddToProjectButton = new System.Windows.Forms.Button();
-            this.label27 = new System.Windows.Forms.Label();
-            this.EntityArtificialAOTextBox = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.EntityAOMultiplierTextBox = new System.Windows.Forms.TextBox();
-            this.EntityGuidTextBox = new System.Windows.Forms.TextBox();
-            this.EntityPriorityLevelComboBox = new System.Windows.Forms.ComboBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.EntityFlagsTextBox = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.EntityLodLevelComboBox = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.EntityScaleXYTextBox = new System.Windows.Forms.TextBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.EntityArchetypeHashLabel = new System.Windows.Forms.Label();
-            this.EntityChildLodDistTextBox = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.EntityScaleZTextBox = new System.Windows.Forms.TextBox();
-            this.EntityLodDistTextBox = new System.Windows.Forms.TextBox();
-            this.EntityArchetypeTextBox = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.EntityPositionTextBox = new System.Windows.Forms.TextBox();
-            this.EntityGoToButton = new System.Windows.Forms.Button();
-            this.label17 = new System.Windows.Forms.Label();
-            this.EntityLodTabPage = new System.Windows.Forms.TabPage();
-            this.label20 = new System.Windows.Forms.Label();
-            this.EntityParentIndexTextBox = new System.Windows.Forms.TextBox();
-            this.EntityNumChildrenTextBox = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.EntityExtensionsTabPage = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.EntityPivotTabPage = new System.Windows.Forms.TabPage();
-            this.EntityPivotRotationQuatBox = new CodeWalker.WinForms.QuaternionBox();
-            this.label95 = new System.Windows.Forms.Label();
-            this.EntityPivotEditCheckBox = new System.Windows.Forms.CheckBox();
-            this.label93 = new System.Windows.Forms.Label();
-            this.EntityPivotPositionTextBox = new System.Windows.Forms.TextBox();
-            this.label94 = new System.Windows.Forms.Label();
-            this.EntityMiloTabPage = new System.Windows.Forms.TabPage();
-            this.MiloFlagsTextBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.MiloNumExitPortalsTextBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.MiloGroupIDTextBox = new System.Windows.Forms.TextBox();
-            this.MiloFloorIDTextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.MiloEntitySetsListBox = new System.Windows.Forms.CheckedListBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.EntityTabControl.SuspendLayout();
-            this.EntityGeneralTabPage.SuspendLayout();
-            this.EntityLodTabPage.SuspendLayout();
-            this.EntityExtensionsTabPage.SuspendLayout();
-            this.EntityPivotTabPage.SuspendLayout();
-            this.EntityMiloTabPage.SuspendLayout();
-            this.SuspendLayout();
+            EntityTabControl = new System.Windows.Forms.TabControl();
+            EntityGeneralTabPage = new System.Windows.Forms.TabPage();
+            EntityRotationQuatBox = new WinForms.QuaternionBox();
+            EntityEditArchetypeButton = new System.Windows.Forms.Button();
+            EntityFlagsCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            label13 = new System.Windows.Forms.Label();
+            label28 = new System.Windows.Forms.Label();
+            EntityDeleteButton = new System.Windows.Forms.Button();
+            EntityTintValueTextBox = new System.Windows.Forms.TextBox();
+            EntityAddToProjectButton = new System.Windows.Forms.Button();
+            label27 = new System.Windows.Forms.Label();
+            EntityArtificialAOTextBox = new System.Windows.Forms.TextBox();
+            label26 = new System.Windows.Forms.Label();
+            EntityAOMultiplierTextBox = new System.Windows.Forms.TextBox();
+            EntityGuidTextBox = new System.Windows.Forms.TextBox();
+            EntityPriorityLevelComboBox = new System.Windows.Forms.ComboBox();
+            label24 = new System.Windows.Forms.Label();
+            label15 = new System.Windows.Forms.Label();
+            EntityFlagsTextBox = new System.Windows.Forms.TextBox();
+            label18 = new System.Windows.Forms.Label();
+            EntityLodLevelComboBox = new System.Windows.Forms.ComboBox();
+            label14 = new System.Windows.Forms.Label();
+            label23 = new System.Windows.Forms.Label();
+            EntityScaleXYTextBox = new System.Windows.Forms.TextBox();
+            label22 = new System.Windows.Forms.Label();
+            EntityArchetypeHashLabel = new System.Windows.Forms.Label();
+            EntityChildLodDistTextBox = new System.Windows.Forms.TextBox();
+            label19 = new System.Windows.Forms.Label();
+            label21 = new System.Windows.Forms.Label();
+            EntityScaleZTextBox = new System.Windows.Forms.TextBox();
+            EntityLodDistTextBox = new System.Windows.Forms.TextBox();
+            EntityArchetypeTextBox = new System.Windows.Forms.TextBox();
+            label16 = new System.Windows.Forms.Label();
+            EntityPositionTextBox = new System.Windows.Forms.TextBox();
+            EntityGoToButton = new System.Windows.Forms.Button();
+            label17 = new System.Windows.Forms.Label();
+            EntityLodTabPage = new System.Windows.Forms.TabPage();
+            label20 = new System.Windows.Forms.Label();
+            EntityParentIndexTextBox = new System.Windows.Forms.TextBox();
+            EntityNumChildrenTextBox = new System.Windows.Forms.TextBox();
+            label25 = new System.Windows.Forms.Label();
+            EntityExtensionsTabPage = new System.Windows.Forms.TabPage();
+            label1 = new System.Windows.Forms.Label();
+            EntityPivotTabPage = new System.Windows.Forms.TabPage();
+            EntityPivotRotationQuatBox = new WinForms.QuaternionBox();
+            label95 = new System.Windows.Forms.Label();
+            EntityPivotEditCheckBox = new System.Windows.Forms.CheckBox();
+            label93 = new System.Windows.Forms.Label();
+            EntityPivotPositionTextBox = new System.Windows.Forms.TextBox();
+            label94 = new System.Windows.Forms.Label();
+            EntityMiloTabPage = new System.Windows.Forms.TabPage();
+            MiloFlagsTextBox = new System.Windows.Forms.TextBox();
+            label6 = new System.Windows.Forms.Label();
+            MiloNumExitPortalsTextBox = new System.Windows.Forms.TextBox();
+            label5 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            MiloGroupIDTextBox = new System.Windows.Forms.TextBox();
+            MiloFloorIDTextBox = new System.Windows.Forms.TextBox();
+            label4 = new System.Windows.Forms.Label();
+            MiloEntitySetsListBox = new System.Windows.Forms.CheckedListBox();
+            label2 = new System.Windows.Forms.Label();
+            EntityTabControl.SuspendLayout();
+            EntityGeneralTabPage.SuspendLayout();
+            EntityLodTabPage.SuspendLayout();
+            EntityExtensionsTabPage.SuspendLayout();
+            EntityPivotTabPage.SuspendLayout();
+            EntityMiloTabPage.SuspendLayout();
+            SuspendLayout();
             // 
             // EntityTabControl
             // 
-            this.EntityTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityTabControl.Controls.Add(this.EntityGeneralTabPage);
-            this.EntityTabControl.Controls.Add(this.EntityLodTabPage);
-            this.EntityTabControl.Controls.Add(this.EntityExtensionsTabPage);
-            this.EntityTabControl.Controls.Add(this.EntityPivotTabPage);
-            this.EntityTabControl.Controls.Add(this.EntityMiloTabPage);
-            this.EntityTabControl.Location = new System.Drawing.Point(2, 3);
-            this.EntityTabControl.Name = "EntityTabControl";
-            this.EntityTabControl.SelectedIndex = 0;
-            this.EntityTabControl.Size = new System.Drawing.Size(563, 502);
-            this.EntityTabControl.TabIndex = 45;
+            EntityTabControl.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityTabControl.Controls.Add(EntityGeneralTabPage);
+            EntityTabControl.Controls.Add(EntityLodTabPage);
+            EntityTabControl.Controls.Add(EntityExtensionsTabPage);
+            EntityTabControl.Controls.Add(EntityPivotTabPage);
+            EntityTabControl.Controls.Add(EntityMiloTabPage);
+            EntityTabControl.Location = new System.Drawing.Point(2, 3);
+            EntityTabControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityTabControl.Name = "EntityTabControl";
+            EntityTabControl.SelectedIndex = 0;
+            EntityTabControl.Size = new System.Drawing.Size(657, 579);
+            EntityTabControl.TabIndex = 45;
             // 
             // EntityGeneralTabPage
             // 
-            this.EntityGeneralTabPage.Controls.Add(this.EntityRotationQuatBox);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityEditArchetypeButton);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityFlagsCheckedListBox);
-            this.EntityGeneralTabPage.Controls.Add(this.label13);
-            this.EntityGeneralTabPage.Controls.Add(this.label28);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityDeleteButton);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityTintValueTextBox);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityAddToProjectButton);
-            this.EntityGeneralTabPage.Controls.Add(this.label27);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityArtificialAOTextBox);
-            this.EntityGeneralTabPage.Controls.Add(this.label26);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityAOMultiplierTextBox);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityGuidTextBox);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityPriorityLevelComboBox);
-            this.EntityGeneralTabPage.Controls.Add(this.label24);
-            this.EntityGeneralTabPage.Controls.Add(this.label15);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityFlagsTextBox);
-            this.EntityGeneralTabPage.Controls.Add(this.label18);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityLodLevelComboBox);
-            this.EntityGeneralTabPage.Controls.Add(this.label14);
-            this.EntityGeneralTabPage.Controls.Add(this.label23);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityScaleXYTextBox);
-            this.EntityGeneralTabPage.Controls.Add(this.label22);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityArchetypeHashLabel);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityChildLodDistTextBox);
-            this.EntityGeneralTabPage.Controls.Add(this.label19);
-            this.EntityGeneralTabPage.Controls.Add(this.label21);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityScaleZTextBox);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityLodDistTextBox);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityArchetypeTextBox);
-            this.EntityGeneralTabPage.Controls.Add(this.label16);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityPositionTextBox);
-            this.EntityGeneralTabPage.Controls.Add(this.EntityGoToButton);
-            this.EntityGeneralTabPage.Controls.Add(this.label17);
-            this.EntityGeneralTabPage.Location = new System.Drawing.Point(4, 22);
-            this.EntityGeneralTabPage.Name = "EntityGeneralTabPage";
-            this.EntityGeneralTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.EntityGeneralTabPage.Size = new System.Drawing.Size(555, 476);
-            this.EntityGeneralTabPage.TabIndex = 0;
-            this.EntityGeneralTabPage.Text = "General";
-            this.EntityGeneralTabPage.UseVisualStyleBackColor = true;
+            EntityGeneralTabPage.Controls.Add(EntityRotationQuatBox);
+            EntityGeneralTabPage.Controls.Add(EntityEditArchetypeButton);
+            EntityGeneralTabPage.Controls.Add(EntityFlagsCheckedListBox);
+            EntityGeneralTabPage.Controls.Add(label13);
+            EntityGeneralTabPage.Controls.Add(label28);
+            EntityGeneralTabPage.Controls.Add(EntityDeleteButton);
+            EntityGeneralTabPage.Controls.Add(EntityTintValueTextBox);
+            EntityGeneralTabPage.Controls.Add(EntityAddToProjectButton);
+            EntityGeneralTabPage.Controls.Add(label27);
+            EntityGeneralTabPage.Controls.Add(EntityArtificialAOTextBox);
+            EntityGeneralTabPage.Controls.Add(label26);
+            EntityGeneralTabPage.Controls.Add(EntityAOMultiplierTextBox);
+            EntityGeneralTabPage.Controls.Add(EntityGuidTextBox);
+            EntityGeneralTabPage.Controls.Add(EntityPriorityLevelComboBox);
+            EntityGeneralTabPage.Controls.Add(label24);
+            EntityGeneralTabPage.Controls.Add(label15);
+            EntityGeneralTabPage.Controls.Add(EntityFlagsTextBox);
+            EntityGeneralTabPage.Controls.Add(label18);
+            EntityGeneralTabPage.Controls.Add(EntityLodLevelComboBox);
+            EntityGeneralTabPage.Controls.Add(label14);
+            EntityGeneralTabPage.Controls.Add(label23);
+            EntityGeneralTabPage.Controls.Add(EntityScaleXYTextBox);
+            EntityGeneralTabPage.Controls.Add(label22);
+            EntityGeneralTabPage.Controls.Add(EntityArchetypeHashLabel);
+            EntityGeneralTabPage.Controls.Add(EntityChildLodDistTextBox);
+            EntityGeneralTabPage.Controls.Add(label19);
+            EntityGeneralTabPage.Controls.Add(label21);
+            EntityGeneralTabPage.Controls.Add(EntityScaleZTextBox);
+            EntityGeneralTabPage.Controls.Add(EntityLodDistTextBox);
+            EntityGeneralTabPage.Controls.Add(EntityArchetypeTextBox);
+            EntityGeneralTabPage.Controls.Add(label16);
+            EntityGeneralTabPage.Controls.Add(EntityPositionTextBox);
+            EntityGeneralTabPage.Controls.Add(EntityGoToButton);
+            EntityGeneralTabPage.Controls.Add(label17);
+            EntityGeneralTabPage.Location = new System.Drawing.Point(4, 24);
+            EntityGeneralTabPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityGeneralTabPage.Name = "EntityGeneralTabPage";
+            EntityGeneralTabPage.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityGeneralTabPage.Size = new System.Drawing.Size(649, 551);
+            EntityGeneralTabPage.TabIndex = 0;
+            EntityGeneralTabPage.Text = "General";
+            EntityGeneralTabPage.UseVisualStyleBackColor = true;
             // 
             // EntityRotationQuatBox
             // 
-            this.EntityRotationQuatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityRotationQuatBox.Location = new System.Drawing.Point(93, 33);
-            this.EntityRotationQuatBox.Margin = new System.Windows.Forms.Padding(0);
-            this.EntityRotationQuatBox.Name = "EntityRotationQuatBox";
-            this.EntityRotationQuatBox.Size = new System.Drawing.Size(456, 24);
-            this.EntityRotationQuatBox.TabIndex = 5;
-            this.EntityRotationQuatBox.ValueChanged += new System.EventHandler(this.EntityRotationQuatBox_ValueChanged);
+            EntityRotationQuatBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityRotationQuatBox.Location = new System.Drawing.Point(108, 38);
+            EntityRotationQuatBox.Margin = new System.Windows.Forms.Padding(0);
+            EntityRotationQuatBox.Name = "EntityRotationQuatBox";
+            EntityRotationQuatBox.Size = new System.Drawing.Size(532, 28);
+            EntityRotationQuatBox.TabIndex = 5;
+            EntityRotationQuatBox.ValueChanged += EntityRotationQuatBox_ValueChanged;
             // 
             // EntityEditArchetypeButton
             // 
-            this.EntityEditArchetypeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityEditArchetypeButton.Location = new System.Drawing.Point(454, 59);
-            this.EntityEditArchetypeButton.Name = "EntityEditArchetypeButton";
-            this.EntityEditArchetypeButton.Size = new System.Drawing.Size(95, 23);
-            this.EntityEditArchetypeButton.TabIndex = 35;
-            this.EntityEditArchetypeButton.Text = "Edit Archetype...";
-            this.EntityEditArchetypeButton.UseVisualStyleBackColor = true;
-            this.EntityEditArchetypeButton.Click += new System.EventHandler(this.EntityEditArchetypeButton_Click);
+            EntityEditArchetypeButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            EntityEditArchetypeButton.Location = new System.Drawing.Point(530, 68);
+            EntityEditArchetypeButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityEditArchetypeButton.Name = "EntityEditArchetypeButton";
+            EntityEditArchetypeButton.Size = new System.Drawing.Size(111, 27);
+            EntityEditArchetypeButton.TabIndex = 35;
+            EntityEditArchetypeButton.Text = "Edit Archetype...";
+            EntityEditArchetypeButton.UseVisualStyleBackColor = true;
+            EntityEditArchetypeButton.Click += EntityEditArchetypeButton_Click;
             // 
             // EntityFlagsCheckedListBox
             // 
-            this.EntityFlagsCheckedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityFlagsCheckedListBox.CheckOnClick = true;
-            this.EntityFlagsCheckedListBox.FormattingEnabled = true;
-            this.EntityFlagsCheckedListBox.Items.AddRange(new object[] {
-            "1 - Allow full rotation",
-            "2 - Stream Low Priority",
-            "4 - Disable embedded collisions",
-            "8 - LOD in parent ymap",
-            "16 - LOD Adopt Me",
-            "32 - Static entity",
-            "64 - Object isn\'t dark at night",
-            "128 - Unk08",
-            "256 - Unk09",
-            "512 - Ignore Day Night Light Settings",
-            "1024 - Unk11",
-            "2048 - Unk12",
-            "4096 - Unk13",
-            "8192 - Unk14",
-            "16384 - Unk15",
-            "32768 - Unk16",
-            "65536 - Unk17",
-            "131072 - Unk18",
-            "262144 - Dont Spawn Peds",
-            "524288 - Unk20",
-            "1048576 - Unk21",
-            "2097152 - Unk22",
-            "4194304 - Dont Render Shadows",
-            "8388608 - Only Render Shadows",
-            "16777216 - Dont Render Reflections",
-            "33554432 - Only Render Reflections",
-            "67108864 - Dont Render Water Reflections",
-            "134217728 - Only Render Water Reflections",
-            "268435456 - Dont Render Mirror Reflections",
-            "536870912 - Only Render Mirror Reflections",
-            "1073741824 - Unk31",
-            "2147483648 - Unk32"});
-            this.EntityFlagsCheckedListBox.Location = new System.Drawing.Point(348, 113);
-            this.EntityFlagsCheckedListBox.Name = "EntityFlagsCheckedListBox";
-            this.EntityFlagsCheckedListBox.Size = new System.Drawing.Size(201, 349);
-            this.EntityFlagsCheckedListBox.TabIndex = 32;
-            this.EntityFlagsCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.EntityFlagsCheckedListBox_ItemCheck);
+            EntityFlagsCheckedListBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            EntityFlagsCheckedListBox.CheckOnClick = true;
+            EntityFlagsCheckedListBox.FormattingEnabled = true;
+            EntityFlagsCheckedListBox.Items.AddRange(new object[] { "1 - Allow Full Rotation", "2 - Stream Low Priority", "4 - Disable embedded Collisions", "8  - LOD in parent map", "16 - LOD Adopt me", "32 - Static Entity", "64 - Interior LOD", "128 - Unused", "256 - Unused", "512 - Unused", "1024 - Unused", "2048 - Unused", "4096 - Unused", "8192 - Unused ", "16384 - Unused", "32768 - LOD Use Alt Fade", "65536 - Underwater", "131072 - Doesn't touch water", "262144 - Doesn't spawn peds", "524288 - Cast Static Shadows", "1048576 - Cast Dynamic Shadows", "2097152 - Ignore Time Settings", "4194304 - Don't render shadows", "8388608 - Only render shadows", "16777216 - Don't render reflections", "33554432 - Only render reflections", "67108864 - Don't render water reflections", "134217728 - Only render water reflections", "268435456 - Don't render mirror reflections", "536870912 - Only render mirror reflections", "1073741824 - Unused", "2147483648 - Unused" });
+            EntityFlagsCheckedListBox.Location = new System.Drawing.Point(406, 130);
+            EntityFlagsCheckedListBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityFlagsCheckedListBox.Name = "EntityFlagsCheckedListBox";
+            EntityFlagsCheckedListBox.Size = new System.Drawing.Size(234, 400);
+            EntityFlagsCheckedListBox.TabIndex = 32;
+            EntityFlagsCheckedListBox.ItemCheck += EntityFlagsCheckedListBox_ItemCheck;
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(15, 64);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(58, 13);
-            this.label13.TabIndex = 7;
-            this.label13.Text = "Archetype:";
+            label13.AutoSize = true;
+            label13.Location = new System.Drawing.Point(18, 74);
+            label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new System.Drawing.Size(64, 15);
+            label13.TabIndex = 7;
+            label13.Text = "Archetype:";
             // 
             // label28
             // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(15, 326);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(55, 13);
-            this.label28.TabIndex = 28;
-            this.label28.Text = "TintValue:";
+            label28.AutoSize = true;
+            label28.Location = new System.Drawing.Point(18, 376);
+            label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label28.Name = "label28";
+            label28.Size = new System.Drawing.Size(58, 15);
+            label28.TabIndex = 28;
+            label28.Text = "TintValue:";
             // 
             // EntityDeleteButton
             // 
-            this.EntityDeleteButton.Location = new System.Drawing.Point(175, 376);
-            this.EntityDeleteButton.Name = "EntityDeleteButton";
-            this.EntityDeleteButton.Size = new System.Drawing.Size(95, 23);
-            this.EntityDeleteButton.TabIndex = 34;
-            this.EntityDeleteButton.Text = "Delete Entity";
-            this.EntityDeleteButton.UseVisualStyleBackColor = true;
-            this.EntityDeleteButton.Click += new System.EventHandler(this.EntityDeleteButton_Click);
+            EntityDeleteButton.Location = new System.Drawing.Point(204, 434);
+            EntityDeleteButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityDeleteButton.Name = "EntityDeleteButton";
+            EntityDeleteButton.Size = new System.Drawing.Size(111, 27);
+            EntityDeleteButton.TabIndex = 34;
+            EntityDeleteButton.Text = "Delete Entity";
+            EntityDeleteButton.UseVisualStyleBackColor = true;
+            EntityDeleteButton.Click += EntityDeleteButton_Click;
             // 
             // EntityTintValueTextBox
             // 
-            this.EntityTintValueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityTintValueTextBox.Location = new System.Drawing.Point(93, 323);
-            this.EntityTintValueTextBox.Name = "EntityTintValueTextBox";
-            this.EntityTintValueTextBox.Size = new System.Drawing.Size(233, 20);
-            this.EntityTintValueTextBox.TabIndex = 29;
-            this.EntityTintValueTextBox.TextChanged += new System.EventHandler(this.EntityTintValueTextBox_TextChanged);
+            EntityTintValueTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityTintValueTextBox.Location = new System.Drawing.Point(108, 373);
+            EntityTintValueTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityTintValueTextBox.Name = "EntityTintValueTextBox";
+            EntityTintValueTextBox.Size = new System.Drawing.Size(271, 23);
+            EntityTintValueTextBox.TabIndex = 29;
+            EntityTintValueTextBox.TextChanged += EntityTintValueTextBox_TextChanged;
             // 
             // EntityAddToProjectButton
             // 
-            this.EntityAddToProjectButton.Location = new System.Drawing.Point(74, 376);
-            this.EntityAddToProjectButton.Name = "EntityAddToProjectButton";
-            this.EntityAddToProjectButton.Size = new System.Drawing.Size(95, 23);
-            this.EntityAddToProjectButton.TabIndex = 33;
-            this.EntityAddToProjectButton.Text = "Add to Project";
-            this.EntityAddToProjectButton.UseVisualStyleBackColor = true;
-            this.EntityAddToProjectButton.Click += new System.EventHandler(this.EntityAddToProjectButton_Click);
+            EntityAddToProjectButton.Location = new System.Drawing.Point(86, 434);
+            EntityAddToProjectButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityAddToProjectButton.Name = "EntityAddToProjectButton";
+            EntityAddToProjectButton.Size = new System.Drawing.Size(111, 27);
+            EntityAddToProjectButton.TabIndex = 33;
+            EntityAddToProjectButton.Text = "Add to Project";
+            EntityAddToProjectButton.UseVisualStyleBackColor = true;
+            EntityAddToProjectButton.Click += EntityAddToProjectButton_Click;
             // 
             // label27
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(15, 300);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(61, 13);
-            this.label27.TabIndex = 26;
-            this.label27.Text = "ArtificialAO:";
+            label27.AutoSize = true;
+            label27.Location = new System.Drawing.Point(18, 346);
+            label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label27.Name = "label27";
+            label27.Size = new System.Drawing.Size(71, 15);
+            label27.TabIndex = 26;
+            label27.Text = "ArtificialAO:";
             // 
             // EntityArtificialAOTextBox
             // 
-            this.EntityArtificialAOTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityArtificialAOTextBox.Location = new System.Drawing.Point(93, 297);
-            this.EntityArtificialAOTextBox.Name = "EntityArtificialAOTextBox";
-            this.EntityArtificialAOTextBox.Size = new System.Drawing.Size(233, 20);
-            this.EntityArtificialAOTextBox.TabIndex = 27;
-            this.EntityArtificialAOTextBox.TextChanged += new System.EventHandler(this.EntityArtificialAOTextBox_TextChanged);
+            EntityArtificialAOTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityArtificialAOTextBox.Location = new System.Drawing.Point(108, 343);
+            EntityArtificialAOTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityArtificialAOTextBox.Name = "EntityArtificialAOTextBox";
+            EntityArtificialAOTextBox.Size = new System.Drawing.Size(271, 23);
+            EntityArtificialAOTextBox.TabIndex = 27;
+            EntityArtificialAOTextBox.TextChanged += EntityArtificialAOTextBox_TextChanged;
             // 
             // label26
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(15, 274);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(66, 13);
-            this.label26.TabIndex = 24;
-            this.label26.Text = "AOMultiplier:";
+            label26.AutoSize = true;
+            label26.Location = new System.Drawing.Point(18, 316);
+            label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label26.Name = "label26";
+            label26.Size = new System.Drawing.Size(78, 15);
+            label26.TabIndex = 24;
+            label26.Text = "AOMultiplier:";
             // 
             // EntityAOMultiplierTextBox
             // 
-            this.EntityAOMultiplierTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityAOMultiplierTextBox.Location = new System.Drawing.Point(93, 271);
-            this.EntityAOMultiplierTextBox.Name = "EntityAOMultiplierTextBox";
-            this.EntityAOMultiplierTextBox.Size = new System.Drawing.Size(233, 20);
-            this.EntityAOMultiplierTextBox.TabIndex = 25;
-            this.EntityAOMultiplierTextBox.TextChanged += new System.EventHandler(this.EntityAOMultiplierTextBox_TextChanged);
+            EntityAOMultiplierTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityAOMultiplierTextBox.Location = new System.Drawing.Point(108, 313);
+            EntityAOMultiplierTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityAOMultiplierTextBox.Name = "EntityAOMultiplierTextBox";
+            EntityAOMultiplierTextBox.Size = new System.Drawing.Size(271, 23);
+            EntityAOMultiplierTextBox.TabIndex = 25;
+            EntityAOMultiplierTextBox.TextChanged += EntityAOMultiplierTextBox_TextChanged;
             // 
             // EntityGuidTextBox
             // 
-            this.EntityGuidTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityGuidTextBox.Location = new System.Drawing.Point(93, 87);
-            this.EntityGuidTextBox.Name = "EntityGuidTextBox";
-            this.EntityGuidTextBox.Size = new System.Drawing.Size(233, 20);
-            this.EntityGuidTextBox.TabIndex = 11;
-            this.EntityGuidTextBox.TextChanged += new System.EventHandler(this.EntityGuidTextBox_TextChanged);
+            EntityGuidTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityGuidTextBox.Location = new System.Drawing.Point(108, 100);
+            EntityGuidTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityGuidTextBox.Name = "EntityGuidTextBox";
+            EntityGuidTextBox.Size = new System.Drawing.Size(271, 23);
+            EntityGuidTextBox.TabIndex = 11;
+            EntityGuidTextBox.TextChanged += EntityGuidTextBox_TextChanged;
             // 
             // EntityPriorityLevelComboBox
             // 
-            this.EntityPriorityLevelComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityPriorityLevelComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.EntityPriorityLevelComboBox.FormattingEnabled = true;
-            this.EntityPriorityLevelComboBox.Location = new System.Drawing.Point(93, 244);
-            this.EntityPriorityLevelComboBox.Name = "EntityPriorityLevelComboBox";
-            this.EntityPriorityLevelComboBox.Size = new System.Drawing.Size(233, 21);
-            this.EntityPriorityLevelComboBox.TabIndex = 23;
-            this.EntityPriorityLevelComboBox.SelectedIndexChanged += new System.EventHandler(this.EntityPriorityLevelComboBox_SelectedIndexChanged);
+            EntityPriorityLevelComboBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityPriorityLevelComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            EntityPriorityLevelComboBox.FormattingEnabled = true;
+            EntityPriorityLevelComboBox.Location = new System.Drawing.Point(108, 282);
+            EntityPriorityLevelComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityPriorityLevelComboBox.Name = "EntityPriorityLevelComboBox";
+            EntityPriorityLevelComboBox.Size = new System.Drawing.Size(271, 23);
+            EntityPriorityLevelComboBox.TabIndex = 23;
+            EntityPriorityLevelComboBox.SelectedIndexChanged += EntityPriorityLevelComboBox_SelectedIndexChanged;
             // 
             // label24
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(15, 247);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(67, 13);
-            this.label24.TabIndex = 22;
-            this.label24.Text = "PriorityLevel:";
+            label24.AutoSize = true;
+            label24.Location = new System.Drawing.Point(18, 285);
+            label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label24.Name = "label24";
+            label24.Size = new System.Drawing.Size(75, 15);
+            label24.TabIndex = 22;
+            label24.Text = "PriorityLevel:";
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(15, 90);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(37, 13);
-            this.label15.TabIndex = 10;
-            this.label15.Text = "GUID:";
+            label15.AutoSize = true;
+            label15.Location = new System.Drawing.Point(18, 104);
+            label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label15.Name = "label15";
+            label15.Size = new System.Drawing.Size(37, 15);
+            label15.TabIndex = 10;
+            label15.Text = "GUID:";
             // 
             // EntityFlagsTextBox
             // 
-            this.EntityFlagsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityFlagsTextBox.Location = new System.Drawing.Point(402, 87);
-            this.EntityFlagsTextBox.Name = "EntityFlagsTextBox";
-            this.EntityFlagsTextBox.Size = new System.Drawing.Size(147, 20);
-            this.EntityFlagsTextBox.TabIndex = 31;
-            this.EntityFlagsTextBox.TextChanged += new System.EventHandler(this.EntityFlagsTextBox_TextChanged);
+            EntityFlagsTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            EntityFlagsTextBox.Location = new System.Drawing.Point(469, 100);
+            EntityFlagsTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityFlagsTextBox.Name = "EntityFlagsTextBox";
+            EntityFlagsTextBox.Size = new System.Drawing.Size(171, 23);
+            EntityFlagsTextBox.TabIndex = 31;
+            EntityFlagsTextBox.TextChanged += EntityFlagsTextBox_TextChanged;
             // 
             // label18
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(15, 116);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(51, 13);
-            this.label18.TabIndex = 12;
-            this.label18.Text = "ScaleXY:";
+            label18.AutoSize = true;
+            label18.Location = new System.Drawing.Point(18, 134);
+            label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label18.Name = "label18";
+            label18.Size = new System.Drawing.Size(51, 15);
+            label18.TabIndex = 12;
+            label18.Text = "ScaleXY:";
             // 
             // EntityLodLevelComboBox
             // 
-            this.EntityLodLevelComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityLodLevelComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.EntityLodLevelComboBox.FormattingEnabled = true;
-            this.EntityLodLevelComboBox.Location = new System.Drawing.Point(93, 217);
-            this.EntityLodLevelComboBox.Name = "EntityLodLevelComboBox";
-            this.EntityLodLevelComboBox.Size = new System.Drawing.Size(233, 21);
-            this.EntityLodLevelComboBox.TabIndex = 21;
-            this.EntityLodLevelComboBox.SelectedIndexChanged += new System.EventHandler(this.EntityLodLevelComboBox_SelectedIndexChanged);
+            EntityLodLevelComboBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityLodLevelComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            EntityLodLevelComboBox.FormattingEnabled = true;
+            EntityLodLevelComboBox.Location = new System.Drawing.Point(108, 250);
+            EntityLodLevelComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityLodLevelComboBox.Name = "EntityLodLevelComboBox";
+            EntityLodLevelComboBox.Size = new System.Drawing.Size(271, 23);
+            EntityLodLevelComboBox.TabIndex = 21;
+            EntityLodLevelComboBox.SelectedIndexChanged += EntityLodLevelComboBox_SelectedIndexChanged;
             // 
             // label14
             // 
-            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(361, 90);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(35, 13);
-            this.label14.TabIndex = 30;
-            this.label14.Text = "Flags:";
+            label14.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            label14.AutoSize = true;
+            label14.Location = new System.Drawing.Point(421, 104);
+            label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new System.Drawing.Size(37, 15);
+            label14.TabIndex = 30;
+            label14.Text = "Flags:";
             // 
             // label23
             // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(15, 220);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(54, 13);
-            this.label23.TabIndex = 20;
-            this.label23.Text = "LodLevel:";
+            label23.AutoSize = true;
+            label23.Location = new System.Drawing.Point(18, 254);
+            label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label23.Name = "label23";
+            label23.Size = new System.Drawing.Size(57, 15);
+            label23.TabIndex = 20;
+            label23.Text = "LodLevel:";
             // 
             // EntityScaleXYTextBox
             // 
-            this.EntityScaleXYTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityScaleXYTextBox.Location = new System.Drawing.Point(93, 113);
-            this.EntityScaleXYTextBox.Name = "EntityScaleXYTextBox";
-            this.EntityScaleXYTextBox.Size = new System.Drawing.Size(233, 20);
-            this.EntityScaleXYTextBox.TabIndex = 13;
-            this.EntityScaleXYTextBox.TextChanged += new System.EventHandler(this.EntityScaleXYTextBox_TextChanged);
+            EntityScaleXYTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityScaleXYTextBox.Location = new System.Drawing.Point(108, 130);
+            EntityScaleXYTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityScaleXYTextBox.Name = "EntityScaleXYTextBox";
+            EntityScaleXYTextBox.Size = new System.Drawing.Size(271, 23);
+            EntityScaleXYTextBox.TabIndex = 13;
+            EntityScaleXYTextBox.TextChanged += EntityScaleXYTextBox_TextChanged;
             // 
             // label22
             // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(15, 194);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(69, 13);
-            this.label22.TabIndex = 18;
-            this.label22.Text = "ChildLodDist:";
+            label22.AutoSize = true;
+            label22.Location = new System.Drawing.Point(18, 224);
+            label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label22.Name = "label22";
+            label22.Size = new System.Drawing.Size(78, 15);
+            label22.TabIndex = 18;
+            label22.Text = "ChildLodDist:";
             // 
             // EntityArchetypeHashLabel
             // 
-            this.EntityArchetypeHashLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityArchetypeHashLabel.AutoSize = true;
-            this.EntityArchetypeHashLabel.Location = new System.Drawing.Point(332, 64);
-            this.EntityArchetypeHashLabel.Name = "EntityArchetypeHashLabel";
-            this.EntityArchetypeHashLabel.Size = new System.Drawing.Size(44, 13);
-            this.EntityArchetypeHashLabel.TabIndex = 9;
-            this.EntityArchetypeHashLabel.Text = "Hash: 0";
+            EntityArchetypeHashLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            EntityArchetypeHashLabel.AutoSize = true;
+            EntityArchetypeHashLabel.Location = new System.Drawing.Point(387, 74);
+            EntityArchetypeHashLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            EntityArchetypeHashLabel.Name = "EntityArchetypeHashLabel";
+            EntityArchetypeHashLabel.Size = new System.Drawing.Size(46, 15);
+            EntityArchetypeHashLabel.TabIndex = 9;
+            EntityArchetypeHashLabel.Text = "Hash: 0";
             // 
             // EntityChildLodDistTextBox
             // 
-            this.EntityChildLodDistTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityChildLodDistTextBox.Location = new System.Drawing.Point(93, 191);
-            this.EntityChildLodDistTextBox.Name = "EntityChildLodDistTextBox";
-            this.EntityChildLodDistTextBox.Size = new System.Drawing.Size(233, 20);
-            this.EntityChildLodDistTextBox.TabIndex = 19;
-            this.EntityChildLodDistTextBox.TextChanged += new System.EventHandler(this.EntityChildLodDistTextBox_TextChanged);
+            EntityChildLodDistTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityChildLodDistTextBox.Location = new System.Drawing.Point(108, 220);
+            EntityChildLodDistTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityChildLodDistTextBox.Name = "EntityChildLodDistTextBox";
+            EntityChildLodDistTextBox.Size = new System.Drawing.Size(271, 23);
+            EntityChildLodDistTextBox.TabIndex = 19;
+            EntityChildLodDistTextBox.TextChanged += EntityChildLodDistTextBox_TextChanged;
             // 
             // label19
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(15, 142);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(44, 13);
-            this.label19.TabIndex = 14;
-            this.label19.Text = "ScaleZ:";
+            label19.AutoSize = true;
+            label19.Location = new System.Drawing.Point(18, 164);
+            label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label19.Name = "label19";
+            label19.Size = new System.Drawing.Size(44, 15);
+            label19.TabIndex = 14;
+            label19.Text = "ScaleZ:";
             // 
             // label21
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(15, 168);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(46, 13);
-            this.label21.TabIndex = 16;
-            this.label21.Text = "LodDist:";
+            label21.AutoSize = true;
+            label21.Location = new System.Drawing.Point(18, 194);
+            label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label21.Name = "label21";
+            label21.Size = new System.Drawing.Size(50, 15);
+            label21.TabIndex = 16;
+            label21.Text = "LodDist:";
             // 
             // EntityScaleZTextBox
             // 
-            this.EntityScaleZTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityScaleZTextBox.Location = new System.Drawing.Point(93, 139);
-            this.EntityScaleZTextBox.Name = "EntityScaleZTextBox";
-            this.EntityScaleZTextBox.Size = new System.Drawing.Size(233, 20);
-            this.EntityScaleZTextBox.TabIndex = 15;
-            this.EntityScaleZTextBox.TextChanged += new System.EventHandler(this.EntityScaleZTextBox_TextChanged);
+            EntityScaleZTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityScaleZTextBox.Location = new System.Drawing.Point(108, 160);
+            EntityScaleZTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityScaleZTextBox.Name = "EntityScaleZTextBox";
+            EntityScaleZTextBox.Size = new System.Drawing.Size(271, 23);
+            EntityScaleZTextBox.TabIndex = 15;
+            EntityScaleZTextBox.TextChanged += EntityScaleZTextBox_TextChanged;
             // 
             // EntityLodDistTextBox
             // 
-            this.EntityLodDistTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityLodDistTextBox.Location = new System.Drawing.Point(93, 165);
-            this.EntityLodDistTextBox.Name = "EntityLodDistTextBox";
-            this.EntityLodDistTextBox.Size = new System.Drawing.Size(233, 20);
-            this.EntityLodDistTextBox.TabIndex = 17;
-            this.EntityLodDistTextBox.TextChanged += new System.EventHandler(this.EntityLodDistTextBox_TextChanged);
+            EntityLodDistTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityLodDistTextBox.Location = new System.Drawing.Point(108, 190);
+            EntityLodDistTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityLodDistTextBox.Name = "EntityLodDistTextBox";
+            EntityLodDistTextBox.Size = new System.Drawing.Size(271, 23);
+            EntityLodDistTextBox.TabIndex = 17;
+            EntityLodDistTextBox.TextChanged += EntityLodDistTextBox_TextChanged;
             // 
             // EntityArchetypeTextBox
             // 
-            this.EntityArchetypeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityArchetypeTextBox.Location = new System.Drawing.Point(93, 61);
-            this.EntityArchetypeTextBox.Name = "EntityArchetypeTextBox";
-            this.EntityArchetypeTextBox.Size = new System.Drawing.Size(233, 20);
-            this.EntityArchetypeTextBox.TabIndex = 8;
-            this.EntityArchetypeTextBox.TextChanged += new System.EventHandler(this.EntityArchetypeTextBox_TextChanged);
+            EntityArchetypeTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityArchetypeTextBox.Location = new System.Drawing.Point(108, 70);
+            EntityArchetypeTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityArchetypeTextBox.Name = "EntityArchetypeTextBox";
+            EntityArchetypeTextBox.Size = new System.Drawing.Size(271, 23);
+            EntityArchetypeTextBox.TabIndex = 8;
+            EntityArchetypeTextBox.TextChanged += EntityArchetypeTextBox_TextChanged;
             // 
             // label16
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(15, 12);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(47, 13);
-            this.label16.TabIndex = 1;
-            this.label16.Text = "Position:";
+            label16.AutoSize = true;
+            label16.Location = new System.Drawing.Point(18, 14);
+            label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label16.Name = "label16";
+            label16.Size = new System.Drawing.Size(53, 15);
+            label16.TabIndex = 1;
+            label16.Text = "Position:";
             // 
             // EntityPositionTextBox
             // 
-            this.EntityPositionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityPositionTextBox.Location = new System.Drawing.Point(93, 9);
-            this.EntityPositionTextBox.Name = "EntityPositionTextBox";
-            this.EntityPositionTextBox.Size = new System.Drawing.Size(382, 20);
-            this.EntityPositionTextBox.TabIndex = 2;
-            this.EntityPositionTextBox.TextChanged += new System.EventHandler(this.EntityPositionTextBox_TextChanged);
+            EntityPositionTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityPositionTextBox.Location = new System.Drawing.Point(108, 10);
+            EntityPositionTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityPositionTextBox.Name = "EntityPositionTextBox";
+            EntityPositionTextBox.Size = new System.Drawing.Size(445, 23);
+            EntityPositionTextBox.TabIndex = 2;
+            EntityPositionTextBox.TextChanged += EntityPositionTextBox_TextChanged;
             // 
             // EntityGoToButton
             // 
-            this.EntityGoToButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityGoToButton.Location = new System.Drawing.Point(481, 7);
-            this.EntityGoToButton.Name = "EntityGoToButton";
-            this.EntityGoToButton.Size = new System.Drawing.Size(68, 23);
-            this.EntityGoToButton.TabIndex = 3;
-            this.EntityGoToButton.Text = "Go to";
-            this.EntityGoToButton.UseVisualStyleBackColor = true;
-            this.EntityGoToButton.Click += new System.EventHandler(this.EntityGoToButton_Click);
+            EntityGoToButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            EntityGoToButton.Location = new System.Drawing.Point(561, 8);
+            EntityGoToButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityGoToButton.Name = "EntityGoToButton";
+            EntityGoToButton.Size = new System.Drawing.Size(79, 27);
+            EntityGoToButton.TabIndex = 3;
+            EntityGoToButton.Text = "Go to";
+            EntityGoToButton.UseVisualStyleBackColor = true;
+            EntityGoToButton.Click += EntityGoToButton_Click;
             // 
             // label17
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(15, 38);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(50, 13);
-            this.label17.TabIndex = 4;
-            this.label17.Text = "Rotation:";
+            label17.AutoSize = true;
+            label17.Location = new System.Drawing.Point(18, 44);
+            label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label17.Name = "label17";
+            label17.Size = new System.Drawing.Size(55, 15);
+            label17.TabIndex = 4;
+            label17.Text = "Rotation:";
             // 
             // EntityLodTabPage
             // 
-            this.EntityLodTabPage.Controls.Add(this.label20);
-            this.EntityLodTabPage.Controls.Add(this.EntityParentIndexTextBox);
-            this.EntityLodTabPage.Controls.Add(this.EntityNumChildrenTextBox);
-            this.EntityLodTabPage.Controls.Add(this.label25);
-            this.EntityLodTabPage.Location = new System.Drawing.Point(4, 22);
-            this.EntityLodTabPage.Name = "EntityLodTabPage";
-            this.EntityLodTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.EntityLodTabPage.Size = new System.Drawing.Size(555, 476);
-            this.EntityLodTabPage.TabIndex = 1;
-            this.EntityLodTabPage.Text = "LOD Hierarchy";
-            this.EntityLodTabPage.UseVisualStyleBackColor = true;
+            EntityLodTabPage.Controls.Add(label20);
+            EntityLodTabPage.Controls.Add(EntityParentIndexTextBox);
+            EntityLodTabPage.Controls.Add(EntityNumChildrenTextBox);
+            EntityLodTabPage.Controls.Add(label25);
+            EntityLodTabPage.Location = new System.Drawing.Point(4, 24);
+            EntityLodTabPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityLodTabPage.Name = "EntityLodTabPage";
+            EntityLodTabPage.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityLodTabPage.Size = new System.Drawing.Size(649, 551);
+            EntityLodTabPage.TabIndex = 1;
+            EntityLodTabPage.Text = "LOD Hierarchy";
+            EntityLodTabPage.UseVisualStyleBackColor = true;
             // 
             // label20
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(15, 16);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(67, 13);
-            this.label20.TabIndex = 24;
-            this.label20.Text = "ParentIndex:";
+            label20.AutoSize = true;
+            label20.Location = new System.Drawing.Point(18, 18);
+            label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label20.Name = "label20";
+            label20.Size = new System.Drawing.Size(73, 15);
+            label20.TabIndex = 24;
+            label20.Text = "ParentIndex:";
             // 
             // EntityParentIndexTextBox
             // 
-            this.EntityParentIndexTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityParentIndexTextBox.Location = new System.Drawing.Point(93, 13);
-            this.EntityParentIndexTextBox.Name = "EntityParentIndexTextBox";
-            this.EntityParentIndexTextBox.Size = new System.Drawing.Size(245, 20);
-            this.EntityParentIndexTextBox.TabIndex = 25;
-            this.EntityParentIndexTextBox.TextChanged += new System.EventHandler(this.EntityParentIndexTextBox_TextChanged);
+            EntityParentIndexTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityParentIndexTextBox.Location = new System.Drawing.Point(108, 15);
+            EntityParentIndexTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityParentIndexTextBox.Name = "EntityParentIndexTextBox";
+            EntityParentIndexTextBox.Size = new System.Drawing.Size(285, 23);
+            EntityParentIndexTextBox.TabIndex = 25;
+            EntityParentIndexTextBox.TextChanged += EntityParentIndexTextBox_TextChanged;
             // 
             // EntityNumChildrenTextBox
             // 
-            this.EntityNumChildrenTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityNumChildrenTextBox.Location = new System.Drawing.Point(93, 39);
-            this.EntityNumChildrenTextBox.Name = "EntityNumChildrenTextBox";
-            this.EntityNumChildrenTextBox.Size = new System.Drawing.Size(245, 20);
-            this.EntityNumChildrenTextBox.TabIndex = 35;
-            this.EntityNumChildrenTextBox.TextChanged += new System.EventHandler(this.EntityNumChildrenTextBox_TextChanged);
+            EntityNumChildrenTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityNumChildrenTextBox.Location = new System.Drawing.Point(108, 45);
+            EntityNumChildrenTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityNumChildrenTextBox.Name = "EntityNumChildrenTextBox";
+            EntityNumChildrenTextBox.Size = new System.Drawing.Size(285, 23);
+            EntityNumChildrenTextBox.TabIndex = 35;
+            EntityNumChildrenTextBox.TextChanged += EntityNumChildrenTextBox_TextChanged;
             // 
             // label25
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(15, 42);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(70, 13);
-            this.label25.TabIndex = 34;
-            this.label25.Text = "NumChildren:";
+            label25.AutoSize = true;
+            label25.Location = new System.Drawing.Point(18, 48);
+            label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label25.Name = "label25";
+            label25.Size = new System.Drawing.Size(82, 15);
+            label25.TabIndex = 34;
+            label25.Text = "NumChildren:";
             // 
             // EntityExtensionsTabPage
             // 
-            this.EntityExtensionsTabPage.Controls.Add(this.label1);
-            this.EntityExtensionsTabPage.Location = new System.Drawing.Point(4, 22);
-            this.EntityExtensionsTabPage.Name = "EntityExtensionsTabPage";
-            this.EntityExtensionsTabPage.Size = new System.Drawing.Size(555, 476);
-            this.EntityExtensionsTabPage.TabIndex = 2;
-            this.EntityExtensionsTabPage.Text = "Extensions";
-            this.EntityExtensionsTabPage.UseVisualStyleBackColor = true;
+            EntityExtensionsTabPage.Controls.Add(label1);
+            EntityExtensionsTabPage.Location = new System.Drawing.Point(4, 24);
+            EntityExtensionsTabPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityExtensionsTabPage.Name = "EntityExtensionsTabPage";
+            EntityExtensionsTabPage.Size = new System.Drawing.Size(649, 551);
+            EntityExtensionsTabPage.TabIndex = 2;
+            EntityExtensionsTabPage.Text = "Extensions";
+            EntityExtensionsTabPage.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 27);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(157, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Entity extensions editing TODO!";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(31, 31);
+            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(173, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Entity extensions editing TODO!";
             // 
             // EntityPivotTabPage
             // 
-            this.EntityPivotTabPage.Controls.Add(this.EntityPivotRotationQuatBox);
-            this.EntityPivotTabPage.Controls.Add(this.label95);
-            this.EntityPivotTabPage.Controls.Add(this.EntityPivotEditCheckBox);
-            this.EntityPivotTabPage.Controls.Add(this.label93);
-            this.EntityPivotTabPage.Controls.Add(this.EntityPivotPositionTextBox);
-            this.EntityPivotTabPage.Controls.Add(this.label94);
-            this.EntityPivotTabPage.Location = new System.Drawing.Point(4, 22);
-            this.EntityPivotTabPage.Name = "EntityPivotTabPage";
-            this.EntityPivotTabPage.Size = new System.Drawing.Size(555, 476);
-            this.EntityPivotTabPage.TabIndex = 3;
-            this.EntityPivotTabPage.Text = "Pivot";
-            this.EntityPivotTabPage.UseVisualStyleBackColor = true;
+            EntityPivotTabPage.Controls.Add(EntityPivotRotationQuatBox);
+            EntityPivotTabPage.Controls.Add(label95);
+            EntityPivotTabPage.Controls.Add(EntityPivotEditCheckBox);
+            EntityPivotTabPage.Controls.Add(label93);
+            EntityPivotTabPage.Controls.Add(EntityPivotPositionTextBox);
+            EntityPivotTabPage.Controls.Add(label94);
+            EntityPivotTabPage.Location = new System.Drawing.Point(4, 24);
+            EntityPivotTabPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityPivotTabPage.Name = "EntityPivotTabPage";
+            EntityPivotTabPage.Size = new System.Drawing.Size(649, 551);
+            EntityPivotTabPage.TabIndex = 3;
+            EntityPivotTabPage.Text = "Pivot";
+            EntityPivotTabPage.UseVisualStyleBackColor = true;
             // 
             // EntityPivotRotationQuatBox
             // 
-            this.EntityPivotRotationQuatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityPivotRotationQuatBox.Location = new System.Drawing.Point(93, 94);
-            this.EntityPivotRotationQuatBox.Margin = new System.Windows.Forms.Padding(0);
-            this.EntityPivotRotationQuatBox.Name = "EntityPivotRotationQuatBox";
-            this.EntityPivotRotationQuatBox.Size = new System.Drawing.Size(456, 24);
-            this.EntityPivotRotationQuatBox.TabIndex = 25;
-            this.EntityPivotRotationQuatBox.ValueChanged += new System.EventHandler(this.EntityPivotRotationQuatBox_ValueChanged);
+            EntityPivotRotationQuatBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityPivotRotationQuatBox.Location = new System.Drawing.Point(108, 108);
+            EntityPivotRotationQuatBox.Margin = new System.Windows.Forms.Padding(0);
+            EntityPivotRotationQuatBox.Name = "EntityPivotRotationQuatBox";
+            EntityPivotRotationQuatBox.Size = new System.Drawing.Size(532, 28);
+            EntityPivotRotationQuatBox.TabIndex = 25;
+            EntityPivotRotationQuatBox.ValueChanged += EntityPivotRotationQuatBox_ValueChanged;
             // 
             // label95
             // 
-            this.label95.Location = new System.Drawing.Point(90, 152);
-            this.label95.Name = "label95";
-            this.label95.Size = new System.Drawing.Size(329, 51);
-            this.label95.TabIndex = 27;
-            this.label95.Text = "Note: Custom pivot is not saved. It will be reset if you close the project or res" +
-    "tart CodeWalker.";
+            label95.Location = new System.Drawing.Point(105, 175);
+            label95.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label95.Name = "label95";
+            label95.Size = new System.Drawing.Size(384, 59);
+            label95.TabIndex = 27;
+            label95.Text = "Note: Custom pivot is not saved. It will be reset if you close the project or restart CodeWalker.";
             // 
             // EntityPivotEditCheckBox
             // 
-            this.EntityPivotEditCheckBox.AutoSize = true;
-            this.EntityPivotEditCheckBox.Location = new System.Drawing.Point(93, 32);
-            this.EntityPivotEditCheckBox.Name = "EntityPivotEditCheckBox";
-            this.EntityPivotEditCheckBox.Size = new System.Drawing.Size(137, 17);
-            this.EntityPivotEditCheckBox.TabIndex = 20;
-            this.EntityPivotEditCheckBox.Text = "Edit pivot in World view";
-            this.EntityPivotEditCheckBox.UseVisualStyleBackColor = true;
-            this.EntityPivotEditCheckBox.CheckedChanged += new System.EventHandler(this.EntityPivotEditCheckBox_CheckedChanged);
+            EntityPivotEditCheckBox.AutoSize = true;
+            EntityPivotEditCheckBox.Location = new System.Drawing.Point(108, 37);
+            EntityPivotEditCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityPivotEditCheckBox.Name = "EntityPivotEditCheckBox";
+            EntityPivotEditCheckBox.Size = new System.Drawing.Size(151, 19);
+            EntityPivotEditCheckBox.TabIndex = 20;
+            EntityPivotEditCheckBox.Text = "Edit pivot in World view";
+            EntityPivotEditCheckBox.UseVisualStyleBackColor = true;
+            EntityPivotEditCheckBox.CheckedChanged += EntityPivotEditCheckBox_CheckedChanged;
             // 
             // label93
             // 
-            this.label93.AutoSize = true;
-            this.label93.Location = new System.Drawing.Point(15, 73);
-            this.label93.Name = "label93";
-            this.label93.Size = new System.Drawing.Size(47, 13);
-            this.label93.TabIndex = 21;
-            this.label93.Text = "Position:";
+            label93.AutoSize = true;
+            label93.Location = new System.Drawing.Point(18, 84);
+            label93.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label93.Name = "label93";
+            label93.Size = new System.Drawing.Size(53, 15);
+            label93.TabIndex = 21;
+            label93.Text = "Position:";
             // 
             // EntityPivotPositionTextBox
             // 
-            this.EntityPivotPositionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityPivotPositionTextBox.Location = new System.Drawing.Point(93, 70);
-            this.EntityPivotPositionTextBox.Name = "EntityPivotPositionTextBox";
-            this.EntityPivotPositionTextBox.Size = new System.Drawing.Size(382, 20);
-            this.EntityPivotPositionTextBox.TabIndex = 22;
-            this.EntityPivotPositionTextBox.TextChanged += new System.EventHandler(this.EntityPivotPositionTextBox_TextChanged);
+            EntityPivotPositionTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            EntityPivotPositionTextBox.Location = new System.Drawing.Point(108, 81);
+            EntityPivotPositionTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityPivotPositionTextBox.Name = "EntityPivotPositionTextBox";
+            EntityPivotPositionTextBox.Size = new System.Drawing.Size(445, 23);
+            EntityPivotPositionTextBox.TabIndex = 22;
+            EntityPivotPositionTextBox.TextChanged += EntityPivotPositionTextBox_TextChanged;
             // 
             // label94
             // 
-            this.label94.AutoSize = true;
-            this.label94.Location = new System.Drawing.Point(15, 99);
-            this.label94.Name = "label94";
-            this.label94.Size = new System.Drawing.Size(50, 13);
-            this.label94.TabIndex = 24;
-            this.label94.Text = "Rotation:";
+            label94.AutoSize = true;
+            label94.Location = new System.Drawing.Point(18, 114);
+            label94.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label94.Name = "label94";
+            label94.Size = new System.Drawing.Size(55, 15);
+            label94.TabIndex = 24;
+            label94.Text = "Rotation:";
             // 
             // EntityMiloTabPage
             // 
-            this.EntityMiloTabPage.Controls.Add(this.MiloFlagsTextBox);
-            this.EntityMiloTabPage.Controls.Add(this.label6);
-            this.EntityMiloTabPage.Controls.Add(this.MiloNumExitPortalsTextBox);
-            this.EntityMiloTabPage.Controls.Add(this.label5);
-            this.EntityMiloTabPage.Controls.Add(this.label3);
-            this.EntityMiloTabPage.Controls.Add(this.MiloGroupIDTextBox);
-            this.EntityMiloTabPage.Controls.Add(this.MiloFloorIDTextBox);
-            this.EntityMiloTabPage.Controls.Add(this.label4);
-            this.EntityMiloTabPage.Controls.Add(this.MiloEntitySetsListBox);
-            this.EntityMiloTabPage.Controls.Add(this.label2);
-            this.EntityMiloTabPage.Location = new System.Drawing.Point(4, 22);
-            this.EntityMiloTabPage.Name = "EntityMiloTabPage";
-            this.EntityMiloTabPage.Size = new System.Drawing.Size(555, 476);
-            this.EntityMiloTabPage.TabIndex = 4;
-            this.EntityMiloTabPage.Text = "MLO Instance";
-            this.EntityMiloTabPage.UseVisualStyleBackColor = true;
+            EntityMiloTabPage.Controls.Add(MiloFlagsTextBox);
+            EntityMiloTabPage.Controls.Add(label6);
+            EntityMiloTabPage.Controls.Add(MiloNumExitPortalsTextBox);
+            EntityMiloTabPage.Controls.Add(label5);
+            EntityMiloTabPage.Controls.Add(label3);
+            EntityMiloTabPage.Controls.Add(MiloGroupIDTextBox);
+            EntityMiloTabPage.Controls.Add(MiloFloorIDTextBox);
+            EntityMiloTabPage.Controls.Add(label4);
+            EntityMiloTabPage.Controls.Add(MiloEntitySetsListBox);
+            EntityMiloTabPage.Controls.Add(label2);
+            EntityMiloTabPage.Location = new System.Drawing.Point(4, 24);
+            EntityMiloTabPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EntityMiloTabPage.Name = "EntityMiloTabPage";
+            EntityMiloTabPage.Size = new System.Drawing.Size(649, 551);
+            EntityMiloTabPage.TabIndex = 4;
+            EntityMiloTabPage.Text = "MLO Instance";
+            EntityMiloTabPage.UseVisualStyleBackColor = true;
             // 
             // MiloFlagsTextBox
             // 
-            this.MiloFlagsTextBox.Location = new System.Drawing.Point(101, 93);
-            this.MiloFlagsTextBox.Name = "MiloFlagsTextBox";
-            this.MiloFlagsTextBox.Size = new System.Drawing.Size(154, 20);
-            this.MiloFlagsTextBox.TabIndex = 43;
-            this.MiloFlagsTextBox.TextChanged += new System.EventHandler(this.MiloFlagsTextBox_TextChanged);
+            MiloFlagsTextBox.Location = new System.Drawing.Point(118, 107);
+            MiloFlagsTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MiloFlagsTextBox.Name = "MiloFlagsTextBox";
+            MiloFlagsTextBox.Size = new System.Drawing.Size(179, 23);
+            MiloFlagsTextBox.TabIndex = 43;
+            MiloFlagsTextBox.TextChanged += MiloFlagsTextBox_TextChanged;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(5, 96);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(75, 13);
-            this.label6.TabIndex = 42;
-            this.label6.Text = "MLOInstFlags:";
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(6, 111);
+            label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(82, 15);
+            label6.TabIndex = 42;
+            label6.Text = "MLOInstFlags:";
             // 
             // MiloNumExitPortalsTextBox
             // 
-            this.MiloNumExitPortalsTextBox.Location = new System.Drawing.Point(101, 67);
-            this.MiloNumExitPortalsTextBox.Name = "MiloNumExitPortalsTextBox";
-            this.MiloNumExitPortalsTextBox.Size = new System.Drawing.Size(154, 20);
-            this.MiloNumExitPortalsTextBox.TabIndex = 41;
-            this.MiloNumExitPortalsTextBox.TextChanged += new System.EventHandler(this.MiloNumExitPortalsTextBox_TextChanged);
+            MiloNumExitPortalsTextBox.Location = new System.Drawing.Point(118, 77);
+            MiloNumExitPortalsTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MiloNumExitPortalsTextBox.Name = "MiloNumExitPortalsTextBox";
+            MiloNumExitPortalsTextBox.Size = new System.Drawing.Size(179, 23);
+            MiloNumExitPortalsTextBox.TabIndex = 41;
+            MiloNumExitPortalsTextBox.TextChanged += MiloNumExitPortalsTextBox_TextChanged;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(5, 70);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(81, 13);
-            this.label5.TabIndex = 40;
-            this.label5.Text = "NumExitPortals:";
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(6, 81);
+            label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(92, 15);
+            label5.TabIndex = 40;
+            label5.Text = "NumExitPortals:";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(5, 18);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 13);
-            this.label3.TabIndex = 36;
-            this.label3.Text = "GroupID:";
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(6, 21);
+            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(54, 15);
+            label3.TabIndex = 36;
+            label3.Text = "GroupID:";
             // 
             // MiloGroupIDTextBox
             // 
-            this.MiloGroupIDTextBox.Location = new System.Drawing.Point(101, 15);
-            this.MiloGroupIDTextBox.Name = "MiloGroupIDTextBox";
-            this.MiloGroupIDTextBox.Size = new System.Drawing.Size(154, 20);
-            this.MiloGroupIDTextBox.TabIndex = 37;
-            this.MiloGroupIDTextBox.TextChanged += new System.EventHandler(this.MiloGroupIDTextBox_TextChanged);
+            MiloGroupIDTextBox.Location = new System.Drawing.Point(118, 17);
+            MiloGroupIDTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MiloGroupIDTextBox.Name = "MiloGroupIDTextBox";
+            MiloGroupIDTextBox.Size = new System.Drawing.Size(179, 23);
+            MiloGroupIDTextBox.TabIndex = 37;
+            MiloGroupIDTextBox.TextChanged += MiloGroupIDTextBox_TextChanged;
             // 
             // MiloFloorIDTextBox
             // 
-            this.MiloFloorIDTextBox.Location = new System.Drawing.Point(101, 41);
-            this.MiloFloorIDTextBox.Name = "MiloFloorIDTextBox";
-            this.MiloFloorIDTextBox.Size = new System.Drawing.Size(154, 20);
-            this.MiloFloorIDTextBox.TabIndex = 39;
-            this.MiloFloorIDTextBox.TextChanged += new System.EventHandler(this.MiloFloorIDTextBox_TextChanged);
+            MiloFloorIDTextBox.Location = new System.Drawing.Point(118, 47);
+            MiloFloorIDTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MiloFloorIDTextBox.Name = "MiloFloorIDTextBox";
+            MiloFloorIDTextBox.Size = new System.Drawing.Size(179, 23);
+            MiloFloorIDTextBox.TabIndex = 39;
+            MiloFloorIDTextBox.TextChanged += MiloFloorIDTextBox_TextChanged;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(5, 44);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(44, 13);
-            this.label4.TabIndex = 38;
-            this.label4.Text = "FloorID:";
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(6, 51);
+            label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(48, 15);
+            label4.TabIndex = 38;
+            label4.Text = "FloorID:";
             // 
             // MiloEntitySetsListBox
             // 
-            this.MiloEntitySetsListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.MiloEntitySetsListBox.CheckOnClick = true;
-            this.MiloEntitySetsListBox.FormattingEnabled = true;
-            this.MiloEntitySetsListBox.Location = new System.Drawing.Point(103, 128);
-            this.MiloEntitySetsListBox.Name = "MiloEntitySetsListBox";
-            this.MiloEntitySetsListBox.Size = new System.Drawing.Size(434, 319);
-            this.MiloEntitySetsListBox.TabIndex = 4;
-            this.MiloEntitySetsListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.MiloEntitySetsListBox_ItemCheck);
+            MiloEntitySetsListBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            MiloEntitySetsListBox.CheckOnClick = true;
+            MiloEntitySetsListBox.FormattingEnabled = true;
+            MiloEntitySetsListBox.Location = new System.Drawing.Point(120, 148);
+            MiloEntitySetsListBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MiloEntitySetsListBox.Name = "MiloEntitySetsListBox";
+            MiloEntitySetsListBox.Size = new System.Drawing.Size(506, 364);
+            MiloEntitySetsListBox.TabIndex = 4;
+            MiloEntitySetsListBox.ItemCheck += MiloEntitySetsListBox_ItemCheck;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 129);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "DefaultEntitySets:";
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(4, 149);
+            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(99, 15);
+            label2.TabIndex = 3;
+            label2.Text = "DefaultEntitySets:";
             // 
             // EditYmapEntityPanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(565, 505);
-            this.Controls.Add(this.EntityTabControl);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "EditYmapEntityPanel";
-            this.Text = "Entity";
-            this.EntityTabControl.ResumeLayout(false);
-            this.EntityGeneralTabPage.ResumeLayout(false);
-            this.EntityGeneralTabPage.PerformLayout();
-            this.EntityLodTabPage.ResumeLayout(false);
-            this.EntityLodTabPage.PerformLayout();
-            this.EntityExtensionsTabPage.ResumeLayout(false);
-            this.EntityExtensionsTabPage.PerformLayout();
-            this.EntityPivotTabPage.ResumeLayout(false);
-            this.EntityPivotTabPage.PerformLayout();
-            this.EntityMiloTabPage.ResumeLayout(false);
-            this.EntityMiloTabPage.PerformLayout();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(659, 583);
+            Controls.Add(EntityTabControl);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "EditYmapEntityPanel";
+            Text = "Entity";
+            EntityTabControl.ResumeLayout(false);
+            EntityGeneralTabPage.ResumeLayout(false);
+            EntityGeneralTabPage.PerformLayout();
+            EntityLodTabPage.ResumeLayout(false);
+            EntityLodTabPage.PerformLayout();
+            EntityExtensionsTabPage.ResumeLayout(false);
+            EntityExtensionsTabPage.PerformLayout();
+            EntityPivotTabPage.ResumeLayout(false);
+            EntityPivotTabPage.PerformLayout();
+            EntityMiloTabPage.ResumeLayout(false);
+            EntityMiloTabPage.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion

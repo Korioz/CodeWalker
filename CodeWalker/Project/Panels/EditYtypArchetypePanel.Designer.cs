@@ -301,48 +301,15 @@
             // 
             // EntityFlagsCheckedListBox
             // 
-            this.EntityFlagsCheckedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntityFlagsCheckedListBox.CheckOnClick = true;
-            this.EntityFlagsCheckedListBox.FormattingEnabled = true;
-            this.EntityFlagsCheckedListBox.Items.AddRange(new object[] {
-            "1 - Wet Road Reflection",
-            "2 - Dont Fade",
-            "4 - Draw Last",
-            "8 - Climbable By AI",
-            "16 - Suppress HD TXDs",
-            "32 - Static",
-            "64 - Disable alpha sorting",
-            "128 - Tough For Bullets",
-            "256 - Is Generic",
-            "512 - Has Anim (YCD)",
-            "1024 - UV anims (YCD)",
-            "2048 - Shadow Only",
-            "4096 - Damage Model",
-            "8192 - Dont Cast Shadows",
-            "16384 - Cast Texture Shadows",
-            "32768 - Dont Collide With Flyer",
-            "65536 - Double-sided rendering",
-            "131072 - Dynamic",
-            "262144 - Override Physics Bounds",
-            "524288 - Auto Start Anim",
-            "1048576 - Pre Reflected Water Proxy",
-            "2097152 - Proxy For Water Reflections",
-            "4194304 - No AI Cover",
-            "8388608 - No Player Cover",
-            "16777216 - Is Ladder Deprecated",
-            "33554432 - Has Cloth",
-            "67108864 - Enable Door Physics",
-            "134217728 - Is Fixed For Navigation",
-            "268435456 -  Dont Avoid By Peds",
-            "536870912 - Use Ambient Scale",
-            "1073741824 - Is Debug",
-            "2147483648 - Has Alpha Shadow"});
-            this.EntityFlagsCheckedListBox.Location = new System.Drawing.Point(441, 38);
-            this.EntityFlagsCheckedListBox.Name = "EntityFlagsCheckedListBox";
-            this.EntityFlagsCheckedListBox.Size = new System.Drawing.Size(182, 274);
-            this.EntityFlagsCheckedListBox.TabIndex = 67;
-            this.EntityFlagsCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.ArchetypeFlagsCheckedListBox_ItemCheck);
+            EntityFlagsCheckedListBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            EntityFlagsCheckedListBox.CheckOnClick = true;
+            EntityFlagsCheckedListBox.FormattingEnabled = true;
+            EntityFlagsCheckedListBox.Items.AddRange(new object[] { "1 - Wet Road Reflection", "2 - Dont Fade", "4 - Draw Last", "8 - Climbable By AI", "16 - Suppress HD TXDs", "32 - Static", "64 - Disable alpha sorting", "128 - Tough For Bullets", "256 - Is Generic", "512 - Has Anim (YCD)", "1024 - UV anims (YCD)", "2048 - Shadow Only", "4096 - Damage Model", "8192 - Dont Cast Shadows", "16384 - Cast Texture Shadows", "32768 - Dont Collide With Flyer", "65536 - Double-sided rendering", "131072 - Dynamic", "262144 - Override Physics Bounds", "524288 - Auto Start Anim", "1048576 - Pre Reflected Water Proxy", "2097152 - Proxy For Water Reflections", "4194304 - No AI Cover", "8388608 - No Player Cover", "16777216 - Is Ladder Deprecated", "33554432 - Has Cloth", "67108864 - Enable Door Physics", "134217728 - Is Fixed For Navigation", "268435456 -  Dont Avoid By Peds", "536870912 - Use Ambient Scale", "1073741824 - Is Debug", "2147483648 - Has Alpha Shadow" });
+            EntityFlagsCheckedListBox.Location = new System.Drawing.Point(441, 38);
+            EntityFlagsCheckedListBox.Name = "EntityFlagsCheckedListBox";
+            EntityFlagsCheckedListBox.Size = new System.Drawing.Size(285, 274);
+            EntityFlagsCheckedListBox.TabIndex = 67;
+            EntityFlagsCheckedListBox.ItemCheck += ArchetypeFlagsCheckedListBox_ItemCheck;
             // 
             // label14
             // 
@@ -518,24 +485,14 @@
             // 
             // MloUpdatePortalCountsButton
             // 
-            MloUpdatePortalCountsButton.Location = new System.Drawing.Point(57, 40);
+            MloUpdatePortalCountsButton.Location = new System.Drawing.Point(49, 35);
             MloUpdatePortalCountsButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             MloUpdatePortalCountsButton.Name = "MloUpdatePortalCountsButton";
-            MloUpdatePortalCountsButton.Size = new System.Drawing.Size(178, 27);
+            MloUpdatePortalCountsButton.Size = new System.Drawing.Size(153, 23);
             MloUpdatePortalCountsButton.TabIndex = 0;
             MloUpdatePortalCountsButton.Text = "Update Portal Counts";
             MloUpdatePortalCountsButton.UseVisualStyleBackColor = true;
             MloUpdatePortalCountsButton.Click += MloUpdatePortalCountsButton_Click;
-            // 
-            // MloUpdatePortalCountsButton
-            // 
-            this.MloUpdatePortalCountsButton.Location = new System.Drawing.Point(49, 35);
-            this.MloUpdatePortalCountsButton.Name = "MloUpdatePortalCountsButton";
-            this.MloUpdatePortalCountsButton.Size = new System.Drawing.Size(153, 23);
-            this.MloUpdatePortalCountsButton.TabIndex = 0;
-            this.MloUpdatePortalCountsButton.Text = "Update Portal Counts";
-            this.MloUpdatePortalCountsButton.UseVisualStyleBackColor = true;
-            this.MloUpdatePortalCountsButton.Click += new System.EventHandler(this.MloUpdatePortalCountsButton_Click);
             // 
             // TimeArchetypeTabPage
             // 
@@ -574,12 +531,12 @@
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(5, 9);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(61, 13);
-            this.label15.TabIndex = 68;
-            this.label15.Text = "Time Flags:";
+            label15.AutoSize = true;
+            label15.Location = new System.Drawing.Point(5, 9);
+            label15.Name = "label15";
+            label15.Size = new System.Drawing.Size(66, 15);
+            label15.TabIndex = 68;
+            label15.Text = "Time Flags:";
             // 
             // EditYtypArchetypePanel
             // 
