@@ -2321,27 +2321,14 @@ namespace CodeWalker
             }
         }
 
-        private class TextureUsageData
-        {
-            public HashSet<string> Models { get; set; } = new HashSet<string>();
-            public HashSet<string> ContainedIn { get; set; } = new HashSet<string>();
-            public int Count { get; set; } = 0;
-            public string TextureName { get; set; }
-        }
-
         private async ValueTask ExportXmlAsync()
         {
-            if (!InvokeRequired)
-            {
-                await Task.Run(ExportXmlAsync);
-                return;
-            }
             bool needfolder = false;//need a folder to output ytd XML to, for the texture .dds files
             if (MainListView.SelectedIndices.Count == 1)
             {
                 var idx = MainListView.SelectedIndices[0];
-                if ((idx < 0) || (idx >= CurrentFiles.Count)) return;
-                var file = CurrentFiles[idx];
+                if ((idx < 0) || (idx >= CurrentFiles?.Count)) return;
+                var file = CurrentFiles?[idx];
                 var nl = file?.File?.Name ?? file?.Name;
                 if (!string.IsNullOrEmpty(nl))
                 {
@@ -2361,14 +2348,14 @@ namespace CodeWalker
             if ((MainListView.SelectedIndices.Count == 1) && (!needfolder))
             {
                 var idx = MainListView.SelectedIndices[0];
-                if ((idx < 0) || (idx >= CurrentFiles.Count))
+                if ((idx < 0) || (idx >= CurrentFiles?.Count))
                 {
                     Console.WriteLine("SelectedIndex not found!");
                     return;
                 }
                     
-                var file = CurrentFiles[idx];
-                if (file.Folder == null)
+                var file = CurrentFiles?[idx];
+                if (file?.Folder == null)
                 {
                     if (CanExportXml(file))
                     {
@@ -2392,8 +2379,8 @@ namespace CodeWalker
                         string xml = MetaXml.GetXml(fentry, data, out newfn);
                         if (string.IsNullOrEmpty(xml))
                         {
-                            Console.WriteLine($"Unable to convert file to XML: {file.Path}");
-                            MessageBox.Show($"Unable to convert file to XML: {file.Path}");
+                            Console.WriteLine($"Unable to convert file to XML: {file?.Path}");
+                            MessageBox.Show($"Unable to convert file to XML: {file?.Path}");
                             return;
                         }
 
@@ -2429,8 +2416,8 @@ namespace CodeWalker
                 for (int i = 0; i < MainListView.SelectedIndices.Count; i++)
                 {
                     var idx = MainListView.SelectedIndices[i];
-                    if ((idx < 0) || (idx >= CurrentFiles.Count)) continue;
-                    var file = CurrentFiles[idx];
+                    if ((idx < 0) || (idx >= CurrentFiles?.Count)) continue;
+                    var file = CurrentFiles?[idx];
                     if (file.Folder == null)
                     {
                         if (!CanExportXml(file)) continue;
