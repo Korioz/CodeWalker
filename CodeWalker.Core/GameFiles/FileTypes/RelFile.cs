@@ -6214,7 +6214,6 @@ namespace CodeWalker.GameFiles
 
         public override void Write(BinaryWriter bw)
         {
-            //base.Write(bw);
             WriteTypeAndOffset(bw);
 
             bw.Write(EmitterCount);
@@ -26807,7 +26806,7 @@ namespace CodeWalker.GameFiles
 
             OpenTag(sb, iindent, $"Item type=\"{typeid}\"{ntoffset}");
 
-            StringTag(sb, icindent, "Name", item.Name ?? RelXml.HashString(item.NameHash));
+            StringTag(sb, icindent, "Name", (item.Name ?? RelXml.HashString(item.NameHash)).ToLower());
 
             item.WriteXml(sb, icindent);
 
@@ -26954,7 +26953,7 @@ namespace CodeWalker.GameFiles
 
 
                     RelData rd = rel.CreateRelData(reltype, typeid);
-                    rd.Name = Xml.GetChildInnerText(item, "Name");
+                    rd.Name = Xml.GetChildInnerText(item, "Name").ToLower();
                     rd.NameHash = XmlRel.GetHash(rd.Name);
                     rd.ReadXml(item);
                     itemslist.Add(rd);

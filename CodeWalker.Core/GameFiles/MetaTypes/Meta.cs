@@ -1142,20 +1142,20 @@ namespace CodeWalker.GameFiles
         {
             if (JenkIndex.TryGetString(Hash, out var str))
             {
-                return str;
+                return str.ToLower();
             }
             if (MetaNames.TryGetString(Hash, out str))
             {
-                return str;
+                return str.ToLower();
             }
-            return GlobalText.GetString(Hash);
+            return GlobalText.GetString(Hash).ToLower();
         }
 
         public string ToCleanString()
         {
             if (Hash == 0)
                 return string.Empty;
-            return ToString();
+            return ToString().ToLower();
         }
 
         public static implicit operator uint(MetaHash h)
