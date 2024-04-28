@@ -2223,11 +2223,11 @@ namespace CodeWalker.GameFiles
 
             string? str;
             if (MetaNames.TryGetString(uh, out str))
-                return str;
+                return str.ToLower();
 
             str = JenkIndex.TryGetString(uh);
             if (!string.IsNullOrEmpty(str))
-                return str;
+                return str.ToLower();
 
             //TODO: do extra hash lookup here
             //if(Lookup.TryGetValue(uh, out str)) ...
@@ -2241,17 +2241,17 @@ namespace CodeWalker.GameFiles
                 return string.Empty;
 
             if (JenkIndex.TryGetString(h, out var str))
-                return str;
+                return str.ToLower();
 
             if (MetaNames.TryGetString(h, out str))
-                return str;
+                return str.ToLower();
 
             //todo: make sure JenkIndex is built!
             //todo: do extra hash lookup here
 
 
             if (!string.IsNullOrEmpty(str))
-                return str;
+                return str.ToLower();
 
             return $"hash_{h.Hex}";
         }
@@ -2262,7 +2262,7 @@ namespace CodeWalker.GameFiles
                 return string.Empty;
 
             if (GlobalText.TryGetString(uh, out var str))
-                return str;
+                return str.ToLower();
 
             //TODO: do extra hash lookup here
             //if(Lookup.TryGetValue(uh, out str)) ...
