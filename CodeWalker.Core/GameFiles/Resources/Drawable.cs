@@ -5519,7 +5519,6 @@ namespace CodeWalker.GameFiles
         public override void WriteXml(StringBuilder sb, int indent, string ddsfolder)
         {
             YdrXml.StringTag(sb, indent, "Name", YdrXml.XmlEscape(Name));
-            YdrXml.StringTag(sb, indent, "Hash", Hash.ToString());
             base.WriteXml(sb, indent, ddsfolder);
             if (Bound != null)
             {
@@ -5533,10 +5532,6 @@ namespace CodeWalker.GameFiles
         public override void ReadXml(XmlNode node, string ddsfolder)
         {
             Name = Xml.GetChildInnerText(node, "Name");
-            if (uint.TryParse(Xml.GetChildInnerText(node, "Hash"), out var hash))
-            {
-                Hash = hash;
-            }
             base.ReadXml(node, ddsfolder);
             var bnode = node.SelectSingleNode("Bounds");
             if (bnode != null)
