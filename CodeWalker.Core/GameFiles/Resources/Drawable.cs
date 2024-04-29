@@ -2344,12 +2344,12 @@ namespace CodeWalker.GameFiles
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (RotationLimits.Length > 0)
+            if (RotationLimits != null && RotationLimits.Length > 0)
             {
                 RotationLimitsBlock = new ResourceSystemStructBlock<JointRotationLimit_s>(RotationLimits);
                 list.Add(RotationLimitsBlock);
             }
-            if (TranslationLimits.Length > 0)
+            if (TranslationLimits != null && TranslationLimits.Length > 0)
             {
                 TranslationLimitsBlock = new ResourceSystemStructBlock<JointTranslationLimit_s>(TranslationLimits);
                 list.Add(TranslationLimitsBlock);

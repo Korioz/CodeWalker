@@ -14,14 +14,6 @@ namespace CodeWalker.Core.Utils
         public static event Action<TimeSpan, string> OnDispose;
         public Stopwatch Stopwatch => this;
 
-        static DisposableTimer()
-        {
-#if DEBUG
-            TimerStopped += (timeSpan, name) => Debug.WriteLine($"{name} took {timeSpan.TotalMilliseconds} ms");
-#endif
-            OnDispose += (timeSpan, name) => Console.WriteLine($"{name} took {timeSpan.TotalMilliseconds} ms");
-        }
-
         public string Name { get; private set; }
 
         public DisposableTimer([CallerMemberName] string name = "") : base()

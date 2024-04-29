@@ -2972,66 +2972,55 @@ namespace CodeWalker
         {
             foreach (var fpath in fpaths)
             {
-#if !DEBUG
-                try
-#endif
+                if (!File.Exists(fpath))
                 {
-                    if (!File.Exists(fpath))
-                    {
-                        continue;//this shouldn't happen...
-                    }
-
-                    var fi = new FileInfo(fpath);
-                    var fname = fi.Name;
-                    var fpathin = fpath;
-
-                    if (!fname.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
-                    {
-                        MessageBox.Show(fname + ": Not an XML file!", "Cannot import XML");
-                        continue;
-                    }
-
-                    var trimlength = 4;
-                    var mformat = XmlMeta.GetXMLFormat(fname, out trimlength);
-
-                    fname = fname.Substring(0, fname.Length - trimlength);
-                    fpathin = fpathin.Substring(0, fpathin.Length - trimlength);
-                    fpathin = Path.Combine(Path.GetDirectoryName(fpathin), Path.GetFileNameWithoutExtension(fpathin));
-
-                    var doc = new XmlDocument();
-                    string text = File.ReadAllText(fpath);
-                    if (!string.IsNullOrEmpty(text))
-                    {
-                        doc.LoadXml(text);
-                    }
-
-                    byte[] data = XmlMeta.GetData(doc, mformat, fpathin);
-
-                    if (data != null && data.Length > 0)
-                    {
-                        if (CurrentFolder.RpfFolder != null)
-                        {
-                            RpfFile.CreateFile(CurrentFolder.RpfFolder, fname, data);
-                        }
-                        else if (!string.IsNullOrEmpty(CurrentFolder.FullPath))
-                        {
-                            var outfpath = Path.Combine(CurrentFolder.FullPath, fname);
-                            File.WriteAllBytes(outfpath, data);
-                            CurrentFolder.EnsureFile(outfpath);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show(fname + ": Schema not supported.", "Cannot import " + XmlMeta.GetXMLFormatName(mformat));
-                    }
-
+                    continue;//this shouldn't happen...
                 }
-#if !DEBUG
-                catch (Exception ex)
+
+                var fi = new FileInfo(fpath);
+                var fname = fi.Name;
+                var fpathin = fpath;
+
+                if (!fname.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
                 {
-                    MessageBox.Show(ex.Message, "Unable to import file");
+                    continue;
                 }
-#endif
+
+                var trimlength = 4;
+                var mformat = XmlMeta.GetXMLFormat(fname, out trimlength);
+
+                fname = fname.Substring(0, fname.Length - trimlength);
+                fpathin = fpathin.Substring(0, fpathin.Length - trimlength);
+                fpathin = Path.Combine(Path.GetDirectoryName(fpathin), Path.GetFileNameWithoutExtension(fpathin));
+
+                var doc = new XmlDocument();
+                string text = File.ReadAllText(fpath);
+                if (!string.IsNullOrEmpty(text))
+                {
+                    doc.LoadXml(text);
+                }
+
+                byte[] data = XmlMeta.GetData(doc, mformat, fpathin);
+
+                if (data != null && data.Length > 0)
+                {
+                    if (CurrentFolder.RpfFolder != null)
+                    {
+                        RpfFile.CreateFile(CurrentFolder.RpfFolder, fname, data);
+                    }
+                    else if (!string.IsNullOrEmpty(CurrentFolder.FullPath))
+                    {
+                        var outfpath = Path.Combine(CurrentFolder.FullPath, fname);
+                        File.WriteAllBytes(outfpath, data);
+                        CurrentFolder.EnsureFile(outfpath);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(fname + ": Schema not supported.", "Cannot import " + XmlMeta.GetXMLFormatName(mformat));
+                }
+
+  
 
             }
 
