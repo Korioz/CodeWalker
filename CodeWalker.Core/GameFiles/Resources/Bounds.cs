@@ -4861,12 +4861,7 @@ namespace CodeWalker.GameFiles
         {
             var rpfman = gameFileCache.RpfMan;
 
-            if (rpfman == null)
-            {
-                throw new ArgumentNullException("RpfMan is null");
-            }
-
-            var dic = new Dictionary<string, Color>();
+            var dic = new Dictionary<string,Color>();
             string filename2 = "common.rpf\\data\\effects\\materialfx.dat";
             string txt2 = rpfman.GetFileUTF8Text(filename2);
             AddMaterialfxDat(txt2, dic);
