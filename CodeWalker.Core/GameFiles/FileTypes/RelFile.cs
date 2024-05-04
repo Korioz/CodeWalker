@@ -15411,19 +15411,19 @@ namespace CodeWalker.GameFiles
     [TC(typeof(EXP))] 
     public class Dat151ScannerSpecificLocation : Dat151RelData
     {
-        public uint padding00 { get; set; }
-        public uint padding01 { get; set; }
-        public uint padding02 { get; set; }
+        public MetaHash Unk01 { get; set; }//0
+        public MetaHash Unk02 { get; set; }//0
+        public MetaHash Unk03 { get; set; }//0
         public Vector3 Position { get; set; }
-        public uint padding03 { get; set; }
+        public MetaHash Unk04 { get; set; }//0
         public float Radius { get; set; }
-        public float ProbOfPlaying { get; set; }
-        public int NumSounds { get; set; }
-        public Dat151ScannerSpecificLocationSounds[] Sounds { get; set; }
-        public MetaHash padding04 { get; set; }
-        public MetaHash padding05 { get; set; }
-        public MetaHash padding06 { get; set; }
-        public MetaHash padding07 { get; set; }
+        public float Unk06 { get; set; }
+        public int Unk07 { get; set; }
+        public MetaHash Unk08 { get; set; }
+        public MetaHash Location { get; set; }
+        public MetaHash Unk10 { get; set; }//0
+        public MetaHash Unk11 { get; set; }//0
+        public MetaHash Unk12 { get; set; }//0
 
         public Dat151ScannerSpecificLocation(RelFile rel) : base(rel)
         {
@@ -15432,64 +15432,75 @@ namespace CodeWalker.GameFiles
         }
         public Dat151ScannerSpecificLocation(RelData d, BinaryReader br) : base(d, br)
         {
-            padding00 = br.ReadUInt32();
-            padding01 = br.ReadUInt32();
-            padding02 = br.ReadUInt32();
+            Unk01 = br.ReadUInt32();//0
+            Unk02 = br.ReadUInt32();//0
+            Unk03 = br.ReadUInt32();//0
             Position = new Vector3(br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
-            padding03 = br.ReadUInt32();
+            Unk04 = br.ReadUInt32();//0
             Radius = br.ReadSingle();
-            ProbOfPlaying = br.ReadSingle();
-
-            NumSounds = br.ReadInt32();
-            Sounds = new Dat151ScannerSpecificLocationSounds[NumSounds];
-            for (int i = 0; i < NumSounds; i++)
-            {
-                Sounds[i] = new Dat151ScannerSpecificLocationSounds(br);
-            }
-            padding04 = br.ReadUInt32();
-            padding05 = br.ReadUInt32();
-            padding06 = br.ReadUInt32();
-            padding07 = br.ReadUInt32();
+            Unk06 = br.ReadSingle();
+            Unk07 = br.ReadInt32();
+            Unk08 = br.ReadUInt32();
+            Location = br.ReadUInt32();
+            Unk10 = br.ReadUInt32();//0
+            Unk11 = br.ReadUInt32();//0
+            Unk12 = br.ReadUInt32();//0
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(padding00);
-            bw.Write(padding01);
-            bw.Write(padding02);
+            bw.Write(Unk01);
+            bw.Write(Unk02);
+            bw.Write(Unk03);
             bw.Write(Position.X);
             bw.Write(Position.Y);
             bw.Write(Position.Z);
-            bw.Write(padding03);
+            bw.Write(Unk04);
             bw.Write(Radius);
-            bw.Write(ProbOfPlaying);
-            bw.Write(NumSounds);
-
-            for (int i = 0; i < NumSounds; i++)
-            {
-                Sounds[i].Write(bw);
-            }
-            bw.Write(padding04);
-            bw.Write(padding05);
-            bw.Write(padding06);
-            bw.Write(padding07);
+            bw.Write(Unk06);
+            bw.Write(Unk07);
+            bw.Write(Unk08);
+            bw.Write(Location);
+            bw.Write(Unk10);
+            bw.Write(Unk11);
+            bw.Write(Unk12);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
+            RelXml.StringTag(sb, indent, "Unk01", RelXml.HashString(Unk01));
+            RelXml.StringTag(sb, indent, "Unk02", RelXml.HashString(Unk02));
+            RelXml.StringTag(sb, indent, "Unk03", RelXml.HashString(Unk03));
             RelXml.SelfClosingTag(sb, indent, "Position " + FloatUtil.GetVector3XmlString(Position));
+            RelXml.StringTag(sb, indent, "Unk04", RelXml.HashString(Unk04));
             RelXml.ValueTag(sb, indent, "Radius", FloatUtil.ToString(Radius));
-            RelXml.ValueTag(sb, indent, "ProbOfPlaying", FloatUtil.ToString(ProbOfPlaying));
-            RelXml.ValueTag(sb, indent, "NumSounds", NumSounds.ToString());
-            RelXml.WriteItemArray(sb, Sounds, indent, "Sounds");
+            RelXml.ValueTag(sb, indent, "Unk06", FloatUtil.ToString(Unk06));
+            RelXml.ValueTag(sb, indent, "Unk07", Unk07.ToString());
+            RelXml.StringTag(sb, indent, "Unk08", RelXml.HashString(Unk08));
+            RelXml.StringTag(sb, indent, "Location", RelXml.HashString(Location));
+            RelXml.StringTag(sb, indent, "Unk10", RelXml.HashString(Unk10));
+            RelXml.StringTag(sb, indent, "Unk11", RelXml.HashString(Unk11));
+            RelXml.StringTag(sb, indent, "Unk12", RelXml.HashString(Unk12));
         }
         public override void ReadXml(XmlNode node)
         {
+            Unk01 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk01"));
+            Unk02 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk02"));
+            Unk03 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk03"));
             Position = Xml.GetChildVector3Attributes(node, "Position");
+            Unk04 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk04"));
             Radius = Xml.GetChildFloatAttribute(node, "Radius", "value");
-            ProbOfPlaying = Xml.GetChildFloatAttribute(node, "ProbOfPlaying", "value");
-            Sounds = XmlRel.ReadItemArray<Dat151ScannerSpecificLocationSounds>(node, "Sounds");
-            NumSounds = (Sounds?.Length ?? 0);
+            Unk06 = Xml.GetChildFloatAttribute(node, "Unk06", "value");
+            Unk07 = Xml.GetChildIntAttribute(node, "Unk07", "value");
+            Unk08 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk08"));
+            Location = XmlRel.GetHash(Xml.GetChildInnerText(node, "Location"));
+            Unk10 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk10"));
+            Unk11 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk11"));
+            Unk12 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk12"));
+        }
+        public override MetaHash[] GetSoundHashes()
+        {
+            return new[] { Unk08, Location };
         }
     }
 
@@ -16395,143 +16406,67 @@ namespace CodeWalker.GameFiles
             return new[] { VehiclesMediumIntensity, VehiclesHighIntensity, GroundMediumIntensity, GroundHighIntensity };
         }
     }
-    [TC(typeof(EXP))]
-    public class Dat151AnimalVocalAnimTriggerItemPlayfulContexts : IMetaXmlItem
-    {
-        public MetaHash Context { get; set; }
-        public float Weight { get; set; }
-
-
-        public Dat151AnimalVocalAnimTriggerItemPlayfulContexts()
-        { }
-
-        public Dat151AnimalVocalAnimTriggerItemPlayfulContexts(BinaryReader br)
-        {
-            Context = br.ReadUInt32();
-            Weight = br.ReadSingle();
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            bw.Write(Context);
-            bw.Write(Weight);
-        }
-
-        public void WriteXml(StringBuilder sb, int indent)
-        {
-            RelXml.StringTag(sb, indent, "Context", RelXml.HashString(Context));
-            RelXml.ValueTag(sb, indent, "Weight", FloatUtil.ToString(Weight));
-        }
-
-        public void ReadXml(XmlNode node)
-        {
-            Context = XmlRel.GetHash(Xml.GetChildInnerText(node, "Context"));
-            Weight = Xml.GetChildFloatAttribute(node, "Weight", "value");
-        }
-        public override string ToString()
-        {
-            return Context.ToString();
-        }
-    }
-
-    [TC(typeof(EXP))]
-    public class Dat151AnimalVocalAnimTriggerItemAngryContexts : IMetaXmlItem
-    {
-        public MetaHash Context { get; set; }
-        public float Weight { get; set; }
-
-
-        public Dat151AnimalVocalAnimTriggerItemAngryContexts()
-        { }
-
-        public Dat151AnimalVocalAnimTriggerItemAngryContexts(BinaryReader br)
-        {
-            Context = br.ReadUInt32();
-            Weight = br.ReadSingle();
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            bw.Write(Context);
-            bw.Write(Weight);
-        }
-
-        public void WriteXml(StringBuilder sb, int indent)
-        {
-            RelXml.StringTag(sb, indent, "Context", RelXml.HashString(Context));
-            RelXml.ValueTag(sb, indent, "Weight", FloatUtil.ToString(Weight));
-        }
-
-        public void ReadXml(XmlNode node)
-        {
-            Context = XmlRel.GetHash(Xml.GetChildInnerText(node, "Context"));
-            Weight = Xml.GetChildFloatAttribute(node, "Weight", "value");
-        }
-        public override string ToString()
-        {
-            return Context.ToString();
-        }
-    }
 
     [TC(typeof(EXP))] 
     public class Dat151AnimalVocalAnimTriggerItem : IMetaXmlItem
     {
-        public byte Animal { get; set; }
-        public byte AngryContextsCount { get; set; }
-        public Dat151AnimalVocalAnimTriggerItemAngryContexts[] AngryContexts { get; set; }
-        public byte PlayfulContextsCount { get; set; }
-        public Dat151AnimalVocalAnimTriggerItemPlayfulContexts[] PlayfulContexts { get; set; }
+        public byte Unk1 { get; set; }
+        public byte ItemCount1 { get; set; } //indicates how many are used
+        public Dat151HashFloat[] Items1 { get; set; } //always array of 8  - probably links to speech.dat somehow
+        public byte ItemCount2 { get; set; } //indicates how many are used
+        public Dat151HashFloat[] Items2 { get; set; } //always array of 8
 
         public Dat151AnimalVocalAnimTriggerItem()
         { }
         public Dat151AnimalVocalAnimTriggerItem(BinaryReader br)
         {
-            Animal = br.ReadByte();
-
-            AngryContextsCount = br.ReadByte();
-            AngryContexts = new Dat151AnimalVocalAnimTriggerItemAngryContexts[AngryContextsCount];
-            for (int i = 0; i < AngryContextsCount; i++)
+            Unk1 = br.ReadByte();
+            ItemCount1 = br.ReadByte();
+            Items1 = new Dat151HashFloat[8];
+            for (int i = 0; i < 8; i++)
             {
-                AngryContexts[i] = new Dat151AnimalVocalAnimTriggerItemAngryContexts(br);
+                Items1[i] = new Dat151HashFloat(br);
             }
-            PlayfulContextsCount = br.ReadByte();
-            PlayfulContexts = new Dat151AnimalVocalAnimTriggerItemPlayfulContexts[PlayfulContextsCount];
-            for (int i = 0; i < PlayfulContextsCount; i++)
+            ItemCount2 = br.ReadByte();
+            Items2 = new Dat151HashFloat[8];
+            for (int i = 0; i < 8; i++)
             {
-                PlayfulContexts[i] = new Dat151AnimalVocalAnimTriggerItemPlayfulContexts(br);
+                Items2[i] = new Dat151HashFloat(br);
             }
         }
         public void Write(BinaryWriter bw)
         {
-            bw.Write(Animal);
-            bw.Write(AngryContextsCount);
-            for (int i = 0; i < AngryContextsCount; i++)
+            bw.Write(Unk1);
+            bw.Write(ItemCount1);
+            for (int i = 0; i < 8; i++)
             {
-                AngryContexts[i].Write(bw);
+                Items1[i].Write(bw);
             }
-            bw.Write(PlayfulContextsCount);
-            for (int i = 0; i < PlayfulContextsCount; i++)
+            bw.Write(ItemCount2);
+            for (int i = 0; i < 8; i++)
             {
-                PlayfulContexts[i].Write(bw);
+                Items2[i].Write(bw);
             }
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.ValueTag(sb, indent, "Animal", Animal.ToString());
-            RelXml.WriteItemArray(sb, AngryContexts, indent, "AngryContexts");
-            RelXml.WriteItemArray(sb, PlayfulContexts, indent, "PlayfulContexts");
+            RelXml.ValueTag(sb, indent, "Unk1", Unk1.ToString());
+            RelXml.ValueTag(sb, indent, "ItemCount1", ItemCount1.ToString());
+            RelXml.WriteItemArray(sb, Items1, indent, "Items1");
+            RelXml.ValueTag(sb, indent, "ItemCount2", ItemCount2.ToString());
+            RelXml.WriteItemArray(sb, Items2, indent, "Items2");
         }
         public void ReadXml(XmlNode node)
         {
-            Animal = (byte)Xml.GetChildUIntAttribute(node, "Animal", "value");
-            AngryContexts = XmlRel.ReadItemArray<Dat151AnimalVocalAnimTriggerItemAngryContexts>(node, "AngryContexts");
-            AngryContextsCount = (byte)(AngryContexts?.Length ?? 0);
-            PlayfulContexts = XmlRel.ReadItemArray<Dat151AnimalVocalAnimTriggerItemPlayfulContexts>(node, "PlayfulContexts");
-            PlayfulContextsCount = (byte)(PlayfulContexts?.Length ?? 0);
+            Unk1 = (byte)Xml.GetChildUIntAttribute(node, "Unk1", "value");
+            ItemCount1 = (byte)Xml.GetChildUIntAttribute(node, "ItemCount1", "value");
+            Items1 = XmlRel.ReadItemArray<Dat151HashFloat>(node, "Items1");
+            ItemCount2 = (byte)Xml.GetChildUIntAttribute(node, "ItemCount2", "value");
+            Items2 = XmlRel.ReadItemArray<Dat151HashFloat>(node, "Items2");
         }
         public override string ToString()
         {
-            return Animal.ToString() + ": " + AngryContextsCount.ToString() + ", " + PlayfulContextsCount.ToString();
+            return Unk1.ToString() + ": " + ItemCount1.ToString() + ", " + ItemCount2.ToString();
         }
     }
     [TC(typeof(EXP))] public class Dat151AnimalVocalAnimTrigger : Dat151RelData
@@ -16546,12 +16481,16 @@ namespace CodeWalker.GameFiles
         }
         public Dat151AnimalVocalAnimTrigger(RelData d, BinaryReader br) : base(d, br)
         {
-            ItemCount = br.ReadByte();//1
+            ItemCount = br.ReadByte();
             Items = new Dat151AnimalVocalAnimTriggerItem[ItemCount];
             for (int i = 0; i < ItemCount; i++)
             {
                 Items[i] = new Dat151AnimalVocalAnimTriggerItem(br);
             }
+
+            var bytesleft = br.BaseStream.Length - br.BaseStream.Position;
+            if (bytesleft != 0)
+            { }
         }
         public override void Write(BinaryWriter bw)
         {
