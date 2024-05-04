@@ -693,7 +693,7 @@ namespace CodeWalker.GameFiles
                 case Dat151RelType.MeleeCombatSettings: return new Dat151MeleeCombatSettings(d, br);
                 case Dat151RelType.TriggeredSpeechContext: return new Dat151TriggeredSpeechContext(d, br);
                 case Dat151RelType.SpeechContext: return new Dat151SpeechContext(d, br);
-                case Dat151RelType.TriggeredSpeechContextVirtual: return new Dat151TriggeredSpeechContextVirtual(d, br);
+                case Dat151RelType.SpeechContextVirtual: return new Dat151SpeechContextVirtual(d, br);
                 case Dat151RelType.SpeechContextList: return new Dat151SpeechContextList(d, br);
                 case Dat151RelType.ShoeAudioSettings: return new Dat151ShoeAudioSettings(d, br);
                 case Dat151RelType.ModelPhysicsParams: return new Dat151ModelPhysicsParams(d, br);
@@ -711,7 +711,7 @@ namespace CodeWalker.GameFiles
                 case Dat151RelType.InteriorWeaponMetrics: return new Dat151InteriorWeaponMetrics(d, br);
                 case Dat151RelType.DoorTuningParams: return new Dat151DoorTuningParams(d, br);
                 case Dat151RelType.ClimbingAudioSettings: return new Dat151ClimbingAudioSettings(d, br);
-                case Dat151RelType.WeatherTypeAudioSettings: return new Dat151WeatherTypeAudioSettings(d, br);
+                case Dat151RelType.WeatherAudioSettings: return new Dat151WeatherAudioSettings(d, br);
                 case Dat151RelType.StemMix: return new Dat151StemMix(d, br);
                 case Dat151RelType.BeatConstraint: return new Dat151BeatConstraint(d, br);
                 case Dat151RelType.BarConstraint: return new Dat151BarConstraint(d, br);
@@ -720,7 +720,7 @@ namespace CodeWalker.GameFiles
                 case Dat151RelType.AnimalVocalAnimTrigger: return new Dat151AnimalVocalAnimTrigger(d, br);
                 case Dat151RelType.ScannerVoiceParams: return new Dat151ScannerVoiceParams(d, br);
                 case Dat151RelType.AudioRoadInfo: return new Dat151AudioRoadInfo(d, br);
-                case Dat151RelType.Microphone: return new Dat151Microphone(d, br);
+                case Dat151RelType.MicrophoneSettings: return new Dat151MicrophoneSettings(d, br);
                 case Dat151RelType.CarRecordingAudioSettings: return new Dat151CarRecordingAudioSettings(d, br);
                 case Dat151RelType.AnimalFootstepSettings: return new Dat151AnimalFootstepSettings(d, br);
                 case Dat151RelType.ClothAudioSettings: return new Dat151ClothAudioSettings(d, br);
@@ -861,7 +861,7 @@ namespace CodeWalker.GameFiles
                         case Dat151RelType.MeleeCombatSettings: return new Dat151MeleeCombatSettings(this);
                         case Dat151RelType.TriggeredSpeechContext: return new Dat151TriggeredSpeechContext(this);
                         case Dat151RelType.SpeechContext: return new Dat151SpeechContext(this);
-                        case Dat151RelType.TriggeredSpeechContextVirtual: return new Dat151TriggeredSpeechContextVirtual(this);
+                        case Dat151RelType.SpeechContextVirtual: return new Dat151SpeechContextVirtual(this);
                         case Dat151RelType.SpeechContextList: return new Dat151SpeechContextList(this);
                         case Dat151RelType.ShoeAudioSettings: return new Dat151ShoeAudioSettings(this);
                         case Dat151RelType.ModelPhysicsParams: return new Dat151ModelPhysicsParams(this);
@@ -879,7 +879,7 @@ namespace CodeWalker.GameFiles
                         case Dat151RelType.InteriorWeaponMetrics: return new Dat151InteriorWeaponMetrics(this);
                         case Dat151RelType.DoorTuningParams: return new Dat151DoorTuningParams(this);
                         case Dat151RelType.ClimbingAudioSettings: return new Dat151ClimbingAudioSettings(this);
-                        case Dat151RelType.WeatherTypeAudioSettings: return new Dat151WeatherTypeAudioSettings(this);
+                        case Dat151RelType.WeatherAudioSettings: return new Dat151WeatherAudioSettings(this);
                         case Dat151RelType.StemMix: return new Dat151StemMix(this);
                         case Dat151RelType.BeatConstraint: return new Dat151BeatConstraint(this);
                         case Dat151RelType.BarConstraint: return new Dat151BarConstraint(this);
@@ -888,7 +888,7 @@ namespace CodeWalker.GameFiles
                         case Dat151RelType.AnimalVocalAnimTrigger: return new Dat151AnimalVocalAnimTrigger(this);
                         case Dat151RelType.ScannerVoiceParams: return new Dat151ScannerVoiceParams(this);
                         case Dat151RelType.AudioRoadInfo: return new Dat151AudioRoadInfo(this);
-                        case Dat151RelType.Microphone: return new Dat151Microphone(this);
+                        case Dat151RelType.MicrophoneSettings: return new Dat151MicrophoneSettings(this);
                         case Dat151RelType.CarRecordingAudioSettings: return new Dat151CarRecordingAudioSettings(this);
                         case Dat151RelType.AnimalFootstepSettings: return new Dat151AnimalFootstepSettings(this);
                         case Dat151RelType.ClothAudioSettings: return new Dat151ClothAudioSettings(this);
@@ -4979,7 +4979,7 @@ namespace CodeWalker.GameFiles
         MeleeCombatSettings = 9, //melee_combat
         TriggeredSpeechContext = 11, //eg. default_speech_context, provoke, apologise, run, etc. contains reference to SpeechContext
         SpeechContext = 12, //eg. default_speech_context_sc, SpeechChat? SpeechController..? child of TriggeredSpeechContext, Unk13
-        TriggeredSpeechContextVirtual = 13, //eg. greet_virtual_sc (has TriggeredSpeechContext children eg. greeting_evening, morning) - TriggeredSpeechContextVirtual..? also can have SpeechContext children instead
+        SpeechContextVirtual = 13, //eg. greet_virtual_sc (has TriggeredSpeechContext children eg. greeting_evening, morning) - TriggeredSpeechContextVirtual..? also can have SpeechContext children instead
         SpeechParams = 14, //speech_params
         SpeechContextList = 15, //contains a list of TriggeredSpeechContext objects. greetings, insults, reactions, provoke, etc. dlc_btl_nightclub_scl, dlc_btl_nightclub_queue_scl
         BoatAudioSettings = 16, //and submarines
@@ -5015,7 +5015,7 @@ namespace CodeWalker.GameFiles
         ClimbingAudioSettings = 51, //climbing materials such as wood, chainlink, etc.
         ModelAudioCollisionSettings = 52, //macs_models_override + AudioCollisionSettings archetype extension
         TrainAudioSettings = 53,
-        WeatherTypeAudioSettings = 54, //connected to WeatherTypeAudioReference
+        WeatherAudioSettings = 54, //connected to WeatherTypeAudioReference
         WeatherTypeAudioReference = 55, //only one in the entire game.dat, named weathertypelist. (most child names found in weather.xml)
         BicycleAudioSettings = 56,
         PlaneAudioSettings = 57,
@@ -5037,7 +5037,7 @@ namespace CodeWalker.GameFiles
         ScannerVehicleParams = 76, // _scanner_params
         AudioRoadInfo = 77,
         MicrophoneSettingsReference = 78,
-        Microphone = 79, //Microphone? _mic
+        MicrophoneSettings = 79, //Microphone? _mic
         CarRecordingAudioSettings = 80, //vehicle recording audio (YVR)
         CarRecordingList = 81,//list of CarRecordings
         AnimalFootstepSettings = 82, //af_, animal footsteps on collision materials
@@ -12421,7 +12421,9 @@ namespace CodeWalker.GameFiles
             return new[] { VehicleCollisions };
         }
     }
-    [TC(typeof(EXP))] public class Dat151PlaneAudioSettings : Dat151RelData
+
+    [TC(typeof(EXP))] 
+    public class Dat151PlaneAudioSettings : Dat151RelData
     {
         public FlagsUint Flags { get; set; }
         public MetaHash EngineLoop { get; set; }
@@ -12976,7 +12978,9 @@ namespace CodeWalker.GameFiles
             return new[] { VehicleCollisions };
         }
     }
-    [TC(typeof(EXP))] public class Dat151HeliAudioSettings : Dat151RelData
+
+    [TC(typeof(EXP))] 
+    public class Dat151HeliAudioSettings : Dat151RelData
     {
         public FlagsUint Flags { get; set; }
         public MetaHash RotorLoop { get; set; }
@@ -13506,7 +13510,9 @@ namespace CodeWalker.GameFiles
             return new[] { ScannerVehicleSettings, VehicleCollisions };
         }
     }
-    [TC(typeof(EXP))] public class Dat151TrailerAudioSettings : Dat151RelData
+
+    [TC(typeof(EXP))] 
+    public class Dat151TrailerAudioSettings : Dat151RelData
     {
         public MetaHash BumpSound { get; set; }
         public byte ClatterType { get; set; }
@@ -13603,7 +13609,9 @@ namespace CodeWalker.GameFiles
             return new[] { ModelCollisionSettings };
         }
     }
-    [TC(typeof(EXP))] public class Dat151TrainAudioSettings : Dat151RelData
+
+    [TC(typeof(EXP))] 
+    public class Dat151TrainAudioSettings : Dat151RelData
     {
         public MetaHash DriveTone { get; set; }
         public MetaHash DriveToneSynth { get; set; }
@@ -14011,16 +14019,18 @@ namespace CodeWalker.GameFiles
             return new[] { BigVehicleImpact, RunOverSound };
         }
     }
-    [TC(typeof(EXP))] public class Dat151SpeechParams : Dat151RelData
+
+    [TC(typeof(EXP))] 
+    public class Dat151SpeechParams : Dat151RelData
     {
         public FlagsUint Flags { get; set; }
-        public int Unk01 { get; set; }
-        public int Unk02 { get; set; }
-        public byte Unk03 { get; set; }
-        public byte Unk04 { get; set; }
-        public short Unk05 { get; set; }
-        public MetaHash Unk06 { get; set; }
-        public int Unk07 { get; set; }
+        public int OverrideContextSettings { get; set; }
+        public uint PreloadTimeoutInMs { get; set; }
+        public byte RequestedVolume { get; set; }
+        public byte Audibility { get; set; }
+        public short padding01 { get; set; }
+        public int RepeatTime { get; set; }
+        public int RepeatTimeOnSameVoice { get; set; }
 
 
         public Dat151SpeechParams(RelFile rel) : base(rel)
@@ -14031,70 +14041,68 @@ namespace CodeWalker.GameFiles
         public Dat151SpeechParams(RelData d, BinaryReader br) : base(d, br)
         {
             Flags = br.ReadUInt32();
-            Unk01 = br.ReadInt32();
-            Unk02 = br.ReadInt32();
-            Unk03 = br.ReadByte();
-            Unk04 = br.ReadByte();
-            Unk05 = br.ReadInt16();
-            Unk06 = br.ReadUInt32();
-            Unk07 = br.ReadInt32();
+            OverrideContextSettings = br.ReadInt32();
+            PreloadTimeoutInMs = br.ReadUInt32();
+            RequestedVolume = br.ReadByte();
+            Audibility = br.ReadByte();
+            padding01 = br.ReadInt16();
+            RepeatTime = br.ReadInt32();
+            RepeatTimeOnSameVoice = br.ReadInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
             bw.Write(Flags);
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
+            bw.Write(OverrideContextSettings);
+            bw.Write(PreloadTimeoutInMs);
+            bw.Write(RequestedVolume);
+            bw.Write(Audibility);
+            bw.Write(padding01);
+            bw.Write(RepeatTime);
+            bw.Write(RepeatTimeOnSameVoice);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
             RelXml.ValueTag(sb, indent, "Flags", "0x" + Flags.Hex);
-            RelXml.ValueTag(sb, indent, "Unk01", Unk01.ToString());
-            RelXml.ValueTag(sb, indent, "Unk02", Unk02.ToString());
-            RelXml.ValueTag(sb, indent, "Unk03", Unk03.ToString());
-            RelXml.ValueTag(sb, indent, "Unk04", Unk04.ToString());
-            RelXml.ValueTag(sb, indent, "Unk05", Unk05.ToString());
-            RelXml.StringTag(sb, indent, "Unk06", RelXml.HashString(Unk06));
-            RelXml.ValueTag(sb, indent, "Unk07", Unk07.ToString());
+            RelXml.ValueTag(sb, indent, "OverrideContextSettings", OverrideContextSettings.ToString());
+            RelXml.ValueTag(sb, indent, "PreloadTimeoutInMs", PreloadTimeoutInMs.ToString());
+            RelXml.ValueTag(sb, indent, "RequestedVolume", RequestedVolume.ToString());
+            RelXml.ValueTag(sb, indent, "Audibility", Audibility.ToString());
+            RelXml.StringTag(sb, indent, "RepeatTime", RepeatTime.ToString());
+            RelXml.ValueTag(sb, indent, "RepeatTimeOnSameVoice", RepeatTimeOnSameVoice.ToString());
         }
         public override void ReadXml(XmlNode node)
         {
             Flags = Xml.GetChildUIntAttribute(node, "Flags", "value");
-            Unk01 = Xml.GetChildIntAttribute(node, "Unk01", "value");
-            Unk02 = Xml.GetChildIntAttribute(node, "Unk02", "value");
-            Unk03 = (byte)Xml.GetChildUIntAttribute(node, "Unk03", "value");
-            Unk04 = (byte)Xml.GetChildUIntAttribute(node, "Unk04", "value");
-            Unk05 = (short)Xml.GetChildIntAttribute(node, "Unk05", "value");
-            Unk06 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk06"));
-            Unk07 = Xml.GetChildIntAttribute(node, "Unk07", "value");
+            OverrideContextSettings = Xml.GetChildIntAttribute(node, "OverrideContextSettings", "value");
+            PreloadTimeoutInMs = Xml.GetChildUIntAttribute(node, "PreloadTimeoutInMs", "value");
+            RequestedVolume = (byte)Xml.GetChildUIntAttribute(node, "RequestedVolume", "value");
+            Audibility = (byte)Xml.GetChildUIntAttribute(node, "Audibility", "value");
+            RepeatTime = Xml.GetChildIntAttribute(node, "RepeatTime", "value");
+            RepeatTimeOnSameVoice = Xml.GetChildIntAttribute(node, "RepeatTimeOnSameVoice", "value");
         }
     }
     [TC(typeof(EXP))] public class Dat151MeleeCombatSettings : Dat151RelData
     {
-        public MetaHash Unk01 { get; set; }
-        public MetaHash Unk02 { get; set; }
-        public MetaHash Unk03 { get; set; }
-        public MetaHash Unk04 { get; set; }
-        public MetaHash Unk05 { get; set; }
-        public MetaHash Unk06 { get; set; }
-        public MetaHash Unk07 { get; set; }
-        public MetaHash Unk08 { get; set; }
-        public MetaHash Unk09 { get; set; }
-        public MetaHash Unk10 { get; set; }
-        public MetaHash Unk11 { get; set; }
-        public MetaHash Unk12 { get; set; }
-        public MetaHash Unk13 { get; set; }
-        public MetaHash Unk14 { get; set; }
-        public MetaHash Unk15 { get; set; }
-        public MetaHash Unk16 { get; set; }
-        public MetaHash Unk17 { get; set; }
-        public MetaHash Unk18 { get; set; }
+        public MetaHash SwipeSound { get; set; }
+        public MetaHash GeneralHitSound { get; set; }
+        public MetaHash PedHitSound { get; set; }
+        public MetaHash PedResponseSound { get; set; }
+        public MetaHash HeadTakeDown { get; set; }
+        public MetaHash BodyTakeDown { get; set; }
+        public MetaHash SmallAnimalHitSound { get; set; }
+        public MetaHash SmallAnimalResponseSound { get; set; }
+        public MetaHash BigAnimalHitSound { get; set; }
+        public MetaHash BigAnimalResponseSound { get; set; }
+        public MetaHash SlowMoPedHitSound { get; set; }
+        public MetaHash SlowMoPedResponseSound { get; set; }
+        public MetaHash SlowMoHeadTakeDown { get; set; }
+        public MetaHash SlowMoBodyTakeDown { get; set; }
+        public MetaHash SlowMoSmallAnimalHitSound { get; set; }
+        public MetaHash SlowMoSmallAnimalResponseSound { get; set; }
+        public MetaHash SlowMoBigAnimalHitSound { get; set; }
+        public MetaHash SlowMoBigAnimalResponseSound { get; set; }
 
         public Dat151MeleeCombatSettings(RelFile rel) : base(rel)
         {
@@ -14103,109 +14111,151 @@ namespace CodeWalker.GameFiles
         }
         public Dat151MeleeCombatSettings(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadUInt32();
-            Unk02 = br.ReadUInt32();
-            Unk03 = br.ReadUInt32();
-            Unk04 = br.ReadUInt32();
-            Unk05 = br.ReadUInt32();
-            Unk06 = br.ReadUInt32();
-            Unk07 = br.ReadUInt32();
-            Unk08 = br.ReadUInt32();
-            Unk09 = br.ReadUInt32();
-            Unk10 = br.ReadUInt32();
-            Unk11 = br.ReadUInt32();
-            Unk12 = br.ReadUInt32();
-            Unk13 = br.ReadUInt32();
-            Unk14 = br.ReadUInt32();
-            Unk15 = br.ReadUInt32();
-            Unk16 = br.ReadUInt32();
-            Unk17 = br.ReadUInt32();
-            Unk18 = br.ReadUInt32();
+            SwipeSound = br.ReadUInt32();
+            GeneralHitSound = br.ReadUInt32();
+            PedHitSound = br.ReadUInt32();
+            PedResponseSound = br.ReadUInt32();
+            HeadTakeDown = br.ReadUInt32();
+            BodyTakeDown = br.ReadUInt32();
+            SmallAnimalHitSound = br.ReadUInt32();
+            SmallAnimalResponseSound = br.ReadUInt32();
+            BigAnimalHitSound = br.ReadUInt32();
+            BigAnimalResponseSound = br.ReadUInt32();
+            SlowMoPedHitSound = br.ReadUInt32();
+            SlowMoPedResponseSound = br.ReadUInt32();
+            SlowMoHeadTakeDown = br.ReadUInt32();
+            SlowMoBodyTakeDown = br.ReadUInt32();
+            SlowMoSmallAnimalHitSound = br.ReadUInt32();
+            SlowMoSmallAnimalResponseSound = br.ReadUInt32();
+            SlowMoBigAnimalHitSound = br.ReadUInt32();
+            SlowMoBigAnimalResponseSound = br.ReadUInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
-            bw.Write(Unk09);
-            bw.Write(Unk10);
-            bw.Write(Unk11);
-            bw.Write(Unk12);
-            bw.Write(Unk13);
-            bw.Write(Unk14);
-            bw.Write(Unk15);
-            bw.Write(Unk16);
-            bw.Write(Unk17);
-            bw.Write(Unk18);
+            bw.Write(SwipeSound);
+            bw.Write(GeneralHitSound);
+            bw.Write(PedHitSound);
+            bw.Write(PedResponseSound);
+            bw.Write(HeadTakeDown);
+            bw.Write(BodyTakeDown);
+            bw.Write(SmallAnimalHitSound);
+            bw.Write(SmallAnimalResponseSound);
+            bw.Write(BigAnimalHitSound);
+            bw.Write(BigAnimalResponseSound);
+            bw.Write(SlowMoPedHitSound);
+            bw.Write(SlowMoPedResponseSound);
+            bw.Write(SlowMoHeadTakeDown);
+            bw.Write(SlowMoBodyTakeDown);
+            bw.Write(SlowMoSmallAnimalHitSound);
+            bw.Write(SlowMoSmallAnimalResponseSound);
+            bw.Write(SlowMoBigAnimalHitSound);
+            bw.Write(SlowMoBigAnimalResponseSound);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.StringTag(sb, indent, "Unk01", RelXml.HashString(Unk01));
-            RelXml.StringTag(sb, indent, "Unk02", RelXml.HashString(Unk02));
-            RelXml.StringTag(sb, indent, "Unk03", RelXml.HashString(Unk03));
-            RelXml.StringTag(sb, indent, "Unk04", RelXml.HashString(Unk04));
-            RelXml.StringTag(sb, indent, "Unk05", RelXml.HashString(Unk05));
-            RelXml.StringTag(sb, indent, "Unk06", RelXml.HashString(Unk06));
-            RelXml.StringTag(sb, indent, "Unk07", RelXml.HashString(Unk07));
-            RelXml.StringTag(sb, indent, "Unk08", RelXml.HashString(Unk08));
-            RelXml.StringTag(sb, indent, "Unk09", RelXml.HashString(Unk09));
-            RelXml.StringTag(sb, indent, "Unk10", RelXml.HashString(Unk10));
-            RelXml.StringTag(sb, indent, "Unk11", RelXml.HashString(Unk11));
-            RelXml.StringTag(sb, indent, "Unk12", RelXml.HashString(Unk12));
-            RelXml.StringTag(sb, indent, "Unk13", RelXml.HashString(Unk13));
-            RelXml.StringTag(sb, indent, "Unk14", RelXml.HashString(Unk14));
-            RelXml.StringTag(sb, indent, "Unk15", RelXml.HashString(Unk15));
-            RelXml.StringTag(sb, indent, "Unk16", RelXml.HashString(Unk16));
-            RelXml.StringTag(sb, indent, "Unk17", RelXml.HashString(Unk17));
-            RelXml.StringTag(sb, indent, "Unk18", RelXml.HashString(Unk18));
+            RelXml.StringTag(sb, indent, "SwipeSound", RelXml.HashString(SwipeSound));
+            RelXml.StringTag(sb, indent, "GeneralHitSound", RelXml.HashString(GeneralHitSound));
+            RelXml.StringTag(sb, indent, "PedHitSound", RelXml.HashString(PedHitSound));
+            RelXml.StringTag(sb, indent, "PedResponseSound", RelXml.HashString(PedResponseSound));
+            RelXml.StringTag(sb, indent, "HeadTakeDown", RelXml.HashString(HeadTakeDown));
+            RelXml.StringTag(sb, indent, "BodyTakeDown", RelXml.HashString(BodyTakeDown));
+            RelXml.StringTag(sb, indent, "SmallAnimalHitSound", RelXml.HashString(SmallAnimalHitSound));
+            RelXml.StringTag(sb, indent, "SmallAnimalResponseSound", RelXml.HashString(SmallAnimalResponseSound));
+            RelXml.StringTag(sb, indent, "BigAnimalHitSound", RelXml.HashString(BigAnimalHitSound));
+            RelXml.StringTag(sb, indent, "BigAnimalResponseSound", RelXml.HashString(BigAnimalResponseSound));
+            RelXml.StringTag(sb, indent, "SlowMoPedHitSound", RelXml.HashString(SlowMoPedHitSound));
+            RelXml.StringTag(sb, indent, "SlowMoPedResponseSound", RelXml.HashString(SlowMoPedResponseSound));
+            RelXml.StringTag(sb, indent, "SlowMoHeadTakeDown", RelXml.HashString(SlowMoHeadTakeDown));
+            RelXml.StringTag(sb, indent, "SlowMoBodyTakeDown", RelXml.HashString(SlowMoBodyTakeDown));
+            RelXml.StringTag(sb, indent, "SlowMoSmallAnimalHitSound", RelXml.HashString(SlowMoSmallAnimalHitSound));
+            RelXml.StringTag(sb, indent, "SlowMoSmallAnimalResponseSound", RelXml.HashString(SlowMoSmallAnimalResponseSound));
+            RelXml.StringTag(sb, indent, "SlowMoBigAnimalHitSound", RelXml.HashString(SlowMoBigAnimalHitSound));
+            RelXml.StringTag(sb, indent, "SlowMoBigAnimalResponseSound", RelXml.HashString(SlowMoBigAnimalResponseSound));
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk01"));
-            Unk02 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk02"));
-            Unk03 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk03"));
-            Unk04 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk04"));
-            Unk05 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk05"));
-            Unk06 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk06"));
-            Unk07 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk07"));
-            Unk08 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk08"));
-            Unk09 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk09"));
-            Unk10 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk10"));
-            Unk11 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk11"));
-            Unk12 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk12"));
-            Unk13 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk13"));
-            Unk14 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk14"));
-            Unk15 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk15"));
-            Unk16 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk16"));
-            Unk17 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk17"));
-            Unk18 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk18"));
+            SwipeSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "SwipeSound"));
+            GeneralHitSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "GeneralHitSound"));
+            PedHitSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "PedHitSound"));
+            PedResponseSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "PedResponseSound"));
+            HeadTakeDown = XmlRel.GetHash(Xml.GetChildInnerText(node, "HeadTakeDown"));
+            BodyTakeDown = XmlRel.GetHash(Xml.GetChildInnerText(node, "BodyTakeDown"));
+            SmallAnimalHitSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "SmallAnimalHitSound"));
+            SmallAnimalResponseSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "SmallAnimalResponseSound"));
+            BigAnimalHitSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "BigAnimalHitSound"));
+            BigAnimalResponseSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "BigAnimalResponseSound"));
+            SlowMoPedHitSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "SlowMoPedHitSound"));
+            SlowMoPedResponseSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "SlowMoPedResponseSound"));
+            SlowMoHeadTakeDown = XmlRel.GetHash(Xml.GetChildInnerText(node, "SlowMoHeadTakeDown"));
+            SlowMoBodyTakeDown = XmlRel.GetHash(Xml.GetChildInnerText(node, "SlowMoBodyTakeDown"));
+            SlowMoSmallAnimalHitSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "SlowMoSmallAnimalHitSound"));
+            SlowMoSmallAnimalResponseSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "SlowMoSmallAnimalResponseSound"));
+            SlowMoBigAnimalHitSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "SlowMoBigAnimalHitSound"));
+            SlowMoBigAnimalResponseSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "SlowMoBigAnimalResponseSound"));
         }
         public override MetaHash[] GetSoundHashes()
         {
-            return new[] { Unk01, Unk02, Unk03, Unk04, Unk05, Unk06, Unk07, Unk08, Unk09, Unk10, Unk11, Unk12, Unk13, Unk14, Unk15, Unk16, Unk17, Unk18 };
+            return new[] { SwipeSound, GeneralHitSound, PedHitSound, PedResponseSound, HeadTakeDown, BodyTakeDown, SmallAnimalHitSound, SmallAnimalResponseSound, BigAnimalHitSound, BigAnimalResponseSound, SlowMoPedHitSound, SlowMoPedResponseSound, SlowMoHeadTakeDown, SlowMoBodyTakeDown, SlowMoSmallAnimalHitSound, SlowMoSmallAnimalResponseSound, SlowMoBigAnimalHitSound, SlowMoBigAnimalResponseSound };
         }
     }
-    [TC(typeof(EXP))] public class Dat151TriggeredSpeechContext : Dat151RelData
+
+    [TC(typeof(EXP))]
+    public class Dat151TriggeredSpeechContextBackupSpeechContext : IMetaXmlItem
+    {
+        public MetaHash SpeechContext { get; set; }
+        public float Weight { get; set; }
+
+
+        public Dat151TriggeredSpeechContextBackupSpeechContext()
+        { }
+
+        public Dat151TriggeredSpeechContextBackupSpeechContext(BinaryReader br)
+        {
+            SpeechContext = br.ReadUInt32();
+            Weight = br.ReadSingle();
+        }
+
+        public void Write(BinaryWriter bw)
+        {
+            bw.Write(SpeechContext);
+            bw.Write(Weight);
+        }
+
+        public void WriteXml(StringBuilder sb, int indent)
+        {
+            RelXml.StringTag(sb, indent, "SpeechContext", RelXml.HashString(SpeechContext));
+            RelXml.ValueTag(sb, indent, "Weight", FloatUtil.ToString(Weight));
+        }
+
+        public void ReadXml(XmlNode node)
+        {
+            SpeechContext = XmlRel.GetHash(Xml.GetChildInnerText(node, "SpeechContext"));
+            Weight = Xml.GetChildFloatAttribute(node, "Weight", "value");
+        }
+        public override string ToString()
+        {
+            return SpeechContext.ToString();
+        }
+    }
+
+
+    [TC(typeof(EXP))] 
+    public class Dat151TriggeredSpeechContext : Dat151RelData
     {
         public FlagsUint Flags { get; set; }
-        public int Unk01 { get; set; }
-        public int Unk02 { get; set; }
-        public int Unk03 { get; set; }
-        public int Unk04 { get; set; }
-        public int Unk05 { get; set; }
-        public MetaHash Unk06 { get; set; }
-        public MetaHash Unk07 { get; set; }
-        public MetaHash Unk08 { get; set; }
-        public MetaHash Unk09 { get; set; }
-        public int ItemCount { get; set; }
-        public Dat151HashFloat[] Items { get; set; }
+        public int TriggeredContextRepeatTime { get; set; }
+        public int PrimaryRepeatTime { get; set; }
+        public int PrimaryRepeatTimeOnSameVoice { get; set; }
+        public int BackupRepeatTime { get; set; }
+        public int BackupRepeatTimeOnSameVoice { get; set; }
+        public MetaHash TimeCanNextUseTriggeredContext { get; set; }
+        public MetaHash TimeCanNextPlayPrimary { get; set; }
+        public MetaHash TimeCanNextPlayBackup { get; set; }
+        public MetaHash PrimarySpeechContext { get; set; }
+        public int BackupSpeechContextCount { get; set; }
+        public Dat151TriggeredSpeechContextBackupSpeechContext[] BackupSpeechContexts { get; set; }
 
 
         public Dat151TriggeredSpeechContext(RelFile rel) : base(rel)
@@ -14216,81 +14266,80 @@ namespace CodeWalker.GameFiles
         public Dat151TriggeredSpeechContext(RelData d, BinaryReader br) : base(d, br)
         {
             Flags = br.ReadUInt32();
-            Unk01 = br.ReadInt32();
-            Unk02 = br.ReadInt32();
-            Unk03 = br.ReadInt32();
-            Unk04 = br.ReadInt32();
-            Unk05 = br.ReadInt32();
-            Unk06 = br.ReadUInt32();
-            Unk07 = br.ReadUInt32();
-            Unk08 = br.ReadUInt32();
-            Unk09 = br.ReadUInt32();
-            ItemCount = br.ReadInt32();
+            TriggeredContextRepeatTime = br.ReadInt32();
+            PrimaryRepeatTime = br.ReadInt32();
+            PrimaryRepeatTimeOnSameVoice = br.ReadInt32();
+            BackupRepeatTime = br.ReadInt32();
+            BackupRepeatTimeOnSameVoice = br.ReadInt32();
+            TimeCanNextUseTriggeredContext = br.ReadUInt32();
+            TimeCanNextPlayPrimary = br.ReadUInt32();
+            TimeCanNextPlayBackup = br.ReadUInt32();
+            PrimarySpeechContext = br.ReadUInt32();
 
-            var items = new Dat151HashFloat[ItemCount];
-            for (int i = 0; i < ItemCount; i++)
+            BackupSpeechContextCount = br.ReadInt32();
+            BackupSpeechContexts = new Dat151TriggeredSpeechContextBackupSpeechContext[BackupSpeechContextCount];
+            for (int i = 0; i < BackupSpeechContextCount; i++)
             {
-                items[i] = new Dat151HashFloat(br);
+                BackupSpeechContexts[i] = new Dat151TriggeredSpeechContextBackupSpeechContext(br);
             }
-            Items = items;
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
             bw.Write(Flags);
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
-            bw.Write(Unk09);
+            bw.Write(TriggeredContextRepeatTime);
+            bw.Write(PrimaryRepeatTime);
+            bw.Write(PrimaryRepeatTimeOnSameVoice);
+            bw.Write(BackupRepeatTime);
+            bw.Write(BackupRepeatTimeOnSameVoice);
+            bw.Write(TimeCanNextUseTriggeredContext);
+            bw.Write(TimeCanNextPlayPrimary);
+            bw.Write(TimeCanNextPlayBackup);
+            bw.Write(PrimarySpeechContext);
 
-            bw.Write(ItemCount);
-            for (int i = 0; i < ItemCount; i++)
+            bw.Write(BackupSpeechContextCount);
+            for (int i = 0; i < BackupSpeechContextCount; i++)
             {
-                Items[i].Write(bw);
+                BackupSpeechContexts[i].Write(bw);
             }
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
             RelXml.ValueTag(sb, indent, "Flags", "0x" + Flags.Hex);
-            RelXml.ValueTag(sb, indent, "Unk01", Unk01.ToString());
-            RelXml.ValueTag(sb, indent, "Unk02", Unk02.ToString());
-            RelXml.ValueTag(sb, indent, "Unk03", Unk03.ToString());
-            RelXml.ValueTag(sb, indent, "Unk04", Unk04.ToString());
-            RelXml.ValueTag(sb, indent, "Unk05", Unk05.ToString());
-            RelXml.StringTag(sb, indent, "Unk06", RelXml.HashString(Unk06));
-            RelXml.StringTag(sb, indent, "Unk07", RelXml.HashString(Unk07));
-            RelXml.StringTag(sb, indent, "Unk08", RelXml.HashString(Unk08));
-            RelXml.StringTag(sb, indent, "Unk09", RelXml.HashString(Unk09));
-            RelXml.WriteItemArray(sb, Items, indent, "Items");
+            RelXml.ValueTag(sb, indent, "TriggeredContextRepeatTime", TriggeredContextRepeatTime.ToString());
+            RelXml.ValueTag(sb, indent, "PrimaryRepeatTime", PrimaryRepeatTime.ToString());
+            RelXml.ValueTag(sb, indent, "PrimaryRepeatTimeOnSameVoice", PrimaryRepeatTimeOnSameVoice.ToString());
+            RelXml.ValueTag(sb, indent, "BackupRepeatTime", BackupRepeatTime.ToString());
+            RelXml.ValueTag(sb, indent, "BackupRepeatTimeOnSameVoice", BackupRepeatTimeOnSameVoice.ToString());
+            RelXml.StringTag(sb, indent, "TimeCanNextUseTriggeredContext", RelXml.HashString(TimeCanNextUseTriggeredContext));
+            RelXml.StringTag(sb, indent, "TimeCanNextPlayPrimary", RelXml.HashString(TimeCanNextPlayPrimary));
+            RelXml.StringTag(sb, indent, "TimeCanNextPlayBackup", RelXml.HashString(TimeCanNextPlayBackup));
+            RelXml.StringTag(sb, indent, "PrimarySpeechContext", RelXml.HashString(PrimarySpeechContext));
+            RelXml.WriteItemArray(sb, BackupSpeechContexts, indent, "BackupSpeechContexts");
         }
         public override void ReadXml(XmlNode node)
         {
             Flags = Xml.GetChildUIntAttribute(node, "Flags", "value");
-            Unk01 = Xml.GetChildIntAttribute(node, "Unk01", "value");
-            Unk02 = Xml.GetChildIntAttribute(node, "Unk02", "value");
-            Unk03 = Xml.GetChildIntAttribute(node, "Unk03", "value");
-            Unk04 = Xml.GetChildIntAttribute(node, "Unk04", "value");
-            Unk05 = Xml.GetChildIntAttribute(node, "Unk05", "value");
-            Unk06 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk06"));
-            Unk07 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk07"));
-            Unk08 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk08"));
-            Unk09 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk09"));
-            Items = XmlRel.ReadItemArray<Dat151HashFloat>(node, "Items");
-            ItemCount = (Items?.Length ?? 0);
+            TriggeredContextRepeatTime = Xml.GetChildIntAttribute(node, "TriggeredContextRepeatTime", "value");
+            PrimaryRepeatTime = Xml.GetChildIntAttribute(node, "PrimaryRepeatTime", "value");
+            PrimaryRepeatTimeOnSameVoice = Xml.GetChildIntAttribute(node, "PrimaryRepeatTimeOnSameVoice", "value");
+            BackupRepeatTime = Xml.GetChildIntAttribute(node, "BackupRepeatTime", "value");
+            BackupRepeatTimeOnSameVoice = Xml.GetChildIntAttribute(node, "BackupRepeatTimeOnSameVoice", "value");
+            TimeCanNextUseTriggeredContext = XmlRel.GetHash(Xml.GetChildInnerText(node, "TimeCanNextUseTriggeredContext"));
+            TimeCanNextPlayPrimary = XmlRel.GetHash(Xml.GetChildInnerText(node, "TimeCanNextPlayPrimary"));
+            TimeCanNextPlayBackup = XmlRel.GetHash(Xml.GetChildInnerText(node, "TimeCanNextPlayBackup"));
+            PrimarySpeechContext = XmlRel.GetHash(Xml.GetChildInnerText(node, "PrimarySpeechContext"));
+            BackupSpeechContexts = XmlRel.ReadItemArray<Dat151TriggeredSpeechContextBackupSpeechContext>(node, "BackupSpeechContexts");
+            BackupSpeechContextCount = (BackupSpeechContexts?.Length ?? 0);
         }
         public override MetaHash[] GetGameHashes()
         {
             var list = new List<MetaHash>();
-            list.Add(Unk09);
-            foreach (var item in Items)
+            list.Add(PrimarySpeechContext);
+            foreach (var item in BackupSpeechContexts)
             {
-                list.Add(item.Hash);
+                list.Add(item.SpeechContext);
             }
             return list.ToArray();
         }
@@ -14422,7 +14471,7 @@ namespace CodeWalker.GameFiles
             }
         }
     }
-    [TC(typeof(EXP))] public class Dat151TriggeredSpeechContextVirtual : Dat151RelData
+    [TC(typeof(EXP))] public class Dat151SpeechContextVirtual : Dat151RelData
     {
         public FlagsUint Flags { get; set; }
         public MetaHash Unk01 { get; set; }
@@ -14437,12 +14486,12 @@ namespace CodeWalker.GameFiles
         public byte ItemCount { get; set; }
         public MetaHash[] Items { get; set; }
 
-        public Dat151TriggeredSpeechContextVirtual(RelFile rel) : base(rel)
+        public Dat151SpeechContextVirtual(RelFile rel) : base(rel)
         {
-            Type = Dat151RelType.TriggeredSpeechContextVirtual;
+            Type = Dat151RelType.SpeechContextVirtual;
             TypeID = (byte)Type;
         }
-        public Dat151TriggeredSpeechContextVirtual(RelData d, BinaryReader br) : base(d, br)
+        public Dat151SpeechContextVirtual(RelData d, BinaryReader br) : base(d, br)
         {
             Flags = br.ReadUInt32();
             Unk01 = br.ReadUInt32();
@@ -14978,17 +15027,55 @@ namespace CodeWalker.GameFiles
             return Track.ToString() + ": " + PreDelay.ToString();
         }
     }
-
-    [TC(typeof(EXP))] public class Dat151ScannerCrimeReport : Dat151RelData
+    [TC(typeof(EXP))] 
+    public class Dat151ScannerCrimeReportCrimeSet : IMetaXmlItem
     {
-        public MetaHash ReportedBy { get; set; }
-        public MetaHash ReportedByPed { get; set; }
-        public MetaHash ReportedByCop { get; set; }
-        public float Unk04 { get; set; }
-        public MetaHash CrimeCode { get; set; }
-        public int Unk06 { get; set; }
-        public MetaHash Crime { get; set; }
-        public float Unk08 { get; set; }
+        public MetaHash SoundRef { get; set; }
+        public float Weight { get; set; }
+
+
+        public Dat151ScannerCrimeReportCrimeSet()
+        { }
+
+        public Dat151ScannerCrimeReportCrimeSet(BinaryReader br)
+        {
+            SoundRef = br.ReadUInt32();
+            Weight = br.ReadSingle();
+        }
+
+        public void Write(BinaryWriter bw)
+        {
+            bw.Write(SoundRef);
+            bw.Write(Weight);
+        }
+
+        public void WriteXml(StringBuilder sb, int indent)
+        {
+            RelXml.StringTag(sb, indent, "SoundRef", RelXml.HashString(SoundRef));
+            RelXml.ValueTag(sb, indent, "Weight", FloatUtil.ToString(Weight));
+        }
+
+        public void ReadXml(XmlNode node)
+        {
+            SoundRef = XmlRel.GetHash(Xml.GetChildInnerText(node, "SoundRef"));
+            Weight = Xml.GetChildFloatAttribute(node, "Weight", "value");
+        }
+        public override string ToString()
+        {
+            return SoundRef.ToString();
+        }
+    }
+
+    [TC(typeof(EXP))] 
+    public class Dat151ScannerCrimeReport : Dat151RelData
+    {
+        public MetaHash GenericReportedBySoundRef { get; set; }
+        public MetaHash ReportedByPedSoundRef { get; set; }
+        public MetaHash ReportedByCopSoundRef { get; set; }
+        public float AcknowledgeSituationProbability { get; set; }
+        public MetaHash SmallCrimeSoundRef { get; set; }
+        public int CrimeSetCount { get; set; }
+        public Dat151ScannerCrimeReportCrimeSet[] CrimeSets { get; set; }
 
         public Dat151ScannerCrimeReport(RelFile rel) : base(rel)
         {
@@ -14997,53 +15084,59 @@ namespace CodeWalker.GameFiles
         }
         public Dat151ScannerCrimeReport(RelData d, BinaryReader br) : base(d, br)
         {
-            ReportedBy = br.ReadUInt32();
-            ReportedByPed = br.ReadUInt32();
-            ReportedByCop = br.ReadUInt32();
-            Unk04 = br.ReadSingle();
-            CrimeCode = br.ReadUInt32();
-            Unk06 = br.ReadInt32();
-            Crime = br.ReadUInt32();
-            Unk08 = br.ReadSingle();
+            GenericReportedBySoundRef = br.ReadUInt32();
+            ReportedByPedSoundRef = br.ReadUInt32();
+            ReportedByCopSoundRef = br.ReadUInt32();
+            AcknowledgeSituationProbability = br.ReadSingle();
+            SmallCrimeSoundRef = br.ReadUInt32();
+
+            CrimeSetCount = br.ReadInt32();
+            CrimeSets = new Dat151ScannerCrimeReportCrimeSet[CrimeSetCount];
+            for (int i = 0; i < CrimeSetCount; i++)
+            {
+                CrimeSets[i] = new Dat151ScannerCrimeReportCrimeSet(br);
+            }
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(ReportedBy);
-            bw.Write(ReportedByPed);
-            bw.Write(ReportedByCop);
-            bw.Write(Unk04);
-            bw.Write(CrimeCode);
-            bw.Write(Unk06);
-            bw.Write(Crime);
-            bw.Write(Unk08);
+            bw.Write(GenericReportedBySoundRef);
+            bw.Write(ReportedByPedSoundRef);
+            bw.Write(ReportedByCopSoundRef);
+            bw.Write(AcknowledgeSituationProbability);
+            bw.Write(SmallCrimeSoundRef);
+
+            bw.Write(CrimeSetCount);
+            for (int i = 0; i < CrimeSetCount; i++)
+            {
+                CrimeSets[i].Write(bw);
+            }
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.StringTag(sb, indent, "ReportedBy", RelXml.HashString(ReportedBy));
-            RelXml.StringTag(sb, indent, "ReportedByPed", RelXml.HashString(ReportedByPed));
-            RelXml.StringTag(sb, indent, "ReportedByCop", RelXml.HashString(ReportedByCop));
-            RelXml.ValueTag(sb, indent, "Unk04", FloatUtil.ToString(Unk04));
-            RelXml.StringTag(sb, indent, "CrimeCode", RelXml.HashString(CrimeCode));
-            RelXml.ValueTag(sb, indent, "Unk06", Unk06.ToString());
-            RelXml.StringTag(sb, indent, "Crime", RelXml.HashString(Crime));
-            RelXml.ValueTag(sb, indent, "Unk08", FloatUtil.ToString(Unk08));
+            RelXml.StringTag(sb, indent, "GenericReportedBySoundRef", RelXml.HashString(GenericReportedBySoundRef));
+            RelXml.StringTag(sb, indent, "ReportedByPedSoundRef", RelXml.HashString(ReportedByPedSoundRef));
+            RelXml.StringTag(sb, indent, "ReportedByCopSoundRef", RelXml.HashString(ReportedByCopSoundRef));
+            RelXml.ValueTag(sb, indent, "AcknowledgeSituationProbability", FloatUtil.ToString(AcknowledgeSituationProbability));
+            RelXml.StringTag(sb, indent, "SmallCrimeSoundRef", RelXml.HashString(SmallCrimeSoundRef));
+            RelXml.WriteItemArray(sb, CrimeSets, indent, "CrimeSets");
+
         }
         public override void ReadXml(XmlNode node)
         {
-            ReportedBy = XmlRel.GetHash(Xml.GetChildInnerText(node, "ReportedBy"));
-            ReportedByPed = XmlRel.GetHash(Xml.GetChildInnerText(node, "ReportedByPed"));
-            ReportedByCop = XmlRel.GetHash(Xml.GetChildInnerText(node, "ReportedByCop"));
-            Unk04 = Xml.GetChildFloatAttribute(node, "Unk04", "value");
-            CrimeCode = XmlRel.GetHash(Xml.GetChildInnerText(node, "CrimeCode"));
-            Unk06 = Xml.GetChildIntAttribute(node, "Unk06", "value");
-            Crime = XmlRel.GetHash(Xml.GetChildInnerText(node, "Crime"));
-            Unk08 = Xml.GetChildFloatAttribute(node, "Unk08", "value");
+            GenericReportedBySoundRef = XmlRel.GetHash(Xml.GetChildInnerText(node, "GenericReportedBySoundRef"));
+            ReportedByPedSoundRef = XmlRel.GetHash(Xml.GetChildInnerText(node, "ReportedByPedSoundRef"));
+            ReportedByCopSoundRef = XmlRel.GetHash(Xml.GetChildInnerText(node, "ReportedByCopSoundRef"));
+            AcknowledgeSituationProbability = Xml.GetChildFloatAttribute(node, "AcknowledgeSituationProbability", "value");
+            SmallCrimeSoundRef = XmlRel.GetHash(Xml.GetChildInnerText(node, "SmallCrimeSoundRef"));
+            CrimeSets = XmlRel.ReadItemArray<Dat151ScannerCrimeReportCrimeSet>(node, "CrimeSets");
+            CrimeSetCount = (CrimeSets?.Length ?? 0);
+
         }
         public override MetaHash[] GetSoundHashes()
         {
-            return new[] { ReportedBy, ReportedByPed, ReportedByCop, CrimeCode, Crime };
+            return new[] { GenericReportedBySoundRef, ReportedByPedSoundRef, ReportedByCopSoundRef, SmallCrimeSoundRef };
         }
     }
     [TC(typeof(EXP))] public class Dat151PedRaceToPedVoiceGroup : Dat151RelData
@@ -15186,8 +15279,8 @@ namespace CodeWalker.GameFiles
     [TC(typeof(EXP))] public class Dat151ScriptedScannerLine : Dat151RelData
     {
         public FlagsUint Flags { get; set; }
-        public int ReportsCount { get; set; }
-        public Dat151ScriptedScannerLineItem[] Reports { get; set; }
+        public int PhrasesCount { get; set; }
+        public Dat151ScriptedScannerLineItem[] Phrase { get; set; }
 
         public Dat151ScriptedScannerLine(RelFile rel) : base(rel)
         {
@@ -15197,11 +15290,11 @@ namespace CodeWalker.GameFiles
         public Dat151ScriptedScannerLine(RelData d, BinaryReader br) : base(d, br)
         {
             Flags = br.ReadUInt32();
-            ReportsCount = br.ReadInt32();
-            Reports = new Dat151ScriptedScannerLineItem[ReportsCount];
-            for (int i = 0; i < ReportsCount; i++)
+            PhrasesCount = br.ReadInt32();
+            Phrase = new Dat151ScriptedScannerLineItem[PhrasesCount];
+            for (int i = 0; i < PhrasesCount; i++)
             {
-                Reports[i] = new Dat151ScriptedScannerLineItem(br);
+                Phrase[i] = new Dat151ScriptedScannerLineItem(br);
             }
         }
         public override void Write(BinaryWriter bw)
@@ -15209,31 +15302,31 @@ namespace CodeWalker.GameFiles
             WriteTypeAndOffset(bw);
 
             bw.Write(Flags);
-            bw.Write(ReportsCount);
-            for (int i = 0; i < ReportsCount; i++)
+            bw.Write(PhrasesCount);
+            for (int i = 0; i < PhrasesCount; i++)
             {
-                Reports[i].Write(bw);
+                Phrase[i].Write(bw);
             }
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
             RelXml.ValueTag(sb, indent, "Flags", "0x" + Flags.Hex);
-            RelXml.WriteItemArray(sb, Reports, indent, "Reports");
+            RelXml.WriteItemArray(sb, Phrase, indent, "Phrase");
         }
         public override void ReadXml(XmlNode node)
         {
             Flags = Xml.GetChildUIntAttribute(node, "Flags", "value");
-            Reports = XmlRel.ReadItemArray<Dat151ScriptedScannerLineItem>(node, "Reports");
-            ReportsCount = (Reports?.Length ?? 0);
+            Phrase = XmlRel.ReadItemArray<Dat151ScriptedScannerLineItem>(node, "Phrase");
+            PhrasesCount = (Phrase?.Length ?? 0);
         }
         public override MetaHash[] GetSoundHashes()
         {
             var list = new List<MetaHash>();
-            if (Reports != null)
+            if (Phrase != null)
             {
-                foreach (var item in Reports)
+                foreach (var item in Phrase)
                 {
-                    list.Add(item.Unk1);
+                    list.Add(item.SoundRef);
                 }
             }
             return list.ToArray();
@@ -15243,57 +15336,94 @@ namespace CodeWalker.GameFiles
     [TC(typeof(EXP))]
     public class Dat151ScriptedScannerLineItem : IMetaXmlItem
     {
-        public MetaHash Unk1 { get; set; }
-        public short Unk2 { get; set; }
-        public short Unk3 { get; set; }
+        public MetaHash SoundRef { get; set; }
+        public short Slot { get; set; }
+        public short PostDelay { get; set; }
 
         public Dat151ScriptedScannerLineItem()
         { }
         public Dat151ScriptedScannerLineItem(BinaryReader br)
         {
-            Unk1 = br.ReadUInt32();
-            Unk2 = br.ReadInt16();
-            Unk3 = br.ReadInt16();
+            SoundRef = br.ReadUInt32();
+            Slot = br.ReadInt16();
+            PostDelay = br.ReadInt16();
         }
         public void Write(BinaryWriter bw)
         {
-            bw.Write(Unk1);
-            bw.Write(Unk2);
-            bw.Write(Unk3);
+            bw.Write(SoundRef);
+            bw.Write(Slot);
+            bw.Write(PostDelay);
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.StringTag(sb, indent, "Unk1", RelXml.HashString(Unk1));
-            RelXml.ValueTag(sb, indent, "Unk2", Unk2.ToString());
-            RelXml.ValueTag(sb, indent, "Unk3", Unk3.ToString());
+            RelXml.StringTag(sb, indent, "SoundRef", RelXml.HashString(SoundRef));
+            RelXml.ValueTag(sb, indent, "Slot", Slot.ToString());
+            RelXml.ValueTag(sb, indent, "PostDelay", PostDelay.ToString());
         }
         public void ReadXml(XmlNode node)
         {
-            Unk1 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk1"));
-            Unk2 = (short)Xml.GetChildIntAttribute(node, "Unk2", "value");
-            Unk3 = (short)Xml.GetChildIntAttribute(node, "Unk3", "value");
+            SoundRef = XmlRel.GetHash(Xml.GetChildInnerText(node, "SoundRef"));
+            Slot = (short)Xml.GetChildIntAttribute(node, "Slot", "value");
+            PostDelay = (short)Xml.GetChildIntAttribute(node, "PostDelay", "value");
         }
         public override string ToString()
         {
-            return Unk1.ToString() + ": " + Unk2.ToString() + ", " + Unk3.ToString();
+            return SoundRef.ToString() + ": " + Slot.ToString() + ", " + PostDelay.ToString();
         }
     }
-
-    [TC(typeof(EXP))] public class Dat151ScannerSpecificLocation : Dat151RelData
+    [TC(typeof(EXP))]
+    public class Dat151ScannerSpecificLocationSounds : IMetaXmlItem
     {
-        public MetaHash Unk01 { get; set; }
-        public MetaHash Unk02 { get; set; }
-        public MetaHash Unk03 { get; set; }
+        public MetaHash Sound { get; set; }
+
+        public Dat151ScannerSpecificLocationSounds()
+        { }
+
+
+        public Dat151ScannerSpecificLocationSounds(BinaryReader br)
+        {
+            Sound = br.ReadUInt32();
+        }
+
+        public void Write(BinaryWriter bw)
+        {
+            bw.Write(Sound);
+        }
+
+        public void WriteXml(StringBuilder sb, int indent)
+        {
+            RelXml.StringTag(sb, indent, "Sound", RelXml.HashString(Sound));
+        }
+
+        public void ReadXml(XmlNode node)
+        {
+            Sound = XmlRel.GetHash(Xml.GetChildInnerText(node, "Sound"));
+        }
+        public override string ToString()
+        {
+            return Sound.ToString();
+        }
+
+    }
+
+
+
+    [TC(typeof(EXP))] 
+    public class Dat151ScannerSpecificLocation : Dat151RelData
+    {
+        public uint padding00 { get; set; }
+        public uint padding01 { get; set; }
+        public uint padding02 { get; set; }
         public Vector3 Position { get; set; }
-        public MetaHash Unk04 { get; set; }
+        public uint padding03 { get; set; }
         public float Radius { get; set; }
-        public float Unk06 { get; set; }
-        public int Unk07 { get; set; }
-        public MetaHash Unk08 { get; set; }
-        public MetaHash Location { get; set; }
-        public MetaHash Unk10 { get; set; }
-        public MetaHash Unk11 { get; set; }
-        public MetaHash Unk12 { get; set; }
+        public float ProbOfPlaying { get; set; }
+        public int NumSounds { get; set; }
+        public Dat151ScannerSpecificLocationSounds[] Sounds { get; set; }
+        public MetaHash padding04 { get; set; }
+        public MetaHash padding05 { get; set; }
+        public MetaHash padding06 { get; set; }
+        public MetaHash padding07 { get; set; }
 
         public Dat151ScannerSpecificLocation(RelFile rel) : base(rel)
         {
@@ -15302,78 +15432,69 @@ namespace CodeWalker.GameFiles
         }
         public Dat151ScannerSpecificLocation(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadUInt32();
-            Unk02 = br.ReadUInt32();
-            Unk03 = br.ReadUInt32();
+            padding00 = br.ReadUInt32();
+            padding01 = br.ReadUInt32();
+            padding02 = br.ReadUInt32();
             Position = new Vector3(br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
-            Unk04 = br.ReadUInt32();
+            padding03 = br.ReadUInt32();
             Radius = br.ReadSingle();
-            Unk06 = br.ReadSingle();
-            Unk07 = br.ReadInt32();
-            Unk08 = br.ReadUInt32();
-            Location = br.ReadUInt32();
-            Unk10 = br.ReadUInt32();
-            Unk11 = br.ReadUInt32();
-            Unk12 = br.ReadUInt32();
+            ProbOfPlaying = br.ReadSingle();
+
+            NumSounds = br.ReadInt32();
+            Sounds = new Dat151ScannerSpecificLocationSounds[NumSounds];
+            for (int i = 0; i < NumSounds; i++)
+            {
+                Sounds[i] = new Dat151ScannerSpecificLocationSounds(br);
+            }
+            padding04 = br.ReadUInt32();
+            padding05 = br.ReadUInt32();
+            padding06 = br.ReadUInt32();
+            padding07 = br.ReadUInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
+            bw.Write(padding00);
+            bw.Write(padding01);
+            bw.Write(padding02);
             bw.Write(Position.X);
             bw.Write(Position.Y);
             bw.Write(Position.Z);
-            bw.Write(Unk04);
+            bw.Write(padding03);
             bw.Write(Radius);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
-            bw.Write(Location);
-            bw.Write(Unk10);
-            bw.Write(Unk11);
-            bw.Write(Unk12);
+            bw.Write(ProbOfPlaying);
+            bw.Write(NumSounds);
+
+            for (int i = 0; i < NumSounds; i++)
+            {
+                Sounds[i].Write(bw);
+            }
+            bw.Write(padding04);
+            bw.Write(padding05);
+            bw.Write(padding06);
+            bw.Write(padding07);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.StringTag(sb, indent, "Unk01", RelXml.HashString(Unk01));
-            RelXml.StringTag(sb, indent, "Unk02", RelXml.HashString(Unk02));
-            RelXml.StringTag(sb, indent, "Unk03", RelXml.HashString(Unk03));
             RelXml.SelfClosingTag(sb, indent, "Position " + FloatUtil.GetVector3XmlString(Position));
-            RelXml.StringTag(sb, indent, "Unk04", RelXml.HashString(Unk04));
             RelXml.ValueTag(sb, indent, "Radius", FloatUtil.ToString(Radius));
-            RelXml.ValueTag(sb, indent, "Unk06", FloatUtil.ToString(Unk06));
-            RelXml.ValueTag(sb, indent, "Unk07", Unk07.ToString());
-            RelXml.StringTag(sb, indent, "Unk08", RelXml.HashString(Unk08));
-            RelXml.StringTag(sb, indent, "Location", RelXml.HashString(Location));
-            RelXml.StringTag(sb, indent, "Unk10", RelXml.HashString(Unk10));
-            RelXml.StringTag(sb, indent, "Unk11", RelXml.HashString(Unk11));
-            RelXml.StringTag(sb, indent, "Unk12", RelXml.HashString(Unk12));
+            RelXml.ValueTag(sb, indent, "ProbOfPlaying", FloatUtil.ToString(ProbOfPlaying));
+            RelXml.ValueTag(sb, indent, "NumSounds", NumSounds.ToString());
+            RelXml.WriteItemArray(sb, Sounds, indent, "Sounds");
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk01"));
-            Unk02 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk02"));
-            Unk03 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk03"));
             Position = Xml.GetChildVector3Attributes(node, "Position");
-            Unk04 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk04"));
             Radius = Xml.GetChildFloatAttribute(node, "Radius", "value");
-            Unk06 = Xml.GetChildFloatAttribute(node, "Unk06", "value");
-            Unk07 = Xml.GetChildIntAttribute(node, "Unk07", "value");
-            Unk08 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk08"));
-            Location = XmlRel.GetHash(Xml.GetChildInnerText(node, "Location"));
-            Unk10 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk10"));
-            Unk11 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk11"));
-            Unk12 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk12"));
-        }
-        public override MetaHash[] GetSoundHashes()
-        {
-            return new[] { Unk08, Location };
+            ProbOfPlaying = Xml.GetChildFloatAttribute(node, "ProbOfPlaying", "value");
+            Sounds = XmlRel.ReadItemArray<Dat151ScannerSpecificLocationSounds>(node, "Sounds");
+            NumSounds = (Sounds?.Length ?? 0);
         }
     }
-    [TC(typeof(EXP))] public class Dat151ScannerSpecificLocationList : Dat151RelData
+
+    [TC(typeof(EXP))] 
+    public class Dat151ScannerSpecificLocationList : Dat151RelData
     {
         public int LocationsCount { get; set; }
         public MetaHash[] Locations { get; set; }
@@ -15416,11 +15537,13 @@ namespace CodeWalker.GameFiles
             return Locations;
         }
     }
-    [TC(typeof(EXP))] public class Dat151AmbientSlotMapItem : IMetaXmlItem
+
+    [TC(typeof(EXP))] 
+    public class Dat151AmbientSlotMapItem : IMetaXmlItem
     {
         public MetaHash WaveSlot { get; set; }//eg. amb_stream_bird_01  (from audioconfig)
         public MetaHash BankName { get; set; }//eg. streamed_birds  (also in AmbientBankMap)
-        public int Unk3 { get; set; }
+        public int Priority { get; set; }
 
         public Dat151AmbientSlotMapItem()
         { }
@@ -15428,32 +15551,34 @@ namespace CodeWalker.GameFiles
         {
             WaveSlot = br.ReadUInt32();
             BankName = br.ReadUInt32();
-            Unk3 = br.ReadInt32();
+            Priority = br.ReadInt32();
         }
         public void Write(BinaryWriter bw)
         {
             bw.Write(WaveSlot);
             bw.Write(BankName);
-            bw.Write(Unk3);
+            bw.Write(Priority);
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
             RelXml.StringTag(sb, indent, "WaveSlot", RelXml.HashString(WaveSlot));
             RelXml.StringTag(sb, indent, "BankName", RelXml.HashString(BankName));
-            RelXml.ValueTag(sb, indent, "Unk3", Unk3.ToString());
+            RelXml.ValueTag(sb, indent, "Priority", Priority.ToString());
         }
         public void ReadXml(XmlNode node)
         {
             WaveSlot = XmlRel.GetHash(Xml.GetChildInnerText(node, "WaveSlot"));
             BankName = XmlRel.GetHash(Xml.GetChildInnerText(node, "BankName"));
-            Unk3 = Xml.GetChildIntAttribute(node, "Unk3", "value");
+            Priority = Xml.GetChildIntAttribute(node, "Priority", "value");
         }
         public override string ToString()
         {
-            return WaveSlot.ToString() + ", " + BankName.ToString() + ", " + Unk3.ToString();
+            return WaveSlot.ToString() + ", " + BankName.ToString() + ", " + Priority.ToString();
         }
     }
-    [TC(typeof(EXP))] public class Dat151AmbientSlotMap : Dat151RelData //contains eg amb_stream_bird_01
+
+    [TC(typeof(EXP))] 
+    public class Dat151AmbientSlotMap : Dat151RelData
     {
         public int AmbienceSlotsCount { get; set; }
         public Dat151AmbientSlotMapItem[] AmbienceSlots { get; set; }
@@ -15492,10 +15617,12 @@ namespace CodeWalker.GameFiles
             AmbienceSlotsCount = (AmbienceSlots?.Length ?? 0);
         }
     }
-    [TC(typeof(EXP))] public class Dat151AmbientBankMap : Dat151RelData //ambience_bank_map_autogenerated
+
+    [TC(typeof(EXP))] 
+    public class Dat151AmbientBankMap : Dat151RelData
     {
         public int AmbienceBanksCount { get; set; }
-        public Dat151AmbientBankMapItem[] AmbienceBanks { get; set; }//AwcName, BankName
+        public Dat151AmbientBankMapItem[] AmbienceBanks { get; set; }
 
         public Dat151AmbientBankMap(RelFile rel) : base(rel)
         {
@@ -15532,7 +15659,8 @@ namespace CodeWalker.GameFiles
         }
     }
 
-    [TC(typeof(EXP))] public struct Dat151AmbientBankMapItem : IMetaXmlItem
+    [TC(typeof(EXP))] 
+    public struct Dat151AmbientBankMapItem : IMetaXmlItem
     {
         public MetaHash AudioBank { get; set; }
         public MetaHash BankName { get; set; }
@@ -15563,19 +15691,20 @@ namespace CodeWalker.GameFiles
         }
     }
 
-    [TC(typeof(EXP))] public class Dat151EnvironmentRule : Dat151RelData
+    [TC(typeof(EXP))] 
+    public class Dat151EnvironmentRule : Dat151RelData
     {
         public FlagsUint Flags { get; set; }
-        public MetaHash ReverbSmall { get; set; }
-        public float Unk02 { get; set; }
-        public MetaHash Unk03 { get; set; }
-        public float Unk04 { get; set; }
-        public float Unk05 { get; set; }
-        public float Unk06 { get; set; }
-        public float Unk07 { get; set; }
-        public MetaHash Unk08 { get; set; }
-        public MetaHash Unk09 { get; set; }
-        public MetaHash Unk10 { get; set; }
+        public float ReverbSmall { get; set; }
+        public float ReverbMedium { get; set; }
+        public float ReverbLarge { get; set; }
+        public float ReverbDamp { get; set; }
+        public float EchoDelay { get; set; }
+        public float EchoDelayVariance { get; set; }
+        public float EchoAttenuation { get; set; }
+        public int EchoNumber { get; set; }
+        public uint EchoSoundList { get; set; }
+        public float BaseEchoVolumeModifier { get; set; }
 
         public Dat151EnvironmentRule(RelFile rel) : base(rel)
         {
@@ -15585,16 +15714,16 @@ namespace CodeWalker.GameFiles
         public Dat151EnvironmentRule(RelData d, BinaryReader br) : base(d, br)
         {
             Flags = br.ReadUInt32();
-            ReverbSmall = br.ReadUInt32();
-            Unk02 = br.ReadSingle();
-            Unk03 = br.ReadUInt32();
-            Unk04 = br.ReadSingle();
-            Unk05 = br.ReadSingle();
-            Unk06 = br.ReadSingle();
-            Unk07 = br.ReadSingle();
-            Unk08 = br.ReadUInt32();
-            Unk09 = br.ReadUInt32();
-            Unk10 = br.ReadUInt32();
+            ReverbSmall = br.ReadSingle();
+            ReverbMedium = br.ReadSingle();
+            ReverbLarge = br.ReadSingle();
+            ReverbDamp = br.ReadSingle();
+            EchoDelay = br.ReadSingle();
+            EchoDelayVariance = br.ReadSingle();
+            EchoAttenuation = br.ReadSingle();
+            EchoNumber = br.ReadInt32();
+            EchoSoundList = br.ReadUInt32();
+            BaseEchoVolumeModifier = br.ReadSingle();
         }
         public override void Write(BinaryWriter bw)
         {
@@ -15602,46 +15731,48 @@ namespace CodeWalker.GameFiles
 
             bw.Write(Flags);
             bw.Write(ReverbSmall);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
-            bw.Write(Unk09);
-            bw.Write(Unk10);
+            bw.Write(ReverbMedium);
+            bw.Write(ReverbLarge);
+            bw.Write(ReverbDamp);
+            bw.Write(EchoDelay);
+            bw.Write(EchoDelayVariance);
+            bw.Write(EchoAttenuation);
+            bw.Write(EchoNumber);
+            bw.Write(EchoSoundList);
+            bw.Write(BaseEchoVolumeModifier);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
             RelXml.ValueTag(sb, indent, "Flags", "0x" + Flags.Hex);
-            RelXml.StringTag(sb, indent, "Unk01", RelXml.HashString(ReverbSmall));
-            RelXml.ValueTag(sb, indent, "Unk02", FloatUtil.ToString(Unk02));
-            RelXml.StringTag(sb, indent, "Unk03", RelXml.HashString(Unk03));
-            RelXml.ValueTag(sb, indent, "Unk04", FloatUtil.ToString(Unk04));
-            RelXml.ValueTag(sb, indent, "Unk05", FloatUtil.ToString(Unk05));
-            RelXml.ValueTag(sb, indent, "Unk06", FloatUtil.ToString(Unk06));
-            RelXml.ValueTag(sb, indent, "Unk07", FloatUtil.ToString(Unk07));
-            RelXml.StringTag(sb, indent, "Unk08", RelXml.HashString(Unk08));
-            RelXml.StringTag(sb, indent, "Unk09", RelXml.HashString(Unk09));
-            RelXml.StringTag(sb, indent, "Unk10", RelXml.HashString(Unk10));
+            RelXml.ValueTag(sb, indent, "ReverbSmall", FloatUtil.ToString(ReverbSmall));
+            RelXml.ValueTag(sb, indent, "ReverbMedium", FloatUtil.ToString(ReverbMedium));
+            RelXml.ValueTag(sb, indent, "ReverbLarge", FloatUtil.ToString(ReverbLarge));
+            RelXml.ValueTag(sb, indent, "ReverbDamp", FloatUtil.ToString(ReverbDamp));
+            RelXml.ValueTag(sb, indent, "EchoDelay", FloatUtil.ToString(EchoDelay));
+            RelXml.ValueTag(sb, indent, "EchoDelayVariance", FloatUtil.ToString(EchoDelayVariance));
+            RelXml.ValueTag(sb, indent, "EchoAttenuation", FloatUtil.ToString(EchoAttenuation));
+            RelXml.ValueTag(sb, indent, "EchoNumber", EchoNumber.ToString());
+            RelXml.ValueTag(sb, indent, "EchoSoundList", EchoSoundList.ToString());
+            RelXml.ValueTag(sb, indent, "BaseEchoVolumeModifier", FloatUtil.ToString(BaseEchoVolumeModifier));
         }
         public override void ReadXml(XmlNode node)
         {
             Flags = Xml.GetChildUIntAttribute(node, "Flags", "value");
-            ReverbSmall = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk01"));
-            Unk02 = Xml.GetChildFloatAttribute(node, "Unk02", "value");
-            Unk03 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk03"));
-            Unk04 = Xml.GetChildFloatAttribute(node, "Unk04", "value");
-            Unk05 = Xml.GetChildFloatAttribute(node, "Unk05", "value");
-            Unk06 = Xml.GetChildFloatAttribute(node, "Unk06", "value");
-            Unk07 = Xml.GetChildFloatAttribute(node, "Unk07", "value");
-            Unk08 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk08"));
-            Unk09 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk09"));
-            Unk10 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk10"));
+            ReverbSmall = Xml.GetChildFloatAttribute(node, "ReverbSmall", "value");
+            ReverbMedium = Xml.GetChildFloatAttribute(node, "ReverbMedium", "value");
+            ReverbLarge = Xml.GetChildFloatAttribute(node, "ReverbLarge", "value");
+            ReverbDamp = Xml.GetChildFloatAttribute(node, "ReverbDamp", "value");
+            EchoDelay = Xml.GetChildFloatAttribute(node, "EchoDelay", "value");
+            EchoDelayVariance = Xml.GetChildFloatAttribute(node, "EchoDelayVariance", "value");
+            EchoAttenuation = Xml.GetChildFloatAttribute(node, "EchoAttenuation", "value");
+            EchoNumber = Xml.GetChildIntAttribute(node, "EchoNumber", "value");
+            EchoSoundList = Xml.GetChildUIntAttribute(node, "EchoSoundList", "value");
+            BaseEchoVolumeModifier = Xml.GetChildFloatAttribute(node, "BaseEchoVolumeModifier", "value");
         }
     }
-    [TC(typeof(EXP))] public class Dat151InteriorWeaponMetrics : Dat151RelData
+
+    [TC(typeof(EXP))] 
+    public class Dat151InteriorWeaponMetrics : Dat151RelData
     {
         public float Wetness { get; set; }
         public float Visability { get; set; }
@@ -15809,103 +15940,104 @@ namespace CodeWalker.GameFiles
             return new[] { Launch, Foot, Knee, Scrape, Hand };
         }
     }
-    [TC(typeof(EXP))] public class Dat151WeatherTypeAudioSettings : Dat151RelData
+    [TC(typeof(EXP))] public class Dat151WeatherAudioSettings : Dat151RelData
     {
-        public float Unk01 { get; set; }
-        public float Unk02 { get; set; }
-        public float Unk03 { get; set; }
-        public float Unk04 { get; set; }
-        public float Unk05 { get; set; }
-        public MetaHash Unk06 { get; set; }
-        public MetaHash Scene { get; set; }
-        public MetaHash Unk08 { get; set; }
-        public int ItemCount { get; set; }
-        public MetaHash[] Items { get; set; }
+        public float Strength { get; set; }
+        public float Blustery { get; set; }
+        public float Temperature { get; set; }
+        public float TimeOfDayAffectsTemperature { get; set; }
+        public float WhistleVolumeOffset { get; set; }
+        public MetaHash WindGust { get; set; }
+        public MetaHash AudioScene { get; set; }
+        public MetaHash WindGustEnd { get; set; }
+        public int WindSoundsCount { get; set; }
+        public MetaHash[] WindSounds { get; set; }
 
-        public Dat151WeatherTypeAudioSettings(RelFile rel) : base(rel)
+        public Dat151WeatherAudioSettings(RelFile rel) : base(rel)
         {
-            Type = Dat151RelType.WeatherTypeAudioSettings;
+            Type = Dat151RelType.WeatherAudioSettings;
             TypeID = (byte)Type;
         }
-        public Dat151WeatherTypeAudioSettings(RelData d, BinaryReader br) : base(d, br)
+        public Dat151WeatherAudioSettings(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadSingle();
-            Unk02 = br.ReadSingle();
-            Unk03 = br.ReadSingle();
-            Unk04 = br.ReadSingle();
-            Unk05 = br.ReadSingle();
-            Unk06 = br.ReadUInt32();
-            Scene = br.ReadUInt32();
-            Unk08 = br.ReadUInt32();
+            Strength = br.ReadSingle();
+            Blustery = br.ReadSingle();
+            Temperature = br.ReadSingle();
+            TimeOfDayAffectsTemperature = br.ReadSingle();
+            WhistleVolumeOffset = br.ReadSingle();
+            WindGust = br.ReadUInt32();
+            AudioScene = br.ReadUInt32();
+            WindGustEnd = br.ReadUInt32();
 
-            ItemCount = br.ReadInt32();
-            Items = new MetaHash[ItemCount];
-            for (int i = 0; i < ItemCount; i++)
+            WindSoundsCount = br.ReadInt32();
+            WindSounds = new MetaHash[WindSoundsCount];
+            for (int i = 0; i < WindSoundsCount; i++)
             {
-                Items[i] = br.ReadUInt32();
+                WindSounds[i] = br.ReadUInt32();
             }
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Scene);
-            bw.Write(Unk08);
+            bw.Write(Strength);
+            bw.Write(Blustery);
+            bw.Write(Temperature);
+            bw.Write(TimeOfDayAffectsTemperature);
+            bw.Write(WhistleVolumeOffset);
+            bw.Write(WindGust);
+            bw.Write(AudioScene);
+            bw.Write(WindGustEnd);
 
-            bw.Write(ItemCount);
-            for (int i = 0; i < ItemCount; i++)
+            bw.Write(WindSoundsCount);
+            for (int i = 0; i < WindSoundsCount; i++)
             {
-                bw.Write(Items[i]);
+                bw.Write(WindSounds[i]);
             }
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.ValueTag(sb, indent, "Unk01", FloatUtil.ToString(Unk01));
-            RelXml.ValueTag(sb, indent, "Unk02", FloatUtil.ToString(Unk02));
-            RelXml.ValueTag(sb, indent, "Unk03", FloatUtil.ToString(Unk03));
-            RelXml.ValueTag(sb, indent, "Unk04", FloatUtil.ToString(Unk04));
-            RelXml.ValueTag(sb, indent, "Unk05", FloatUtil.ToString(Unk05));
-            RelXml.StringTag(sb, indent, "Unk06", RelXml.HashString(Unk06));
-            RelXml.StringTag(sb, indent, "Scene", RelXml.HashString(Scene));
-            RelXml.StringTag(sb, indent, "Unk08", RelXml.HashString(Unk08));
-            RelXml.WriteHashItemArray(sb, Items, indent, "Items");
+            RelXml.ValueTag(sb, indent, "Strength", FloatUtil.ToString(Strength));
+            RelXml.ValueTag(sb, indent, "Blustery", FloatUtil.ToString(Blustery));
+            RelXml.ValueTag(sb, indent, "Temperature", FloatUtil.ToString(Temperature));
+            RelXml.ValueTag(sb, indent, "TimeOfDayAffectsTemperature", FloatUtil.ToString(TimeOfDayAffectsTemperature));
+            RelXml.ValueTag(sb, indent, "WhistleVolumeOffset", FloatUtil.ToString(WhistleVolumeOffset));
+            RelXml.StringTag(sb, indent, "WindGust", RelXml.HashString(WindGust));
+            RelXml.StringTag(sb, indent, "AudioScene", RelXml.HashString(AudioScene));
+            RelXml.StringTag(sb, indent, "WindGustEnd", RelXml.HashString(WindGustEnd));
+            RelXml.WriteHashItemArray(sb, WindSounds, indent, "WindSounds");
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = Xml.GetChildFloatAttribute(node, "Unk01", "value");
-            Unk02 = Xml.GetChildFloatAttribute(node, "Unk02", "value");
-            Unk03 = Xml.GetChildFloatAttribute(node, "Unk03", "value");
-            Unk04 = Xml.GetChildFloatAttribute(node, "Unk04", "value");
-            Unk05 = Xml.GetChildFloatAttribute(node, "Unk05", "value");
-            Unk06 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk06"));
-            Scene = XmlRel.GetHash(Xml.GetChildInnerText(node, "Scene"));
-            Unk08 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk08"));
-            Items = XmlRel.ReadHashItemArray(node, "Items");
-            ItemCount = (Items?.Length ?? 0);
+            Strength = Xml.GetChildFloatAttribute(node, "Strength", "value");
+            Blustery = Xml.GetChildFloatAttribute(node, "Blustery", "value");
+            Temperature = Xml.GetChildFloatAttribute(node, "Temperature", "value");
+            TimeOfDayAffectsTemperature = Xml.GetChildFloatAttribute(node, "TimeOfDayAffectsTemperature", "value");
+            WhistleVolumeOffset = Xml.GetChildFloatAttribute(node, "WhistleVolumeOffset", "value");
+            WindGust = XmlRel.GetHash(Xml.GetChildInnerText(node, "WindGust"));
+            AudioScene = XmlRel.GetHash(Xml.GetChildInnerText(node, "AudioScene"));
+            WindGustEnd = XmlRel.GetHash(Xml.GetChildInnerText(node, "WindGustEnd"));
+            WindSounds = XmlRel.ReadHashItemArray(node, "WindSounds");
+            WindSoundsCount = (WindSounds?.Length ?? 0);
         }
         public override MetaHash[] GetMixerHashes()
         {
-            return new[] { Scene };
+            return new[] { AudioScene };
         }
         public override MetaHash[] GetSoundHashes()
         {
             var list = new List<MetaHash>();
-            list.Add(Unk06);
-            list.Add(Unk08);
-            if (Items != null)
+            list.Add(WindGust);
+            list.Add(WindGustEnd);
+            if (WindSounds != null)
             {
-                list.AddRange(Items);
+                list.AddRange(WindSounds);
             }
             return list.ToArray();
         }
     }
-    [TC(typeof(EXP))] public class Dat151StemMix : Dat151RelData
+    [TC(typeof(EXP))] 
+    public class Dat151StemMix : Dat151RelData
     {
         public short Stem1Volume { get; set; }
         public short Stem2Volume { get; set; }
@@ -15970,7 +16102,7 @@ namespace CodeWalker.GameFiles
     }
     [TC(typeof(EXP))] public class Dat151BeatConstraint : Dat151RelData
     {
-        public ushort Unk01 { get; set; } 
+        public ushort ValidSixteenths { get; set; } 
 
         public Dat151BeatConstraint(RelFile rel) : base(rel)
         {
@@ -15979,27 +16111,29 @@ namespace CodeWalker.GameFiles
         }
         public Dat151BeatConstraint(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadUInt16();
+            ValidSixteenths = br.ReadUInt16();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
+            bw.Write(ValidSixteenths);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.ValueTag(sb, indent, "Unk01", Unk01.ToString());
+            RelXml.ValueTag(sb, indent, "ValidSixteenths", ValidSixteenths.ToString());
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = (ushort)Xml.GetChildUIntAttribute(node, "Unk01", "value");
+            ValidSixteenths = (ushort)Xml.GetChildUIntAttribute(node, "ValidSixteenths", "value");
         }
     }
-    [TC(typeof(EXP))] public class Dat151BarConstraint : Dat151RelData
+
+    [TC(typeof(EXP))] 
+    public class Dat151BarConstraint : Dat151RelData
     {
-        public int Unk01 { get; set; }
-        public int Unk02 { get; set; }
+        public int PatternLength { get; set; }
+        public int ValidBar { get; set; }
 
         public Dat151BarConstraint(RelFile rel) : base(rel)
         {
@@ -16008,48 +16142,50 @@ namespace CodeWalker.GameFiles
         }
         public Dat151BarConstraint(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadInt32();
-            Unk02 = br.ReadInt32();
+            PatternLength = br.ReadInt32();
+            ValidBar = br.ReadInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
-            bw.Write(Unk02);
+            bw.Write(PatternLength);
+            bw.Write(ValidBar);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.ValueTag(sb, indent, "Unk01", Unk01.ToString());
-            RelXml.ValueTag(sb, indent, "Unk02", Unk02.ToString());
+            RelXml.ValueTag(sb, indent, "PatternLength", PatternLength.ToString());
+            RelXml.ValueTag(sb, indent, "ValidBar", ValidBar.ToString());
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = Xml.GetChildIntAttribute(node, "Unk01", "value");
-            Unk02 = Xml.GetChildIntAttribute(node, "Unk02", "value");
+            PatternLength = Xml.GetChildIntAttribute(node, "PatternLength", "value");
+            ValidBar = Xml.GetChildIntAttribute(node, "ValidBar", "value");
         }
     }
-    [TC(typeof(EXP))] public class Dat151DirectionalAmbience : Dat151RelData
+
+    [TC(typeof(EXP))]
+    public class Dat151DirectionalAmbience : Dat151RelData
     {
         public FlagsUint Flags { get; set; }
-        public MetaHash ChildSound1 { get; set; }
-        public MetaHash ChildSound2 { get; set; }
-        public MetaHash ChildSound3 { get; set; }
-        public MetaHash ChildSound4 { get; set; }
-        public float Unk05 { get; set; }
-        public MetaHash Unk06 { get; set; }
-        public MetaHash Unk07 { get; set; }
-        public MetaHash Unk08 { get; set; }
-        public MetaHash Unk09 { get; set; }
-        public MetaHash Unk10 { get; set; }
-        public MetaHash Unk11 { get; set; }
-        public MetaHash Unk12 { get; set; }
-        public MetaHash Unk13 { get; set; }
-        public float Unk14 { get; set; }
-        public MetaHash Unk15 { get; set; }
-        public MetaHash Unk16 { get; set; }
-        public MetaHash Unk17 { get; set; }
-        public float Unk18 { get; set; }
+        public MetaHash SoundNorth { get; set; }
+        public MetaHash SoundEast { get; set; }
+        public MetaHash SoundSouth { get; set; }
+        public MetaHash SoundWest { get; set; }
+        public float VolumeSmoothing { get; set; }
+        public MetaHash TimeToVolume { get; set; }
+        public MetaHash OcclusionToVol { get; set; }
+        public MetaHash HeightToCutOff { get; set; }
+        public MetaHash OcclusionToCutOff { get; set; }
+        public MetaHash BuiltUpFactorToVol { get; set; }
+        public MetaHash BuildingDensityToVol { get; set; }
+        public MetaHash TreeDensityToVol { get; set; }
+        public MetaHash WaterFactorToVol { get; set; }
+        public float InstanceVolumeScale { get; set; }
+        public MetaHash HeightAboveBlanketToVol { get; set; }
+        public MetaHash HighwayFactorToVol { get; set; }
+        public MetaHash VehicleCountToVol { get; set; }
+        public float MaxDistanceOutToSea { get; set; }
 
         public Dat151DirectionalAmbience(RelFile rel) : base(rel)
         {
@@ -16059,103 +16195,105 @@ namespace CodeWalker.GameFiles
         public Dat151DirectionalAmbience(RelData d, BinaryReader br) : base(d, br)
         {
             Flags = br.ReadUInt32();
-            ChildSound1 = br.ReadUInt32();
-            ChildSound2 = br.ReadUInt32();
-            ChildSound3 = br.ReadUInt32();
-            ChildSound4 = br.ReadUInt32();
-            Unk05 = br.ReadSingle();
-            Unk06 = br.ReadUInt32();
-            Unk07 = br.ReadUInt32();
-            Unk08 = br.ReadUInt32();
-            Unk09 = br.ReadUInt32();
-            Unk10 = br.ReadUInt32();
-            Unk11 = br.ReadUInt32();
-            Unk12 = br.ReadUInt32();
-            Unk13 = br.ReadUInt32();
-            Unk14 = br.ReadSingle();
-            Unk15 = br.ReadUInt32();
-            Unk16 = br.ReadUInt32();
-            Unk17 = br.ReadUInt32();
-            Unk18 = br.ReadSingle();
+            SoundNorth = br.ReadUInt32();
+            SoundEast = br.ReadUInt32();
+            SoundSouth = br.ReadUInt32();
+            SoundWest = br.ReadUInt32();
+            VolumeSmoothing = br.ReadSingle();
+            TimeToVolume = br.ReadUInt32();
+            OcclusionToVol = br.ReadUInt32();
+            HeightToCutOff = br.ReadUInt32();
+            OcclusionToCutOff = br.ReadUInt32();
+            BuiltUpFactorToVol = br.ReadUInt32();
+            BuildingDensityToVol = br.ReadUInt32();
+            TreeDensityToVol = br.ReadUInt32();
+            WaterFactorToVol = br.ReadUInt32();
+            InstanceVolumeScale = br.ReadSingle();
+            HeightAboveBlanketToVol = br.ReadUInt32();
+            HighwayFactorToVol = br.ReadUInt32();
+            VehicleCountToVol = br.ReadUInt32();
+            MaxDistanceOutToSea = br.ReadSingle();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
             bw.Write(Flags);
-            bw.Write(ChildSound1);
-            bw.Write(ChildSound2);
-            bw.Write(ChildSound3);
-            bw.Write(ChildSound4);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
-            bw.Write(Unk09);
-            bw.Write(Unk10);
-            bw.Write(Unk11);
-            bw.Write(Unk12);
-            bw.Write(Unk13);
-            bw.Write(Unk14);
-            bw.Write(Unk15);
-            bw.Write(Unk16);
-            bw.Write(Unk17);
-            bw.Write(Unk18);
+            bw.Write(SoundNorth);
+            bw.Write(SoundEast);
+            bw.Write(SoundSouth);
+            bw.Write(SoundWest);
+            bw.Write(VolumeSmoothing);
+            bw.Write(TimeToVolume);
+            bw.Write(OcclusionToVol);
+            bw.Write(HeightToCutOff);
+            bw.Write(OcclusionToCutOff);
+            bw.Write(BuiltUpFactorToVol);
+            bw.Write(BuildingDensityToVol);
+            bw.Write(TreeDensityToVol);
+            bw.Write(WaterFactorToVol);
+            bw.Write(InstanceVolumeScale);
+            bw.Write(HeightAboveBlanketToVol);
+            bw.Write(HighwayFactorToVol);
+            bw.Write(VehicleCountToVol);
+            bw.Write(MaxDistanceOutToSea);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
             RelXml.ValueTag(sb, indent, "Flags", "0x" + Flags.Hex);
-            RelXml.StringTag(sb, indent, "ChildSound1", RelXml.HashString(ChildSound1));
-            RelXml.StringTag(sb, indent, "ChildSound2", RelXml.HashString(ChildSound2));
-            RelXml.StringTag(sb, indent, "ChildSound3", RelXml.HashString(ChildSound3));
-            RelXml.StringTag(sb, indent, "ChildSound4", RelXml.HashString(ChildSound4));
-            RelXml.ValueTag(sb, indent, "Unk05", FloatUtil.ToString(Unk05));
-            RelXml.StringTag(sb, indent, "Unk06", RelXml.HashString(Unk06));
-            RelXml.StringTag(sb, indent, "Unk07", RelXml.HashString(Unk07));
-            RelXml.StringTag(sb, indent, "Unk08", RelXml.HashString(Unk08));
-            RelXml.StringTag(sb, indent, "Unk09", RelXml.HashString(Unk09));
-            RelXml.StringTag(sb, indent, "Unk10", RelXml.HashString(Unk10));
-            RelXml.StringTag(sb, indent, "Unk11", RelXml.HashString(Unk11));
-            RelXml.StringTag(sb, indent, "Unk12", RelXml.HashString(Unk12));
-            RelXml.StringTag(sb, indent, "Unk13", RelXml.HashString(Unk13));
-            RelXml.ValueTag(sb, indent, "Unk14", FloatUtil.ToString(Unk14));
-            RelXml.StringTag(sb, indent, "Unk15", RelXml.HashString(Unk15));
-            RelXml.StringTag(sb, indent, "Unk16", RelXml.HashString(Unk16));
-            RelXml.StringTag(sb, indent, "Unk17", RelXml.HashString(Unk17));
-            RelXml.ValueTag(sb, indent, "Unk18", FloatUtil.ToString(Unk18));
+            RelXml.StringTag(sb, indent, "SoundNorth", RelXml.HashString(SoundNorth));
+            RelXml.StringTag(sb, indent, "SoundEast", RelXml.HashString(SoundEast));
+            RelXml.StringTag(sb, indent, "SoundSouth", RelXml.HashString(SoundSouth));
+            RelXml.StringTag(sb, indent, "SoundWest", RelXml.HashString(SoundWest));
+            RelXml.ValueTag(sb, indent, "VolumeSmoothing", FloatUtil.ToString(VolumeSmoothing));
+            RelXml.StringTag(sb, indent, "TimeToVolume", RelXml.HashString(TimeToVolume));
+            RelXml.StringTag(sb, indent, "OcclusionToVol", RelXml.HashString(OcclusionToVol));
+            RelXml.StringTag(sb, indent, "HeightToCutOff", RelXml.HashString(HeightToCutOff));
+            RelXml.StringTag(sb, indent, "OcclusionToCutOff", RelXml.HashString(OcclusionToCutOff));
+            RelXml.StringTag(sb, indent, "BuiltUpFactorToVol", RelXml.HashString(BuiltUpFactorToVol));
+            RelXml.StringTag(sb, indent, "BuildingDensityToVol", RelXml.HashString(BuildingDensityToVol));
+            RelXml.StringTag(sb, indent, "TreeDensityToVol", RelXml.HashString(TreeDensityToVol));
+            RelXml.StringTag(sb, indent, "WaterFactorToVol", RelXml.HashString(WaterFactorToVol));
+            RelXml.ValueTag(sb, indent, "InstanceVolumeScale", FloatUtil.ToString(InstanceVolumeScale));
+            RelXml.StringTag(sb, indent, "HeightAboveBlanketToVol", RelXml.HashString(HeightAboveBlanketToVol));
+            RelXml.StringTag(sb, indent, "HighwayFactorToVol", RelXml.HashString(HighwayFactorToVol));
+            RelXml.StringTag(sb, indent, "VehicleCountToVol", RelXml.HashString(VehicleCountToVol));
+            RelXml.ValueTag(sb, indent, "MaxDistanceOutToSea", FloatUtil.ToString(MaxDistanceOutToSea));
         }
         public override void ReadXml(XmlNode node)
         {
             Flags = Xml.GetChildUIntAttribute(node, "Flags", "value");
-            ChildSound1 = XmlRel.GetHash(Xml.GetChildInnerText(node, "ChildSound1"));
-            ChildSound2 = XmlRel.GetHash(Xml.GetChildInnerText(node, "ChildSound2"));
-            ChildSound3 = XmlRel.GetHash(Xml.GetChildInnerText(node, "ChildSound3"));
-            ChildSound4 = XmlRel.GetHash(Xml.GetChildInnerText(node, "ChildSound4"));
-            Unk05 = Xml.GetChildFloatAttribute(node, "Unk05", "value");
-            Unk06 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk06"));
-            Unk07 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk07"));
-            Unk08 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk08"));
-            Unk09 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk09"));
-            Unk10 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk10"));
-            Unk11 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk11"));
-            Unk12 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk12"));
-            Unk13 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk13"));
-            Unk14 = Xml.GetChildFloatAttribute(node, "Unk14", "value");
-            Unk15 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk15"));
-            Unk16 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk16"));
-            Unk17 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk17"));
-            Unk18 = Xml.GetChildFloatAttribute(node, "Unk18", "value");
+            SoundNorth = XmlRel.GetHash(Xml.GetChildInnerText(node, "SoundNorth"));
+            SoundEast = XmlRel.GetHash(Xml.GetChildInnerText(node, "SoundEast"));
+            SoundSouth = XmlRel.GetHash(Xml.GetChildInnerText(node, "SoundSouth"));
+            SoundWest = XmlRel.GetHash(Xml.GetChildInnerText(node, "SoundWest"));
+            VolumeSmoothing = Xml.GetChildFloatAttribute(node, "VolumeSmoothing", "value");
+            TimeToVolume = XmlRel.GetHash(Xml.GetChildInnerText(node, "TimeToVolume"));
+            OcclusionToVol = XmlRel.GetHash(Xml.GetChildInnerText(node, "OcclusionToVol"));
+            HeightToCutOff = XmlRel.GetHash(Xml.GetChildInnerText(node, "HeightToCutOff"));
+            OcclusionToCutOff = XmlRel.GetHash(Xml.GetChildInnerText(node, "OcclusionToCutOff"));
+            BuiltUpFactorToVol = XmlRel.GetHash(Xml.GetChildInnerText(node, "BuiltUpFactorToVol"));
+            BuildingDensityToVol = XmlRel.GetHash(Xml.GetChildInnerText(node, "BuildingDensityToVol"));
+            TreeDensityToVol = XmlRel.GetHash(Xml.GetChildInnerText(node, "TreeDensityToVol"));
+            WaterFactorToVol = XmlRel.GetHash(Xml.GetChildInnerText(node, "WaterFactorToVol"));
+            InstanceVolumeScale = Xml.GetChildFloatAttribute(node, "InstanceVolumeScale", "value");
+            HeightAboveBlanketToVol = XmlRel.GetHash(Xml.GetChildInnerText(node, "HeightAboveBlanketToVol"));
+            HighwayFactorToVol = XmlRel.GetHash(Xml.GetChildInnerText(node, "HighwayFactorToVol"));
+            VehicleCountToVol = XmlRel.GetHash(Xml.GetChildInnerText(node, "VehicleCountToVol"));
+            MaxDistanceOutToSea = Xml.GetChildFloatAttribute(node, "MaxDistanceOutToSea", "value");
         }
         public override MetaHash[] GetCurveHashes()
         {
-            return new[] { Unk06, Unk07, Unk08, Unk09, Unk10, Unk11, Unk12, Unk13, Unk15, Unk16, Unk17 };
+            return new[] { TimeToVolume, OcclusionToVol, HeightToCutOff, OcclusionToCutOff, BuiltUpFactorToVol, BuildingDensityToVol, TreeDensityToVol, WaterFactorToVol, HeightAboveBlanketToVol, HighwayFactorToVol, VehicleCountToVol };
         }
         public override MetaHash[] GetSoundHashes()
         {
-            return new[] { ChildSound1, ChildSound2, ChildSound3, ChildSound4 };
+            return new[] { SoundNorth, SoundEast, SoundSouth, SoundWest };
         }
     }
-    [TC(typeof(EXP))] public class Dat151GunfightConductorIntensitySettings : Dat151RelData
+
+    [TC(typeof(EXP))]
+    public class Dat151GunfightConductorIntensitySettings : Dat151RelData
     {
         public int MaxTimeAfterLastShot { get; set; }
         public float TimeToFakeBulletImpacts { get; set; }
@@ -16257,66 +16395,143 @@ namespace CodeWalker.GameFiles
             return new[] { VehiclesMediumIntensity, VehiclesHighIntensity, GroundMediumIntensity, GroundHighIntensity };
         }
     }
-    [TC(typeof(EXP))] public class Dat151AnimalVocalAnimTriggerItem : IMetaXmlItem
+    [TC(typeof(EXP))]
+    public class Dat151AnimalVocalAnimTriggerItemPlayfulContexts : IMetaXmlItem
     {
-        public byte Unk1 { get; set; }
-        public byte ItemCount1 { get; set; } //indicates how many are used
-        public Dat151HashFloat[] Items1 { get; set; } //always array of 8  - probably links to speech.dat somehow
-        public byte ItemCount2 { get; set; } //indicates how many are used
-        public Dat151HashFloat[] Items2 { get; set; } //always array of 8
+        public MetaHash Context { get; set; }
+        public float Weight { get; set; }
+
+
+        public Dat151AnimalVocalAnimTriggerItemPlayfulContexts()
+        { }
+
+        public Dat151AnimalVocalAnimTriggerItemPlayfulContexts(BinaryReader br)
+        {
+            Context = br.ReadUInt32();
+            Weight = br.ReadSingle();
+        }
+
+        public void Write(BinaryWriter bw)
+        {
+            bw.Write(Context);
+            bw.Write(Weight);
+        }
+
+        public void WriteXml(StringBuilder sb, int indent)
+        {
+            RelXml.StringTag(sb, indent, "Context", RelXml.HashString(Context));
+            RelXml.ValueTag(sb, indent, "Weight", FloatUtil.ToString(Weight));
+        }
+
+        public void ReadXml(XmlNode node)
+        {
+            Context = XmlRel.GetHash(Xml.GetChildInnerText(node, "Context"));
+            Weight = Xml.GetChildFloatAttribute(node, "Weight", "value");
+        }
+        public override string ToString()
+        {
+            return Context.ToString();
+        }
+    }
+
+    [TC(typeof(EXP))]
+    public class Dat151AnimalVocalAnimTriggerItemAngryContexts : IMetaXmlItem
+    {
+        public MetaHash Context { get; set; }
+        public float Weight { get; set; }
+
+
+        public Dat151AnimalVocalAnimTriggerItemAngryContexts()
+        { }
+
+        public Dat151AnimalVocalAnimTriggerItemAngryContexts(BinaryReader br)
+        {
+            Context = br.ReadUInt32();
+            Weight = br.ReadSingle();
+        }
+
+        public void Write(BinaryWriter bw)
+        {
+            bw.Write(Context);
+            bw.Write(Weight);
+        }
+
+        public void WriteXml(StringBuilder sb, int indent)
+        {
+            RelXml.StringTag(sb, indent, "Context", RelXml.HashString(Context));
+            RelXml.ValueTag(sb, indent, "Weight", FloatUtil.ToString(Weight));
+        }
+
+        public void ReadXml(XmlNode node)
+        {
+            Context = XmlRel.GetHash(Xml.GetChildInnerText(node, "Context"));
+            Weight = Xml.GetChildFloatAttribute(node, "Weight", "value");
+        }
+        public override string ToString()
+        {
+            return Context.ToString();
+        }
+    }
+
+    [TC(typeof(EXP))] 
+    public class Dat151AnimalVocalAnimTriggerItem : IMetaXmlItem
+    {
+        public byte Animal { get; set; }
+        public byte AngryContextsCount { get; set; }
+        public Dat151AnimalVocalAnimTriggerItemAngryContexts[] AngryContexts { get; set; }
+        public byte PlayfulContextsCount { get; set; }
+        public Dat151AnimalVocalAnimTriggerItemPlayfulContexts[] PlayfulContexts { get; set; }
 
         public Dat151AnimalVocalAnimTriggerItem()
         { }
         public Dat151AnimalVocalAnimTriggerItem(BinaryReader br)
         {
-            Unk1 = br.ReadByte();
-            ItemCount1 = br.ReadByte();
-            Items1 = new Dat151HashFloat[8];
-            for (int i = 0; i < 8; i++)
+            Animal = br.ReadByte();
+
+            AngryContextsCount = br.ReadByte();
+            AngryContexts = new Dat151AnimalVocalAnimTriggerItemAngryContexts[AngryContextsCount];
+            for (int i = 0; i < AngryContextsCount; i++)
             {
-                Items1[i] = new Dat151HashFloat(br);
+                AngryContexts[i] = new Dat151AnimalVocalAnimTriggerItemAngryContexts(br);
             }
-            ItemCount2 = br.ReadByte();
-            Items2 = new Dat151HashFloat[8];
-            for (int i = 0; i < 8; i++)
+            PlayfulContextsCount = br.ReadByte();
+            PlayfulContexts = new Dat151AnimalVocalAnimTriggerItemPlayfulContexts[PlayfulContextsCount];
+            for (int i = 0; i < PlayfulContextsCount; i++)
             {
-                Items2[i] = new Dat151HashFloat(br);
+                PlayfulContexts[i] = new Dat151AnimalVocalAnimTriggerItemPlayfulContexts(br);
             }
         }
         public void Write(BinaryWriter bw)
         {
-            bw.Write(Unk1);
-            bw.Write(ItemCount1);
-            for (int i = 0; i < 8; i++)
+            bw.Write(Animal);
+            bw.Write(AngryContextsCount);
+            for (int i = 0; i < AngryContextsCount; i++)
             {
-                Items1[i].Write(bw);
+                AngryContexts[i].Write(bw);
             }
-            bw.Write(ItemCount2);
-            for (int i = 0; i < 8; i++)
+            bw.Write(PlayfulContextsCount);
+            for (int i = 0; i < PlayfulContextsCount; i++)
             {
-                Items2[i].Write(bw);
+                PlayfulContexts[i].Write(bw);
             }
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.ValueTag(sb, indent, "Unk1", Unk1.ToString());
-            RelXml.ValueTag(sb, indent, "ItemCount1", ItemCount1.ToString());
-            RelXml.WriteItemArray(sb, Items1, indent, "Items1");
-            RelXml.ValueTag(sb, indent, "ItemCount2", ItemCount2.ToString());
-            RelXml.WriteItemArray(sb, Items2, indent, "Items2");
+            RelXml.ValueTag(sb, indent, "Animal", Animal.ToString());
+            RelXml.WriteItemArray(sb, AngryContexts, indent, "AngryContexts");
+            RelXml.WriteItemArray(sb, PlayfulContexts, indent, "PlayfulContexts");
         }
         public void ReadXml(XmlNode node)
         {
-            Unk1 = (byte)Xml.GetChildUIntAttribute(node, "Unk1", "value");
-            ItemCount1 = (byte)Xml.GetChildUIntAttribute(node, "ItemCount1", "value");
-            Items1 = XmlRel.ReadItemArray<Dat151HashFloat>(node, "Items1");
-            ItemCount2 = (byte)Xml.GetChildUIntAttribute(node, "ItemCount2", "value");
-            Items2 = XmlRel.ReadItemArray<Dat151HashFloat>(node, "Items2");
-            //probably should make an error if Items1/2 are not an array of 8...
+            Animal = (byte)Xml.GetChildUIntAttribute(node, "Animal", "value");
+            AngryContexts = XmlRel.ReadItemArray<Dat151AnimalVocalAnimTriggerItemAngryContexts>(node, "AngryContexts");
+            AngryContextsCount = (byte)(AngryContexts?.Length ?? 0);
+            PlayfulContexts = XmlRel.ReadItemArray<Dat151AnimalVocalAnimTriggerItemPlayfulContexts>(node, "PlayfulContexts");
+            PlayfulContextsCount = (byte)(PlayfulContexts?.Length ?? 0);
         }
         public override string ToString()
         {
-            return Unk1.ToString() + ": " + ItemCount1.ToString() + ", " + ItemCount2.ToString();
+            return Animal.ToString() + ": " + AngryContextsCount.ToString() + ", " + PlayfulContextsCount.ToString();
         }
     }
     [TC(typeof(EXP))] public class Dat151AnimalVocalAnimTrigger : Dat151RelData
@@ -16721,7 +16936,7 @@ namespace CodeWalker.GameFiles
     }
     [TC(typeof(EXP))] public class Dat151AudioRoadInfo : Dat151RelData
     {
-        public MetaHash RoadName { get; set; }//0
+        public MetaHash RoadName { get; set; }
         public float TyreBumpDistance { get; set; }
 
         public Dat151AudioRoadInfo(RelFile rel) : base(rel)
@@ -16731,7 +16946,7 @@ namespace CodeWalker.GameFiles
         }
         public Dat151AudioRoadInfo(RelData d, BinaryReader br) : base(d, br)
         {
-            RoadName = br.ReadUInt32();//0
+            RoadName = br.ReadUInt32();
             TyreBumpDistance = br.ReadSingle();
         }
         public override void Write(BinaryWriter bw)
@@ -16754,93 +16969,93 @@ namespace CodeWalker.GameFiles
     }
     [TC(typeof(EXP))] public class Dat151MicrophoneItem : IMetaXmlItem
     {
-        public float Unk01 { get; set; }
-        public float Unk02 { get; set; }
-        public float Unk03 { get; set; }
-        public float Unk04 { get; set; }
-        public float Unk05 { get; set; }
-        public float Unk06 { get; set; }
-        public int Unk07 { get; set; }
-        public float Unk08 { get; set; }
-        public float Unk09 { get; set; }
+        public float ListenerContribution { get; set; }
+        public float RearAttenuationFrontConeAngle { get; set; }
+        public float RearAttenuationRearConeAngle { get; set; }
+        public float CloseRearAttenuation { get; set; }
+        public float FarRearAttenuation { get; set; }
+        public float RollOff { get; set; }
+        public int RearAttenuationType { get; set; }
+        public float MicLength { get; set; }
+        public float MicToPlayerLocalEnvironmentRatio { get; set; }
 
         public Dat151MicrophoneItem()
         { }
         public Dat151MicrophoneItem(BinaryReader br)
         {
-            Unk01 = br.ReadSingle();
-            Unk02 = br.ReadSingle();
-            Unk03 = br.ReadSingle();
-            Unk04 = br.ReadSingle();
-            Unk05 = br.ReadSingle();
-            Unk06 = br.ReadSingle();
-            Unk07 = br.ReadInt32();
-            Unk08 = br.ReadSingle();
-            Unk09 = br.ReadSingle();
+            ListenerContribution = br.ReadSingle();
+            RearAttenuationFrontConeAngle = br.ReadSingle();
+            RearAttenuationRearConeAngle = br.ReadSingle();
+            CloseRearAttenuation = br.ReadSingle();
+            FarRearAttenuation = br.ReadSingle();
+            RollOff = br.ReadSingle();
+            RearAttenuationType = br.ReadInt32();
+            MicLength = br.ReadSingle();
+            MicToPlayerLocalEnvironmentRatio = br.ReadSingle();
         }
         public void Write(BinaryWriter bw)
         {
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
-            bw.Write(Unk09);
+            bw.Write(ListenerContribution);
+            bw.Write(RearAttenuationFrontConeAngle);
+            bw.Write(RearAttenuationRearConeAngle);
+            bw.Write(CloseRearAttenuation);
+            bw.Write(FarRearAttenuation);
+            bw.Write(RollOff);
+            bw.Write(RearAttenuationType);
+            bw.Write(MicLength);
+            bw.Write(MicToPlayerLocalEnvironmentRatio);
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.ValueTag(sb, indent, "Unk01", FloatUtil.ToString(Unk01));
-            RelXml.ValueTag(sb, indent, "Unk02", FloatUtil.ToString(Unk02));
-            RelXml.ValueTag(sb, indent, "Unk03", FloatUtil.ToString(Unk03));
-            RelXml.ValueTag(sb, indent, "Unk04", FloatUtil.ToString(Unk04));
-            RelXml.ValueTag(sb, indent, "Unk05", FloatUtil.ToString(Unk05));
-            RelXml.ValueTag(sb, indent, "Unk06", FloatUtil.ToString(Unk06));
-            RelXml.ValueTag(sb, indent, "Unk07", Unk07.ToString());
-            RelXml.ValueTag(sb, indent, "Unk08", FloatUtil.ToString(Unk08));
-            RelXml.ValueTag(sb, indent, "Unk09", FloatUtil.ToString(Unk09));
+            RelXml.ValueTag(sb, indent, "ListenerContribution", FloatUtil.ToString(ListenerContribution));
+            RelXml.ValueTag(sb, indent, "RearAttenuationFrontConeAngle", FloatUtil.ToString(RearAttenuationFrontConeAngle));
+            RelXml.ValueTag(sb, indent, "RearAttenuationRearConeAngle", FloatUtil.ToString(RearAttenuationRearConeAngle));
+            RelXml.ValueTag(sb, indent, "CloseRearAttenuation", FloatUtil.ToString(CloseRearAttenuation));
+            RelXml.ValueTag(sb, indent, "FarRearAttenuation", FloatUtil.ToString(FarRearAttenuation));
+            RelXml.ValueTag(sb, indent, "RollOff", FloatUtil.ToString(RollOff));
+            RelXml.ValueTag(sb, indent, "RearAttenuationType", RearAttenuationType.ToString());
+            RelXml.ValueTag(sb, indent, "MicLength", FloatUtil.ToString(MicLength));
+            RelXml.ValueTag(sb, indent, "MicToPlayerLocalEnvironmentRatio", FloatUtil.ToString(MicToPlayerLocalEnvironmentRatio));
         }
         public void ReadXml(XmlNode node)
         {
-            Unk01 = Xml.GetChildFloatAttribute(node, "Unk01", "value");
-            Unk02 = Xml.GetChildFloatAttribute(node, "Unk02", "value");
-            Unk03 = Xml.GetChildFloatAttribute(node, "Unk03", "value");
-            Unk04 = Xml.GetChildFloatAttribute(node, "Unk04", "value");
-            Unk05 = Xml.GetChildFloatAttribute(node, "Unk05", "value");
-            Unk06 = Xml.GetChildFloatAttribute(node, "Unk06", "value");
-            Unk07 = Xml.GetChildIntAttribute(node, "Unk07", "value");
-            Unk08 = Xml.GetChildFloatAttribute(node, "Unk08", "value");
-            Unk09 = Xml.GetChildFloatAttribute(node, "Unk09", "value");
+            ListenerContribution = Xml.GetChildFloatAttribute(node, "ListenerContribution", "value");
+            RearAttenuationFrontConeAngle = Xml.GetChildFloatAttribute(node, "RearAttenuationFrontConeAngle", "value");
+            RearAttenuationRearConeAngle = Xml.GetChildFloatAttribute(node, "RearAttenuationRearConeAngle", "value");
+            CloseRearAttenuation = Xml.GetChildFloatAttribute(node, "CloseRearAttenuation", "value");
+            FarRearAttenuation = Xml.GetChildFloatAttribute(node, "FarRearAttenuation", "value");
+            RollOff = Xml.GetChildFloatAttribute(node, "RollOff", "value");
+            RearAttenuationType = Xml.GetChildIntAttribute(node, "RearAttenuationType", "value");
+            MicLength = Xml.GetChildFloatAttribute(node, "MicLength", "value");
+            MicToPlayerLocalEnvironmentRatio = Xml.GetChildFloatAttribute(node, "MicToPlayerLocalEnvironmentRatio", "value");
         }
         public override string ToString()
         {
-            return string.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}", Unk01, Unk02, Unk03, Unk04, Unk05, Unk06, Unk07, Unk08, Unk09);
+            return string.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}", ListenerContribution, RearAttenuationFrontConeAngle, RearAttenuationRearConeAngle, CloseRearAttenuation, FarRearAttenuation, RollOff, RearAttenuationType, MicLength, MicToPlayerLocalEnvironmentRatio);
         }
     }
-    [TC(typeof(EXP))] public class Dat151Microphone : Dat151RelData
+    [TC(typeof(EXP))] public class Dat151MicrophoneSettings : Dat151RelData
     {
         public FlagsUint Flags { get; set; }
-        public byte Unk01 { get; set; }
+        public byte MicType { get; set; }
         public byte MicrophonesCount { get; set; }
-        public byte Unk02 { get; set; }
-        public byte Unk03 { get; set; }
+        public byte padding00 { get; set; }
+        public byte padding01 { get; set; }
         public Dat151MicrophoneItem[] Microphones { get; set; }
 
-        public Dat151Microphone(RelFile rel) : base(rel)
+        public Dat151MicrophoneSettings(RelFile rel) : base(rel)
         {
-            Type = Dat151RelType.Microphone;
+            Type = Dat151RelType.MicrophoneSettings;
             TypeID = (byte)Type;
         }
-        public Dat151Microphone(RelData d, BinaryReader br) : base(d, br)
+        public Dat151MicrophoneSettings(RelData d, BinaryReader br) : base(d, br)
         {
             Flags = br.ReadUInt32();
-            Unk01 = br.ReadByte();
-            MicrophonesCount = br.ReadByte();
-            Unk02 = br.ReadByte();
-            Unk03 = br.ReadByte();
+            MicType = br.ReadByte();
 
+            MicrophonesCount = br.ReadByte();
+            padding00 = br.ReadByte();
+            padding01 = br.ReadByte();
             Microphones = new Dat151MicrophoneItem[MicrophonesCount];
             for (int i = 0; i < MicrophonesCount; i++)
             {
@@ -16852,10 +17067,11 @@ namespace CodeWalker.GameFiles
             WriteTypeAndOffset(bw);
 
             bw.Write(Flags);
-            bw.Write(Unk01);
+            bw.Write(MicType);
+
             bw.Write(MicrophonesCount);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
+            bw.Write(padding00);
+            bw.Write(padding01);
             for (int i = 0; i < MicrophonesCount; i++)
             {
                 Microphones[i].Write(bw);
@@ -16864,22 +17080,18 @@ namespace CodeWalker.GameFiles
         public override void WriteXml(StringBuilder sb, int indent)
         {
             RelXml.ValueTag(sb, indent, "Flags", "0x" + Flags.Hex);
-            RelXml.ValueTag(sb, indent, "Unk01", Unk01.ToString());
-            RelXml.ValueTag(sb, indent, "Unk02", Unk02.ToString());
-            RelXml.ValueTag(sb, indent, "Unk03", Unk03.ToString());
+            RelXml.ValueTag(sb, indent, "MicType", MicType.ToString());
             RelXml.WriteItemArray(sb, Microphones, indent, "Microphones");
         }
         public override void ReadXml(XmlNode node)
         {
             Flags = Xml.GetChildUIntAttribute(node, "Flags", "value");
-            Unk01 = (byte)Xml.GetChildIntAttribute(node, "Unk01", "value");
-            Unk02 = (byte)Xml.GetChildIntAttribute(node, "Unk02", "value");
-            Unk03 = (byte)Xml.GetChildIntAttribute(node, "Unk03", "value");
+            MicType = (byte)Xml.GetChildIntAttribute(node, "MicType", "value");
             Microphones = XmlRel.ReadItemArray<Dat151MicrophoneItem>(node, "Microphones");
             MicrophonesCount = (byte)(Microphones?.Length ?? 0);
         }
     }
-    [TC(typeof(EXP))] public class Dat151CarRecordingAudioSettings : Dat151RelData  //vehicle record audio? (YVR)
+    [TC(typeof(EXP))] public class Dat151CarRecordingAudioSettings : Dat151RelData
     {
         public MetaHash Group { get; set; }
         public int Duration { get; set; }
@@ -17072,16 +17284,16 @@ namespace CodeWalker.GameFiles
     }
     [TC(typeof(EXP))] public class Dat151AnimalFootstepSettings : Dat151RelData
     {
-        public MetaHash Unk01 { get; set; }
-        public MetaHash Unk02 { get; set; }
-        public MetaHash Unk03 { get; set; }
-        public MetaHash Unk04 { get; set; }
-        public MetaHash Unk05 { get; set; }
-        public MetaHash Unk06 { get; set; }
-        public MetaHash Unk07 { get; set; }
-        public MetaHash Unk08 { get; set; }
-        public MetaHash Unk09 { get; set; }
-        public int Unk10 { get; set; }
+        public MetaHash WalkAndTrot { get; set; }
+        public MetaHash Gallop1 { get; set; }
+        public MetaHash Gallop2 { get; set; }
+        public MetaHash Scuff { get; set; }
+        public MetaHash Jump { get; set; }
+        public MetaHash Land { get; set; }
+        public MetaHash LandHard { get; set; }
+        public MetaHash Clumsy { get; set; }
+        public MetaHash SlideLoop { get; set; }
+        public int AudioEventLoudness { get; set; }
 
         public Dat151AnimalFootstepSettings(RelFile rel) : base(rel)
         {
@@ -17090,80 +17302,80 @@ namespace CodeWalker.GameFiles
         }
         public Dat151AnimalFootstepSettings(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadUInt32();
-            Unk02 = br.ReadUInt32();
-            Unk03 = br.ReadUInt32();
-            Unk04 = br.ReadUInt32();
-            Unk05 = br.ReadUInt32();
-            Unk06 = br.ReadUInt32();
-            Unk07 = br.ReadUInt32();
-            Unk08 = br.ReadUInt32();
-            Unk09 = br.ReadUInt32();
-            Unk10 = br.ReadInt32();
+            WalkAndTrot = br.ReadUInt32();
+            Gallop1 = br.ReadUInt32();
+            Gallop2 = br.ReadUInt32();
+            Scuff = br.ReadUInt32();
+            Jump = br.ReadUInt32();
+            Land = br.ReadUInt32();
+            LandHard = br.ReadUInt32();
+            Clumsy = br.ReadUInt32();
+            SlideLoop = br.ReadUInt32();
+            AudioEventLoudness = br.ReadInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
-            bw.Write(Unk09);
-            bw.Write(Unk10);
+            bw.Write(WalkAndTrot);
+            bw.Write(Gallop1);
+            bw.Write(Gallop2);
+            bw.Write(Scuff);
+            bw.Write(Jump);
+            bw.Write(Land);
+            bw.Write(LandHard);
+            bw.Write(Clumsy);
+            bw.Write(SlideLoop);
+            bw.Write(AudioEventLoudness);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.StringTag(sb, indent, "Unk01", RelXml.HashString(Unk01));
-            RelXml.StringTag(sb, indent, "Unk02", RelXml.HashString(Unk02));
-            RelXml.StringTag(sb, indent, "Unk03", RelXml.HashString(Unk03));
-            RelXml.StringTag(sb, indent, "Unk04", RelXml.HashString(Unk04));
-            RelXml.StringTag(sb, indent, "Unk05", RelXml.HashString(Unk05));
-            RelXml.StringTag(sb, indent, "Unk06", RelXml.HashString(Unk06));
-            RelXml.StringTag(sb, indent, "Unk07", RelXml.HashString(Unk07));
-            RelXml.StringTag(sb, indent, "Unk08", RelXml.HashString(Unk08));
-            RelXml.StringTag(sb, indent, "Unk09", RelXml.HashString(Unk09));
-            RelXml.ValueTag(sb, indent, "Unk10", Unk10.ToString());
+            RelXml.StringTag(sb, indent, "WalkAndTrot", RelXml.HashString(WalkAndTrot));
+            RelXml.StringTag(sb, indent, "Gallop1", RelXml.HashString(Gallop1));
+            RelXml.StringTag(sb, indent, "Gallop2", RelXml.HashString(Gallop2));
+            RelXml.StringTag(sb, indent, "Scuff", RelXml.HashString(Scuff));
+            RelXml.StringTag(sb, indent, "Jump", RelXml.HashString(Jump));
+            RelXml.StringTag(sb, indent, "Land", RelXml.HashString(Land));
+            RelXml.StringTag(sb, indent, "LandHard", RelXml.HashString(LandHard));
+            RelXml.StringTag(sb, indent, "Clumsy", RelXml.HashString(Clumsy));
+            RelXml.StringTag(sb, indent, "SlideLoop", RelXml.HashString(SlideLoop));
+            RelXml.ValueTag(sb, indent, "AudioEventLoudness", AudioEventLoudness.ToString());
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk01"));
-            Unk02 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk02"));
-            Unk03 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk03"));
-            Unk04 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk04"));
-            Unk05 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk05"));
-            Unk06 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk06"));
-            Unk07 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk07"));
-            Unk08 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk08"));
-            Unk09 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk09"));
-            Unk10 = Xml.GetChildIntAttribute(node, "Unk10", "value");
+            WalkAndTrot = XmlRel.GetHash(Xml.GetChildInnerText(node, "WalkAndTrot"));
+            Gallop1 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Gallop1"));
+            Gallop2 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Gallop2"));
+            Scuff = XmlRel.GetHash(Xml.GetChildInnerText(node, "Scuff"));
+            Jump = XmlRel.GetHash(Xml.GetChildInnerText(node, "Jump"));
+            Land = XmlRel.GetHash(Xml.GetChildInnerText(node, "Land"));
+            LandHard = XmlRel.GetHash(Xml.GetChildInnerText(node, "LandHard"));
+            Clumsy = XmlRel.GetHash(Xml.GetChildInnerText(node, "Clumsy"));
+            SlideLoop = XmlRel.GetHash(Xml.GetChildInnerText(node, "SlideLoop"));
+            AudioEventLoudness = Xml.GetChildIntAttribute(node, "AudioEventLoudness", "value");
         }
         public override MetaHash[] GetSoundHashes()
         {
-            return new[] { Unk01, Unk02, Unk03, Unk04, Unk05, Unk06, Unk07, Unk08, Unk09 };
+            return new[] { WalkAndTrot, Gallop1, Gallop2, Scuff, Jump, Land, LandHard, Clumsy, SlideLoop };
         }
     }
     [TC(typeof(EXP))] public class Dat151ClothAudioSettings : Dat151RelData
     {
         public FlagsUint Flags { get; set; }
-        public MetaHash Unk01 { get; set; }
-        public MetaHash Unk02 { get; set; }
-        public MetaHash Unk03 { get; set; }
-        public MetaHash Unk04 { get; set; }
-        public MetaHash Unk05 { get; set; }
-        public MetaHash Unk06 { get; set; }
-        public MetaHash Unk07 { get; set; }
-        public MetaHash Unk08 { get; set; }//0
-        public MetaHash Unk09 { get; set; }//another cloth...
-        public MetaHash Unk10 { get; set; }
-        public MetaHash Unk11 { get; set; }
-        public MetaHash Unk12 { get; set; }//0
-        public MetaHash Unk13 { get; set; }
-        public MetaHash Unk14 { get; set; }
+        public MetaHash ImpactSound { get; set; }
+        public MetaHash WalkSound { get; set; }
+        public MetaHash RunSound { get; set; }
+        public MetaHash SprintSound { get; set; }
+        public MetaHash IntoCoverSound { get; set; }
+        public MetaHash OutOfCoverSound { get; set; }
+        public MetaHash WindSound { get; set; }
+        public float Intensity { get; set; }
+        public MetaHash PlayerVersion { get; set; }
+        public MetaHash BulletImpacts { get; set; }
+        public MetaHash PedRollSound { get; set; }
+        public MetaHash ScrapeMaterialSettings { get; set; }
+        public MetaHash JumpLandSound { get; set; }
+        public MetaHash MeleeSwingSound { get; set; }
 
         public Dat151ClothAudioSettings(RelFile rel) : base(rel)
         {
@@ -17173,84 +17385,84 @@ namespace CodeWalker.GameFiles
         public Dat151ClothAudioSettings(RelData d, BinaryReader br) : base(d, br)
         {
             Flags = br.ReadUInt32();
-            Unk01 = br.ReadUInt32();
-            Unk02 = br.ReadUInt32();
-            Unk03 = br.ReadUInt32();
-            Unk04 = br.ReadUInt32();
-            Unk05 = br.ReadUInt32();
-            Unk06 = br.ReadUInt32();
-            Unk07 = br.ReadUInt32();
-            Unk08 = br.ReadUInt32();//0
-            Unk09 = br.ReadUInt32();
-            Unk10 = br.ReadUInt32();
-            Unk11 = br.ReadUInt32();
-            Unk12 = br.ReadUInt32();//0
-            Unk13 = br.ReadUInt32();
-            Unk14 = br.ReadUInt32();
+            ImpactSound = br.ReadUInt32();
+            WalkSound = br.ReadUInt32();
+            RunSound = br.ReadUInt32();
+            SprintSound = br.ReadUInt32();
+            IntoCoverSound = br.ReadUInt32();
+            OutOfCoverSound = br.ReadUInt32();
+            WindSound = br.ReadUInt32();
+            Intensity = br.ReadSingle();
+            PlayerVersion = br.ReadUInt32();
+            BulletImpacts = br.ReadUInt32();
+            PedRollSound = br.ReadUInt32();
+            ScrapeMaterialSettings = br.ReadUInt32();
+            JumpLandSound = br.ReadUInt32();
+            MeleeSwingSound = br.ReadUInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
             bw.Write(Flags);
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
-            bw.Write(Unk09);
-            bw.Write(Unk10);
-            bw.Write(Unk11);
-            bw.Write(Unk12);
-            bw.Write(Unk13);
-            bw.Write(Unk14);
+            bw.Write(ImpactSound);
+            bw.Write(WalkSound);
+            bw.Write(RunSound);
+            bw.Write(SprintSound);
+            bw.Write(IntoCoverSound);
+            bw.Write(OutOfCoverSound);
+            bw.Write(WindSound);
+            bw.Write(Intensity);
+            bw.Write(PlayerVersion);
+            bw.Write(BulletImpacts);
+            bw.Write(PedRollSound);
+            bw.Write(ScrapeMaterialSettings);
+            bw.Write(JumpLandSound);
+            bw.Write(MeleeSwingSound);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
             RelXml.ValueTag(sb, indent, "Flags", "0x" + Flags.Hex);
-            RelXml.StringTag(sb, indent, "Unk01", RelXml.HashString(Unk01));
-            RelXml.StringTag(sb, indent, "Unk02", RelXml.HashString(Unk02));
-            RelXml.StringTag(sb, indent, "Unk03", RelXml.HashString(Unk03));
-            RelXml.StringTag(sb, indent, "Unk04", RelXml.HashString(Unk04));
-            RelXml.StringTag(sb, indent, "Unk05", RelXml.HashString(Unk05));
-            RelXml.StringTag(sb, indent, "Unk06", RelXml.HashString(Unk06));
-            RelXml.StringTag(sb, indent, "Unk07", RelXml.HashString(Unk07));
-            RelXml.StringTag(sb, indent, "Unk08", RelXml.HashString(Unk08));
-            RelXml.StringTag(sb, indent, "Unk09", RelXml.HashString(Unk09));
-            RelXml.StringTag(sb, indent, "Unk10", RelXml.HashString(Unk10));
-            RelXml.StringTag(sb, indent, "Unk11", RelXml.HashString(Unk11));
-            RelXml.StringTag(sb, indent, "Unk12", RelXml.HashString(Unk12));
-            RelXml.StringTag(sb, indent, "Unk13", RelXml.HashString(Unk13));
-            RelXml.StringTag(sb, indent, "Unk14", RelXml.HashString(Unk14));
+            RelXml.StringTag(sb, indent, "ImpactSound", RelXml.HashString(ImpactSound));
+            RelXml.StringTag(sb, indent, "WalkSound", RelXml.HashString(WalkSound));
+            RelXml.StringTag(sb, indent, "RunSound", RelXml.HashString(RunSound));
+            RelXml.StringTag(sb, indent, "SprintSound", RelXml.HashString(SprintSound));
+            RelXml.StringTag(sb, indent, "IntoCoverSound", RelXml.HashString(IntoCoverSound));
+            RelXml.StringTag(sb, indent, "OutOfCoverSound", RelXml.HashString(OutOfCoverSound));
+            RelXml.StringTag(sb, indent, "WindSound", RelXml.HashString(WindSound));
+            RelXml.ValueTag(sb, indent, "Intensity", FloatUtil.ToString(Intensity));
+            RelXml.StringTag(sb, indent, "PlayerVersion", RelXml.HashString(PlayerVersion));
+            RelXml.StringTag(sb, indent, "BulletImpacts", RelXml.HashString(BulletImpacts));
+            RelXml.StringTag(sb, indent, "PedRollSound", RelXml.HashString(PedRollSound));
+            RelXml.StringTag(sb, indent, "ScrapeMaterialSettings", RelXml.HashString(ScrapeMaterialSettings));
+            RelXml.StringTag(sb, indent, "JumpLandSound", RelXml.HashString(JumpLandSound));
+            RelXml.StringTag(sb, indent, "MeleeSwingSound", RelXml.HashString(MeleeSwingSound));
         }
         public override void ReadXml(XmlNode node)
         {
             Flags = Xml.GetChildUIntAttribute(node, "Flags", "value");
-            Unk01 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk01"));
-            Unk02 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk02"));
-            Unk03 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk03"));
-            Unk04 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk04"));
-            Unk05 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk05"));
-            Unk06 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk06"));
-            Unk07 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk07"));
-            Unk08 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk08"));
-            Unk09 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk09"));
-            Unk10 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk10"));
-            Unk11 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk11"));
-            Unk12 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk12"));
-            Unk13 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk13"));
-            Unk14 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk14"));
+            ImpactSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "ImpactSound"));
+            WalkSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "WalkSound"));
+            RunSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "RunSound"));
+            SprintSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "SprintSound"));
+            IntoCoverSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "IntoCoverSound"));
+            OutOfCoverSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "OutOfCoverSound"));
+            WindSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "WindSound"));
+            Intensity = XmlRel.GetHash(Xml.GetChildInnerText(node, "Intensity"));
+            PlayerVersion = XmlRel.GetHash(Xml.GetChildInnerText(node, "PlayerVersion"));
+            BulletImpacts = XmlRel.GetHash(Xml.GetChildInnerText(node, "BulletImpacts"));
+            PedRollSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "PedRollSound"));
+            ScrapeMaterialSettings = XmlRel.GetHash(Xml.GetChildInnerText(node, "ScrapeMaterialSettings"));
+            JumpLandSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "JumpLandSound"));
+            MeleeSwingSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "MeleeSwingSound"));
         }
         public override MetaHash[] GetSoundHashes()
         {
-            return new[] { Unk01, Unk02, Unk03, Unk04, Unk05, Unk06, Unk07, Unk10, Unk11, Unk13, Unk14 };
+            return new[] { ImpactSound, WalkSound, RunSound, SprintSound, IntoCoverSound, OutOfCoverSound, WindSound, BulletImpacts, PedRollSound, JumpLandSound, MeleeSwingSound };
         }
         public override MetaHash[] GetGameHashes()
         {
-            return new[] { Unk09 };//is this necessary here?
+            return new[] { PlayerVersion };
         }
     }
     [TC(typeof(EXP))] public class Dat151RadioTrackSettings : Dat151RelData //_rts, _radio_settings (plays a specific radio track song)
@@ -17300,169 +17512,161 @@ namespace CodeWalker.GameFiles
             return new[] { Sound, HistorySound };
         }
     }
-    [TC(typeof(EXP))] public class Dat151ModelFootStepTuningItem : IMetaXmlItem
+    [TC(typeof(EXP))] 
+    public class Dat151ModelFootStepTuningItem : IMetaXmlItem
     {
-        public MetaHash Unk01 { get; set; }//name eg. default, good_stealth, bad_stealth, soft_steps, drunk
-        public float Unk02 { get; set; }
-        public int Unk03 { get; set; }
-        public int Unk04 { get; set; }
-        public float Unk05 { get; set; }
-        public float Unk06 { get; set; }
-        public int Unk07 { get; set; }
-        public MetaHash Unk08 { get; set; }//0
-        public MetaHash Unk09 { get; set; }//??? not matching anything in dat.rel files
-        public float Unk10 { get; set; }
-        public int Unk11 { get; set; }
-        public MetaHash Unk12 { get; set; }//0
-        public MetaHash Unk13 { get; set; }//??? not matching anything in dat.rel files
-        public float Unk14 { get; set; }
-        public int Unk15 { get; set; }
-        public MetaHash Unk16 { get; set; }//0
-        public MetaHash Unk17 { get; set; }//??? not matching anything in dat.rel files
-        public float Unk18 { get; set; }
-        public int Unk19 { get; set; }
-        public int Unk20 { get; set; }
-        public MetaHash Unk21 { get; set; }//??? not matching anything in dat.rel files
-        public float Unk22 { get; set; }
-        public int Unk23 { get; set; }
-        public MetaHash Unk24 { get; set; }//0
-        public float Unk25 { get; set; }
+        public MetaHash ModeName { get; set; }
+        public float ShoeVolumeOffset { get; set; }
+        public uint ShoeLPFCutoff { get; set; }
+        public uint ShoeAttackTime { get; set; }
+        public float DragScuffProbability { get; set; }
+        public float DirtVolumeOffset { get; set; }
+        public uint DirtLPFCutoff { get; set; }
+        public uint DirtAttackTime { get; set; }
+        public MetaHash DirtSweetenerCurve { get; set; }
+        public float CreakVolumeOffset { get; set; }
+        public uint CreakLPFCutoff { get; set; }
+        public uint CreakAttackTime { get; set; }
+        public MetaHash CreakSweetenerCurve { get; set; }
+        public float GlassVolumeOffset { get; set; }
+        public uint GlassLPFCutoff { get; set; }
+        public uint GlassAttackTime { get; set; }
+        public MetaHash GlassSweetenerCurve { get; set; }
+        public float WetVolumeOffset { get; set; }
+        public uint WetLPFCutoff { get; set; }
+        public uint WetAttackTime { get; set; }
+        public MetaHash WetSweetenerCurve { get; set; }
+        public float CustomVolumeOffset { get; set; }
+        public uint CustomLPFCutoff { get; set; }
+        public uint CustomAttackTime { get; set; }
+        public float MaterialImpactImpulseScale { get; set; }
 
         public Dat151ModelFootStepTuningItem()
         { }
         public Dat151ModelFootStepTuningItem(BinaryReader br)
         {
-            Unk01 = br.ReadUInt32();
-            Unk02 = br.ReadSingle();
-            Unk03 = br.ReadInt32();
-            Unk04 = br.ReadInt32();
-            Unk05 = br.ReadSingle();
-            Unk06 = br.ReadSingle();
-            Unk07 = br.ReadInt32();
-            Unk08 = br.ReadUInt32();//0
-            Unk09 = br.ReadUInt32();
-            Unk10 = br.ReadSingle();
-            Unk11 = br.ReadInt32();
-            Unk12 = br.ReadUInt32();//0
-            Unk13 = br.ReadUInt32();
-            Unk14 = br.ReadSingle();
-            Unk15 = br.ReadInt32();
-            Unk16 = br.ReadUInt32();//0
-            Unk17 = br.ReadUInt32();
-            Unk18 = br.ReadSingle();
-            Unk19 = br.ReadInt32();
-            Unk20 = br.ReadInt32();
-            Unk21 = br.ReadUInt32();
-            Unk22 = br.ReadSingle();
-            Unk23 = br.ReadInt32();
-            Unk24 = br.ReadUInt32();//0
-            Unk25 = br.ReadSingle();
-
-            if (Unk08 != 0)
-            { }
-            if (Unk12 != 0)
-            { }
-            if (Unk16 != 0)
-            { }
-            if (Unk24 != 0)
-            { }
+            ModeName = br.ReadUInt32();
+            ShoeVolumeOffset = br.ReadSingle();
+            ShoeLPFCutoff = br.ReadUInt32();
+            ShoeAttackTime = br.ReadUInt32();
+            DragScuffProbability = br.ReadSingle();
+            DirtVolumeOffset = br.ReadSingle();
+            DirtLPFCutoff = br.ReadUInt32();
+            DirtAttackTime = br.ReadUInt32();
+            DirtSweetenerCurve = br.ReadUInt32();
+            CreakVolumeOffset = br.ReadSingle();
+            CreakLPFCutoff = br.ReadUInt32();
+            CreakAttackTime = br.ReadUInt32();
+            CreakSweetenerCurve = br.ReadUInt32();
+            GlassVolumeOffset = br.ReadSingle();
+            GlassLPFCutoff = br.ReadUInt32();
+            GlassAttackTime = br.ReadUInt32();
+            GlassSweetenerCurve = br.ReadUInt32();
+            WetVolumeOffset = br.ReadSingle();
+            WetLPFCutoff = br.ReadUInt32();
+            WetAttackTime = br.ReadUInt32();
+            WetSweetenerCurve = br.ReadUInt32();
+            CustomVolumeOffset = br.ReadSingle();
+            CustomLPFCutoff = br.ReadUInt32();
+            CustomAttackTime = br.ReadUInt32();
+            MaterialImpactImpulseScale = br.ReadSingle();
         }
         public void Write(BinaryWriter bw)
         {
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
-            bw.Write(Unk09);
-            bw.Write(Unk10);
-            bw.Write(Unk11);
-            bw.Write(Unk12);
-            bw.Write(Unk13);
-            bw.Write(Unk14);
-            bw.Write(Unk15);
-            bw.Write(Unk16);
-            bw.Write(Unk17);
-            bw.Write(Unk18);
-            bw.Write(Unk19);
-            bw.Write(Unk20);
-            bw.Write(Unk21);
-            bw.Write(Unk22);
-            bw.Write(Unk23);
-            bw.Write(Unk24);
-            bw.Write(Unk25);
+            bw.Write(ModeName);
+            bw.Write(ShoeVolumeOffset);
+            bw.Write(ShoeLPFCutoff);
+            bw.Write(ShoeAttackTime);
+            bw.Write(DragScuffProbability);
+            bw.Write(DirtVolumeOffset);
+            bw.Write(DirtLPFCutoff);
+            bw.Write(DirtAttackTime);
+            bw.Write(DirtSweetenerCurve);
+            bw.Write(CreakVolumeOffset);
+            bw.Write(CreakLPFCutoff);
+            bw.Write(CreakAttackTime);
+            bw.Write(CreakSweetenerCurve);
+            bw.Write(GlassVolumeOffset);
+            bw.Write(GlassLPFCutoff);
+            bw.Write(GlassAttackTime);
+            bw.Write(GlassSweetenerCurve);
+            bw.Write(WetVolumeOffset);
+            bw.Write(WetLPFCutoff);
+            bw.Write(WetAttackTime);
+            bw.Write(WetSweetenerCurve);
+            bw.Write(CustomVolumeOffset);
+            bw.Write(CustomLPFCutoff);
+            bw.Write(CustomAttackTime);
+            bw.Write(MaterialImpactImpulseScale);
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.StringTag(sb, indent, "Unk01", RelXml.HashString(Unk01));
-            RelXml.ValueTag(sb, indent, "Unk02", FloatUtil.ToString(Unk02));
-            RelXml.ValueTag(sb, indent, "Unk03", Unk03.ToString());
-            RelXml.ValueTag(sb, indent, "Unk04", Unk04.ToString());
-            RelXml.ValueTag(sb, indent, "Unk05", FloatUtil.ToString(Unk05));
-            RelXml.ValueTag(sb, indent, "Unk06", FloatUtil.ToString(Unk06));
-            RelXml.ValueTag(sb, indent, "Unk07", Unk07.ToString());
-            RelXml.StringTag(sb, indent, "Unk08", RelXml.HashString(Unk08));
-            RelXml.StringTag(sb, indent, "Unk09", RelXml.HashString(Unk09));
-            RelXml.ValueTag(sb, indent, "Unk10", FloatUtil.ToString(Unk10));
-            RelXml.ValueTag(sb, indent, "Unk11", Unk11.ToString());
-            RelXml.StringTag(sb, indent, "Unk12", RelXml.HashString(Unk12));
-            RelXml.StringTag(sb, indent, "Unk13", RelXml.HashString(Unk13));
-            RelXml.ValueTag(sb, indent, "Unk14", FloatUtil.ToString(Unk14));
-            RelXml.ValueTag(sb, indent, "Unk15", Unk15.ToString());
-            RelXml.StringTag(sb, indent, "Unk16", RelXml.HashString(Unk16));
-            RelXml.StringTag(sb, indent, "Unk17", RelXml.HashString(Unk17));
-            RelXml.ValueTag(sb, indent, "Unk18", FloatUtil.ToString(Unk18));
-            RelXml.ValueTag(sb, indent, "Unk19", Unk19.ToString());
-            RelXml.ValueTag(sb, indent, "Unk20", Unk20.ToString());
-            RelXml.StringTag(sb, indent, "Unk21", RelXml.HashString(Unk21));
-            RelXml.ValueTag(sb, indent, "Unk22", FloatUtil.ToString(Unk22));
-            RelXml.ValueTag(sb, indent, "Unk23", Unk23.ToString());
-            RelXml.StringTag(sb, indent, "Unk24", RelXml.HashString(Unk24));
-            RelXml.ValueTag(sb, indent, "Unk25", FloatUtil.ToString(Unk25));
+            RelXml.StringTag(sb, indent, "ModeName", RelXml.HashString(ModeName));
+            RelXml.ValueTag(sb, indent, "ShoeVolumeOffset", FloatUtil.ToString(ShoeVolumeOffset));
+            RelXml.ValueTag(sb, indent, "ShoeLPFCutoff", ShoeLPFCutoff.ToString());
+            RelXml.ValueTag(sb, indent, "ShoeAttackTime", ShoeAttackTime.ToString());
+            RelXml.ValueTag(sb, indent, "DragScuffProbability", FloatUtil.ToString(DragScuffProbability));
+            RelXml.ValueTag(sb, indent, "DirtVolumeOffset", FloatUtil.ToString(DirtVolumeOffset));
+            RelXml.ValueTag(sb, indent, "DirtLPFCutoff", DirtLPFCutoff.ToString());
+            RelXml.StringTag(sb, indent, "DirtAttackTime", DirtAttackTime.ToString());
+            RelXml.StringTag(sb, indent, "DirtSweetenerCurve", RelXml.HashString(DirtSweetenerCurve));
+            RelXml.ValueTag(sb, indent, "CreakVolumeOffset", FloatUtil.ToString(CreakVolumeOffset));
+            RelXml.ValueTag(sb, indent, "CreakLPFCutoff", CreakLPFCutoff.ToString());
+            RelXml.StringTag(sb, indent, "CreakAttackTime", CreakAttackTime.ToString());
+            RelXml.StringTag(sb, indent, "CreakSweetenerCurve", RelXml.HashString(CreakSweetenerCurve));
+            RelXml.ValueTag(sb, indent, "GlassVolumeOffset", FloatUtil.ToString(GlassVolumeOffset));
+            RelXml.ValueTag(sb, indent, "GlassLPFCutoff", GlassLPFCutoff.ToString());
+            RelXml.StringTag(sb, indent, "GlassAttackTime", GlassAttackTime.ToString());
+            RelXml.StringTag(sb, indent, "GlassSweetenerCurve", RelXml.HashString(GlassSweetenerCurve));
+            RelXml.ValueTag(sb, indent, "WetVolumeOffset", FloatUtil.ToString(WetVolumeOffset));
+            RelXml.ValueTag(sb, indent, "WetLPFCutoff", WetLPFCutoff.ToString());
+            RelXml.ValueTag(sb, indent, "WetAttackTime", WetAttackTime.ToString());
+            RelXml.StringTag(sb, indent, "WetSweetenerCurve", RelXml.HashString(WetSweetenerCurve));
+            RelXml.ValueTag(sb, indent, "CustomVolumeOffset", FloatUtil.ToString(CustomVolumeOffset));
+            RelXml.ValueTag(sb, indent, "CustomLPFCutoff", CustomLPFCutoff.ToString());
+            RelXml.StringTag(sb, indent, "CustomAttackTime", CustomAttackTime.ToString());
+            RelXml.ValueTag(sb, indent, "MaterialImpactImpulseScale", FloatUtil.ToString(MaterialImpactImpulseScale));
         }
         public void ReadXml(XmlNode node)
         {
-            Unk01 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk01"));
-            Unk02 = Xml.GetChildFloatAttribute(node, "Unk02", "value");
-            Unk03 = Xml.GetChildIntAttribute(node, "Unk03", "value");
-            Unk04 = Xml.GetChildIntAttribute(node, "Unk04", "value");
-            Unk05 = Xml.GetChildFloatAttribute(node, "Unk05", "value");
-            Unk06 = Xml.GetChildFloatAttribute(node, "Unk06", "value");
-            Unk07 = Xml.GetChildIntAttribute(node, "Unk07", "value");
-            Unk08 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk08"));
-            Unk09 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk09"));
-            Unk10 = Xml.GetChildFloatAttribute(node, "Unk10", "value");
-            Unk11 = Xml.GetChildIntAttribute(node, "Unk11", "value");
-            Unk12 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk12"));
-            Unk13 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk13"));
-            Unk14 = Xml.GetChildFloatAttribute(node, "Unk14", "value");
-            Unk15 = Xml.GetChildIntAttribute(node, "Unk15", "value");
-            Unk16 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk16"));
-            Unk17 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk17"));
-            Unk18 = Xml.GetChildFloatAttribute(node, "Unk18", "value");
-            Unk19 = Xml.GetChildIntAttribute(node, "Unk19", "value");
-            Unk20 = Xml.GetChildIntAttribute(node, "Unk20", "value");
-            Unk21 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk21"));
-            Unk22 = Xml.GetChildFloatAttribute(node, "Unk22", "value");
-            Unk23 = Xml.GetChildIntAttribute(node, "Unk23", "value");
-            Unk24 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk24"));
-            Unk25 = Xml.GetChildFloatAttribute(node, "Unk25", "value");
+            ModeName = XmlRel.GetHash(Xml.GetChildInnerText(node, "ModeName"));
+            ShoeVolumeOffset = Xml.GetChildFloatAttribute(node, "ShoeVolumeOffset", "value");
+            ShoeLPFCutoff = Xml.GetChildUIntAttribute(node, "ShoeLPFCutoff", "value");
+            ShoeAttackTime = Xml.GetChildUIntAttribute(node, "ShoeAttackTime", "value");
+            DragScuffProbability = Xml.GetChildFloatAttribute(node, "DragScuffProbability", "value");
+            DirtVolumeOffset = Xml.GetChildFloatAttribute(node, "DirtVolumeOffset", "value");
+            DirtLPFCutoff = Xml.GetChildUIntAttribute(node, "DirtLPFCutoff", "value");
+            DirtAttackTime = Xml.GetChildUIntAttribute(node, "DirtAttackTime", "value");
+            DirtSweetenerCurve = XmlRel.GetHash(Xml.GetChildInnerText(node, "DirtSweetenerCurve"));
+            CreakVolumeOffset = Xml.GetChildFloatAttribute(node, "CreakVolumeOffset", "value");
+            CreakLPFCutoff = Xml.GetChildUIntAttribute(node, "CreakLPFCutoff", "value");
+            CreakAttackTime = Xml.GetChildUIntAttribute(node, "CreakAttackTime", "value");
+            CreakSweetenerCurve = XmlRel.GetHash(Xml.GetChildInnerText(node, "CreakSweetenerCurve"));
+            GlassVolumeOffset = Xml.GetChildFloatAttribute(node, "GlassVolumeOffset", "value");
+            GlassLPFCutoff = Xml.GetChildUIntAttribute(node, "GlassLPFCutoff", "value");
+            GlassAttackTime = Xml.GetChildUIntAttribute(node, "GlassAttackTime", "value");
+            GlassSweetenerCurve = XmlRel.GetHash(Xml.GetChildInnerText(node, "GlassSweetenerCurve"));
+            WetVolumeOffset = Xml.GetChildFloatAttribute(node, "WetVolumeOffset", "value");
+            WetLPFCutoff = Xml.GetChildUIntAttribute(node, "WetLPFCutoff", "value");
+            WetAttackTime = Xml.GetChildUIntAttribute(node, "WetAttackTime", "value");
+            WetSweetenerCurve = XmlRel.GetHash(Xml.GetChildInnerText(node, "WetSweetenerCurve"));
+            CustomVolumeOffset = Xml.GetChildFloatAttribute(node, "CustomVolumeOffset", "value");
+            CustomLPFCutoff = Xml.GetChildUIntAttribute(node, "CustomLPFCutoff", "value");
+            CustomAttackTime = Xml.GetChildUIntAttribute(node, "CustomAttackTime", "value");
+            MaterialImpactImpulseScale = Xml.GetChildFloatAttribute(node, "MaterialImpactImpulseScale", "value");
         }
         public override string ToString()
         {
-            return Unk01.ToString();
+            return ModeName.ToString();
         }
     }
     [TC(typeof(EXP))] public class Dat151ModelFootStepTuning : Dat151RelData
     {
-        public float Unk01 { get; set; }
-        public float Unk02 { get; set; }
-        public float Unk03 { get; set; }
-        public float Unk04 { get; set; }
-        public float Unk05 { get; set; }
+        public float FootstepPitchRatioMin { get; set; }
+        public float FootstepPitchRatioMax { get; set; }
+        public float InLeftPocketProbability { get; set; }
+        public float HasKeysProbability { get; set; }
+        public float HasMoneyProbability { get; set; }
         public int ItemCount { get; set; }
         public Dat151ModelFootStepTuningItem[] Items { get; set; }
 
@@ -17473,11 +17677,12 @@ namespace CodeWalker.GameFiles
         }
         public Dat151ModelFootStepTuning(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadSingle();
-            Unk02 = br.ReadSingle();
-            Unk03 = br.ReadSingle();
-            Unk04 = br.ReadSingle();
-            Unk05 = br.ReadSingle();
+            FootstepPitchRatioMin = br.ReadSingle();
+            FootstepPitchRatioMax = br.ReadSingle();
+            InLeftPocketProbability = br.ReadSingle();
+            HasKeysProbability = br.ReadSingle();
+            HasMoneyProbability = br.ReadSingle();
+
             ItemCount = br.ReadInt32();
             Items = new Dat151ModelFootStepTuningItem[ItemCount];
             for (int i = 0; i < ItemCount; i++)
@@ -17489,11 +17694,12 @@ namespace CodeWalker.GameFiles
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
+            bw.Write(FootstepPitchRatioMin);
+            bw.Write(FootstepPitchRatioMax);
+            bw.Write(InLeftPocketProbability);
+            bw.Write(HasKeysProbability);
+            bw.Write(HasMoneyProbability);
+
             bw.Write(ItemCount);
             for (int i = 0; i < ItemCount; i++)
             {
@@ -17502,20 +17708,20 @@ namespace CodeWalker.GameFiles
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.ValueTag(sb, indent, "Unk01", FloatUtil.ToString(Unk01));
-            RelXml.ValueTag(sb, indent, "Unk02", FloatUtil.ToString(Unk02));
-            RelXml.ValueTag(sb, indent, "Unk03", FloatUtil.ToString(Unk03));
-            RelXml.ValueTag(sb, indent, "Unk04", FloatUtil.ToString(Unk04));
-            RelXml.ValueTag(sb, indent, "Unk05", FloatUtil.ToString(Unk05));
+            RelXml.ValueTag(sb, indent, "FootstepPitchRatioMin", FloatUtil.ToString(FootstepPitchRatioMin));
+            RelXml.ValueTag(sb, indent, "FootstepPitchRatioMax", FloatUtil.ToString(FootstepPitchRatioMax));
+            RelXml.ValueTag(sb, indent, "InLeftPocketProbability", FloatUtil.ToString(InLeftPocketProbability));
+            RelXml.ValueTag(sb, indent, "HasKeysProbability", FloatUtil.ToString(HasKeysProbability));
+            RelXml.ValueTag(sb, indent, "HasMoneyProbability", FloatUtil.ToString(HasMoneyProbability));
             RelXml.WriteItemArray(sb, Items, indent, "Items");
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = Xml.GetChildFloatAttribute(node, "Unk01", "value");
-            Unk02 = Xml.GetChildFloatAttribute(node, "Unk02", "value");
-            Unk03 = Xml.GetChildFloatAttribute(node, "Unk03", "value");
-            Unk04 = Xml.GetChildFloatAttribute(node, "Unk04", "value");
-            Unk05 = Xml.GetChildFloatAttribute(node, "Unk05", "value");
+            FootstepPitchRatioMin = Xml.GetChildFloatAttribute(node, "FootstepPitchRatioMin", "value");
+            FootstepPitchRatioMax = Xml.GetChildFloatAttribute(node, "FootstepPitchRatioMax", "value");
+            InLeftPocketProbability = Xml.GetChildFloatAttribute(node, "InLeftPocketProbability", "value");
+            HasKeysProbability = Xml.GetChildFloatAttribute(node, "HasKeysProbability", "value");
+            HasMoneyProbability = Xml.GetChildFloatAttribute(node, "HasMoneyProbability", "value");
             Items = XmlRel.ReadItemArray<Dat151ModelFootStepTuningItem>(node, "Items");
             ItemCount = (Items?.Length ?? 0);
         }
@@ -17672,15 +17878,15 @@ namespace CodeWalker.GameFiles
     }
     [TC(typeof(EXP))] public class Dat151AlarmSettings : Dat151RelData
     {
-        public MetaHash DistantAlarm { get; set; }
-        public MetaHash Curve { get; set; }
-        public int Unk03 { get; set; }
-        public MetaHash Interior { get; set; }//interior name: v_jewel2
-        public MetaHash Alarm { get; set; }//alarm sound: script/alarm_bell_01
-        public MetaHash Unk04 { get; set; }//0
-        public MetaHash Unk05 { get; set; }//0
+        public MetaHash AlarmLoop { get; set; }
+        public MetaHash AlarmDecayCurve { get; set; }
+        public uint StopDistance { get; set; }
+        public MetaHash InteriorSettings { get; set; }
+        public MetaHash BankName { get; set; }
+        public uint padding00 { get; set; }
+        public uint padding01 { get; set; }
         public Vector3 Position { get; set; }
-        public MetaHash Unk06 { get; set; }//0
+        public uint padding02 { get; set; }
 
         public Dat151AlarmSettings(RelFile rel) : base(rel)
         {
@@ -17689,71 +17895,67 @@ namespace CodeWalker.GameFiles
         }
         public Dat151AlarmSettings(RelData d, BinaryReader br) : base(d, br)
         {
-            DistantAlarm = br.ReadUInt32();
-            Curve = br.ReadUInt32();
-            Unk03 = br.ReadInt32();
-            Interior = br.ReadUInt32();//interior name: v_jewel2
-            Alarm = br.ReadUInt32();//alarm sound: script/alarm_bell_01
-            Unk04 = br.ReadUInt32();//0
-            Unk05 = br.ReadUInt32();//0
+            AlarmLoop = br.ReadUInt32();
+            AlarmDecayCurve = br.ReadUInt32();
+            StopDistance = br.ReadUInt32();
+            InteriorSettings = br.ReadUInt32();
+            BankName = br.ReadUInt32();
+            padding00 = br.ReadUInt32();
+            padding01 = br.ReadUInt32();
             Position = new Vector3(br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
-            Unk06 = br.ReadUInt32();//0
+            padding02 = br.ReadUInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(DistantAlarm);
-            bw.Write(Curve);
-            bw.Write(Unk03);
-            bw.Write(Interior);
-            bw.Write(Alarm);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
+            bw.Write(AlarmLoop);
+            bw.Write(AlarmDecayCurve);
+            bw.Write(StopDistance);
+            bw.Write(InteriorSettings);
+            bw.Write(BankName);
+            bw.Write(padding00);
+            bw.Write(padding01);
             bw.Write(Position.X);
             bw.Write(Position.Y);
             bw.Write(Position.Z);
-            bw.Write(Unk06);
+            bw.Write(padding02);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.StringTag(sb, indent, "DistantAlarm", RelXml.HashString(DistantAlarm));
-            RelXml.StringTag(sb, indent, "Curve", RelXml.HashString(Curve));
-            RelXml.ValueTag(sb, indent, "Unk03", Unk03.ToString());
-            RelXml.StringTag(sb, indent, "Interior", RelXml.HashString(Interior));
-            RelXml.StringTag(sb, indent, "Alarm", RelXml.HashString(Alarm));
-            RelXml.StringTag(sb, indent, "Unk04", RelXml.HashString(Unk04));
-            RelXml.StringTag(sb, indent, "Unk05", RelXml.HashString(Unk05));
+            RelXml.StringTag(sb, indent, "AlarmLoop", RelXml.HashString(AlarmLoop));
+            RelXml.StringTag(sb, indent, "AlarmDecayCurve", RelXml.HashString(AlarmDecayCurve));
+            RelXml.ValueTag(sb, indent, "StopDistance", StopDistance.ToString());
+            RelXml.StringTag(sb, indent, "InteriorSettings", RelXml.HashString(InteriorSettings));
+            RelXml.StringTag(sb, indent, "BankName", RelXml.HashString(BankName));
             RelXml.SelfClosingTag(sb, indent, "Position " + FloatUtil.GetVector3XmlString(Position));
-            RelXml.StringTag(sb, indent, "Unk06", RelXml.HashString(Unk06));
         }
         public override void ReadXml(XmlNode node)
         {
-            DistantAlarm = XmlRel.GetHash(Xml.GetChildInnerText(node, "DistantAlarm"));
-            Curve = XmlRel.GetHash(Xml.GetChildInnerText(node, "Curve"));
-            Unk03 = Xml.GetChildIntAttribute(node, "Unk03", "value");
-            Interior = XmlRel.GetHash(Xml.GetChildInnerText(node, "Interior"));
-            Alarm = XmlRel.GetHash(Xml.GetChildInnerText(node, "Alarm"));
-            Unk04 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk04"));
-            Unk05 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk05"));
+            AlarmLoop = XmlRel.GetHash(Xml.GetChildInnerText(node, "AlarmLoop"));
+            AlarmDecayCurve = XmlRel.GetHash(Xml.GetChildInnerText(node, "AlarmDecayCurve"));
+            StopDistance = Xml.GetChildUIntAttribute(node, "StopDistance", "value");
+            InteriorSettings = XmlRel.GetHash(Xml.GetChildInnerText(node, "InteriorSettings"));
+            BankName = XmlRel.GetHash(Xml.GetChildInnerText(node, "BankName"));
             Position = Xml.GetChildVector3Attributes(node, "Position");
-            Unk06 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk06"));
         }
         public override MetaHash[] GetCurveHashes()
         {
-            return new[] { Curve };
+            return new[] { AlarmDecayCurve };
         }
         public override MetaHash[] GetSoundHashes()
         {
-            return new[] { DistantAlarm };
+            return new[] { AlarmLoop };
         }
     }
-    [TC(typeof(EXP))] public class Dat151SlowMoSettings : Dat151RelData
+
+    [TC(typeof(EXP))] 
+    public class Dat151SlowMoSettings : Dat151RelData
     {
         public MetaHash Scene { get; set; }
-        public int Unk02 { get; set; }
-        public MetaHash Unk03 { get; set; }//0
-        public MetaHash Unk04 { get; set; }
+        public int Priority { get; set; }
+        public float Release { get; set; }
+        public MetaHash SlowMoSound { get; set; }
 
         public Dat151SlowMoSettings(RelFile rel) : base(rel)
         {
@@ -17763,32 +17965,32 @@ namespace CodeWalker.GameFiles
         public Dat151SlowMoSettings(RelData d, BinaryReader br) : base(d, br)
         {
             Scene = br.ReadUInt32();
-            Unk02 = br.ReadInt32();
-            Unk03 = br.ReadUInt32();
-            Unk04 = br.ReadUInt32();
+            Priority = br.ReadInt32();
+            Release = br.ReadSingle();
+            SlowMoSound = br.ReadUInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
             bw.Write(Scene);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
+            bw.Write(Priority);
+            bw.Write(Release);
+            bw.Write(SlowMoSound);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
             RelXml.StringTag(sb, indent, "Scene", RelXml.HashString(Scene));
-            RelXml.ValueTag(sb, indent, "Unk02", Unk02.ToString());
-            RelXml.StringTag(sb, indent, "Unk03", RelXml.HashString(Unk03));
-            RelXml.StringTag(sb, indent, "Unk04", RelXml.HashString(Unk04));
+            RelXml.ValueTag(sb, indent, "Priority", Priority.ToString());
+            RelXml.ValueTag(sb, indent, "Release", FloatUtil.ToString(Release));
+            RelXml.StringTag(sb, indent, "SlowMoSound", RelXml.HashString(SlowMoSound));
         }
         public override void ReadXml(XmlNode node)
         {
             Scene = XmlRel.GetHash(Xml.GetChildInnerText(node, "Scene"));
-            Unk02 = Xml.GetChildIntAttribute(node, "Unk02", "value");
-            Unk03 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk03"));
-            Unk04 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk04"));
+            Priority = Xml.GetChildIntAttribute(node, "Priority", "value");
+            Release = Xml.GetChildFloatAttribute(node, "Release", "value");
+            SlowMoSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "SlowMoSound"));
         }
         public override MetaHash[] GetMixerHashes()
         {
@@ -17796,15 +17998,17 @@ namespace CodeWalker.GameFiles
         }
         public override MetaHash[] GetSoundHashes()
         {
-            return new[] { Unk04 };
+            return new[] { SlowMoSound };
         }
     }
-    [TC(typeof(EXP))] public class Dat151PedScenarioAudioSettings : Dat151RelData //eg world_human_musician
+
+    [TC(typeof(EXP))] 
+    public class Dat151PedScenarioAudioSettings : Dat151RelData
     {
         public FlagsUint Flags { get; set; }
-        public int Unk01 { get; set; }
+        public int MaxInstances { get; set; }
         public MetaHash Sound { get; set; }
-        public float Unk03 { get; set; }
+        public float SharedOwnershipRadius { get; set; }
         public int VariationsCount { get; set; }
         public Dat151PedScenarioAudioSettingsItem[] Variations { get; set; }
 
@@ -17816,9 +18020,10 @@ namespace CodeWalker.GameFiles
         public Dat151PedScenarioAudioSettings(RelData d, BinaryReader br) : base(d, br)
         {
             Flags = br.ReadUInt32();
-            Unk01 = br.ReadInt32();
+            MaxInstances = br.ReadInt32();
             Sound = br.ReadUInt32();
-            Unk03 = br.ReadSingle();
+            SharedOwnershipRadius = br.ReadSingle();
+
             VariationsCount = br.ReadInt32();
             Variations = new Dat151PedScenarioAudioSettingsItem[VariationsCount];
             for (int i = 0; i < VariationsCount; i++)
@@ -17831,9 +18036,10 @@ namespace CodeWalker.GameFiles
             WriteTypeAndOffset(bw);
 
             bw.Write(Flags);
-            bw.Write(Unk01);
+            bw.Write(MaxInstances);
             bw.Write(Sound);
-            bw.Write(Unk03);
+            bw.Write(SharedOwnershipRadius);
+
             bw.Write(VariationsCount);
             for (int i = 0; i < VariationsCount; i++)
             {
@@ -17843,17 +18049,17 @@ namespace CodeWalker.GameFiles
         public override void WriteXml(StringBuilder sb, int indent)
         {
             RelXml.ValueTag(sb, indent, "Flags", "0x" + Flags.Hex);
-            RelXml.ValueTag(sb, indent, "Unk01", Unk01.ToString());
+            RelXml.ValueTag(sb, indent, "MaxInstances", MaxInstances.ToString());
             RelXml.StringTag(sb, indent, "Sound", RelXml.HashString(Sound));
-            RelXml.ValueTag(sb, indent, "Unk03", FloatUtil.ToString(Unk03));
+            RelXml.ValueTag(sb, indent, "SharedOwnershipRadius", FloatUtil.ToString(SharedOwnershipRadius));
             RelXml.WriteItemArray(sb, Variations, indent, "Variations");
         }
         public override void ReadXml(XmlNode node)
         {
             Flags = Xml.GetChildUIntAttribute(node, "Flags", "value");
-            Unk01 = Xml.GetChildIntAttribute(node, "Unk01", "value");
+            MaxInstances = Xml.GetChildIntAttribute(node, "MaxInstances", "value");
             Sound = XmlRel.GetHash(Xml.GetChildInnerText(node, "Sound"));
-            Unk03 = Xml.GetChildFloatAttribute(node, "Unk03", "value");
+            SharedOwnershipRadius = Xml.GetChildFloatAttribute(node, "SharedOwnershipRadius", "value");
             Variations = XmlRel.ReadItemArray<Dat151PedScenarioAudioSettingsItem>(node, "Variations");
             VariationsCount = (Variations?.Length ?? 0);
         }
@@ -17936,22 +18142,22 @@ namespace CodeWalker.GameFiles
     }
     [TC(typeof(EXP))] public class Dat151ElectricEngineAudioSettings : Dat151RelData
     {
-        public int Unk01 { get; set; }
-        public MetaHash Transmission { get; set; } //hybrid_tezeract_transmission
-        public int Unk03 { get; set; }
-        public int Unk04 { get; set; }
-        public int Unk05 { get; set; }
-        public MetaHash Turbo { get; set; } //hybrid_tezeract_turbo_whine
-        public int Unk07 { get; set; }
-        public int Unk08 { get; set; }
-        public int Unk09 { get; set; }
-        public int Unk10 { get; set; }
-        public MetaHash RevsOff { get; set; } //streamed_vehicles_hybrid_hybrid_gas_revs_off
-        public int Unk12 { get; set; }
-        public int Unk13 { get; set; }
-        public int Unk14 { get; set; }
-        public MetaHash Unk15 { get; set; } //idle loop..?
-        public MetaHash Start { get; set; } //streamed_vehicles_hybrid_voltic_start
+        public uint MasterVolume { get; set; }
+        public MetaHash SpeedLoop { get; set; }
+        public int SpeedLoop_MinPitch { get; set; }
+        public int SpeedLoop_MaxPitch { get; set; }
+        public int SpeedLoop_ThrottleVol { get; set; }
+        public MetaHash BoostLoop { get; set; }
+        public int BoostLoop_MinPitch { get; set; }
+        public int BoostLoop_MaxPitch { get; set; }
+        public int BoostLoop_SpinupSpeed { get; set; }
+        public int BoostLoop_Vol { get; set; }
+        public MetaHash RevsOffLoop { get; set; }
+        public int RevsOffLoop_MinPitch { get; set; }
+        public int RevsOffLoop_MaxPitch { get; set; }
+        public int RevsOffLoop_Vol { get; set; }
+        public MetaHash BankLoadSound { get; set; }
+        public MetaHash EngineStartUp { get; set; }
 
         public Dat151ElectricEngineAudioSettings(RelFile rel) : base(rel)
         {
@@ -17960,107 +18166,107 @@ namespace CodeWalker.GameFiles
         }
         public Dat151ElectricEngineAudioSettings(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadInt32();
-            Transmission = br.ReadUInt32();
-            Unk03 = br.ReadInt32();
-            Unk04 = br.ReadInt32();
-            Unk05 = br.ReadInt32();
-            Turbo = br.ReadUInt32();
-            Unk07 = br.ReadInt32();
-            Unk08 = br.ReadInt32();
-            Unk09 = br.ReadInt32();
-            Unk10 = br.ReadInt32();
-            RevsOff = br.ReadUInt32();
-            Unk12 = br.ReadInt32();
-            Unk13 = br.ReadInt32();
-            Unk14 = br.ReadInt32();
-            Unk15 = br.ReadUInt32();
-            Start = br.ReadUInt32();
+            MasterVolume = br.ReadUInt32();
+            SpeedLoop = br.ReadUInt32();
+            SpeedLoop_MinPitch = br.ReadInt32();
+            SpeedLoop_MaxPitch = br.ReadInt32();
+            SpeedLoop_ThrottleVol = br.ReadInt32();
+            BoostLoop = br.ReadUInt32();
+            BoostLoop_MinPitch = br.ReadInt32();
+            BoostLoop_MaxPitch = br.ReadInt32();
+            BoostLoop_SpinupSpeed = br.ReadInt32();
+            BoostLoop_Vol = br.ReadInt32();
+            RevsOffLoop = br.ReadUInt32();
+            RevsOffLoop_MinPitch = br.ReadInt32();
+            RevsOffLoop_MaxPitch = br.ReadInt32();
+            RevsOffLoop_Vol = br.ReadInt32();
+            BankLoadSound = br.ReadUInt32();
+            EngineStartUp = br.ReadUInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
-            bw.Write(Transmission);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Turbo);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
-            bw.Write(Unk09);
-            bw.Write(Unk10);
-            bw.Write(RevsOff);
-            bw.Write(Unk12);
-            bw.Write(Unk13);
-            bw.Write(Unk14);
-            bw.Write(Unk15);
-            bw.Write(Start);
+            bw.Write(MasterVolume);
+            bw.Write(SpeedLoop);
+            bw.Write(SpeedLoop_MinPitch);
+            bw.Write(SpeedLoop_MaxPitch);
+            bw.Write(SpeedLoop_ThrottleVol);
+            bw.Write(BoostLoop);
+            bw.Write(BoostLoop_MinPitch);
+            bw.Write(BoostLoop_MaxPitch);
+            bw.Write(BoostLoop_SpinupSpeed);
+            bw.Write(BoostLoop_Vol);
+            bw.Write(RevsOffLoop);
+            bw.Write(RevsOffLoop_MinPitch);
+            bw.Write(RevsOffLoop_MaxPitch);
+            bw.Write(RevsOffLoop_Vol);
+            bw.Write(BankLoadSound);
+            bw.Write(EngineStartUp);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.ValueTag(sb, indent, "Unk01", Unk01.ToString());
-            RelXml.StringTag(sb, indent, "Transmission", RelXml.HashString(Transmission));
-            RelXml.ValueTag(sb, indent, "Unk03", Unk03.ToString());
-            RelXml.ValueTag(sb, indent, "Unk04", Unk04.ToString());
-            RelXml.ValueTag(sb, indent, "Unk05", Unk05.ToString());
-            RelXml.StringTag(sb, indent, "Turbo", RelXml.HashString(Turbo));
-            RelXml.ValueTag(sb, indent, "Unk07", Unk07.ToString());
-            RelXml.ValueTag(sb, indent, "Unk08", Unk08.ToString());
-            RelXml.ValueTag(sb, indent, "Unk09", Unk09.ToString());
-            RelXml.ValueTag(sb, indent, "Unk10", Unk10.ToString());
-            RelXml.StringTag(sb, indent, "RevsOff", RelXml.HashString(RevsOff));
-            RelXml.ValueTag(sb, indent, "Unk12", Unk12.ToString());
-            RelXml.ValueTag(sb, indent, "Unk13", Unk13.ToString());
-            RelXml.ValueTag(sb, indent, "Unk14", Unk14.ToString());
-            RelXml.StringTag(sb, indent, "Unk15", RelXml.HashString(Unk15));
-            RelXml.StringTag(sb, indent, "Start", RelXml.HashString(Start));
+            RelXml.ValueTag(sb, indent, "MasterVolume", MasterVolume.ToString());
+            RelXml.StringTag(sb, indent, "SpeedLoop", RelXml.HashString(SpeedLoop));
+            RelXml.ValueTag(sb, indent, "SpeedLoop_MinPitch", SpeedLoop_MinPitch.ToString());
+            RelXml.ValueTag(sb, indent, "SpeedLoop_MaxPitch", SpeedLoop_MaxPitch.ToString());
+            RelXml.ValueTag(sb, indent, "SpeedLoop_ThrottleVol", SpeedLoop_ThrottleVol.ToString());
+            RelXml.StringTag(sb, indent, "BoostLoop", RelXml.HashString(BoostLoop));
+            RelXml.ValueTag(sb, indent, "BoostLoop_MinPitch", BoostLoop_MinPitch.ToString());
+            RelXml.ValueTag(sb, indent, "BoostLoop_MaxPitch", BoostLoop_MaxPitch.ToString());
+            RelXml.ValueTag(sb, indent, "BoostLoop_SpinupSpeed", BoostLoop_SpinupSpeed.ToString());
+            RelXml.ValueTag(sb, indent, "BoostLoop_Vol", BoostLoop_Vol.ToString());
+            RelXml.StringTag(sb, indent, "RevsOffLoop", RelXml.HashString(RevsOffLoop));
+            RelXml.ValueTag(sb, indent, "RevsOffLoop_MinPitch", RevsOffLoop_MinPitch.ToString());
+            RelXml.ValueTag(sb, indent, "RevsOffLoop_MaxPitch", RevsOffLoop_MaxPitch.ToString());
+            RelXml.ValueTag(sb, indent, "RevsOffLoop_Vol", RevsOffLoop_Vol.ToString());
+            RelXml.StringTag(sb, indent, "BankLoadSound", RelXml.HashString(BankLoadSound));
+            RelXml.StringTag(sb, indent, "EngineStartUp", RelXml.HashString(EngineStartUp));
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = Xml.GetChildIntAttribute(node, "Unk01", "value");
-            Transmission = XmlRel.GetHash(Xml.GetChildInnerText(node, "Transmission"));
-            Unk03 = Xml.GetChildIntAttribute(node, "Unk03", "value");
-            Unk04 = Xml.GetChildIntAttribute(node, "Unk04", "value");
-            Unk05 = Xml.GetChildIntAttribute(node, "Unk05", "value");
-            Turbo = XmlRel.GetHash(Xml.GetChildInnerText(node, "Turbo"));
-            Unk07 = Xml.GetChildIntAttribute(node, "Unk07", "value");
-            Unk08 = Xml.GetChildIntAttribute(node, "Unk08", "value");
-            Unk09 = Xml.GetChildIntAttribute(node, "Unk09", "value");
-            Unk10 = Xml.GetChildIntAttribute(node, "Unk10", "value");
-            RevsOff = XmlRel.GetHash(Xml.GetChildInnerText(node, "RevsOff"));
-            Unk12 = Xml.GetChildIntAttribute(node, "Unk12", "value");
-            Unk13 = Xml.GetChildIntAttribute(node, "Unk13", "value");
-            Unk14 = Xml.GetChildIntAttribute(node, "Unk14", "value");
-            Unk15 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk15"));
-            Start = XmlRel.GetHash(Xml.GetChildInnerText(node, "Start"));
+            MasterVolume = Xml.GetChildUIntAttribute(node, "MasterVolume", "value");
+            SpeedLoop = XmlRel.GetHash(Xml.GetChildInnerText(node, "SpeedLoop"));
+            SpeedLoop_MinPitch = Xml.GetChildIntAttribute(node, "SpeedLoop_MinPitch", "value");
+            SpeedLoop_MaxPitch = Xml.GetChildIntAttribute(node, "SpeedLoop_MaxPitch", "value");
+            SpeedLoop_ThrottleVol = Xml.GetChildIntAttribute(node, "SpeedLoop_ThrottleVol", "value");
+            BoostLoop = XmlRel.GetHash(Xml.GetChildInnerText(node, "BoostLoop"));
+            BoostLoop_MinPitch = Xml.GetChildIntAttribute(node, "BoostLoop_MinPitch", "value");
+            BoostLoop_MaxPitch = Xml.GetChildIntAttribute(node, "BoostLoop_MaxPitch", "value");
+            BoostLoop_SpinupSpeed = Xml.GetChildIntAttribute(node, "BoostLoop_SpinupSpeed", "value");
+            BoostLoop_Vol = Xml.GetChildIntAttribute(node, "BoostLoop_Vol", "value");
+            RevsOffLoop = XmlRel.GetHash(Xml.GetChildInnerText(node, "RevsOffLoop"));
+            RevsOffLoop_MinPitch = Xml.GetChildIntAttribute(node, "RevsOffLoop_MinPitch", "value");
+            RevsOffLoop_MaxPitch = Xml.GetChildIntAttribute(node, "RevsOffLoop_MaxPitch", "value");
+            RevsOffLoop_Vol = Xml.GetChildIntAttribute(node, "RevsOffLoop_Vol", "value");
+            BankLoadSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "BankLoadSound"));
+            EngineStartUp = XmlRel.GetHash(Xml.GetChildInnerText(node, "EngineStartUp"));
         }
         public override MetaHash[] GetSoundHashes()
         {
-            return new[] { Transmission, Turbo, RevsOff, Unk15, Start };
+            return new[] { SpeedLoop, BoostLoop, RevsOffLoop, BankLoadSound, EngineStartUp };
         }
     }
     [TC(typeof(EXP))] public class Dat151PlayerBreathingSettings : Dat151RelData
     {
-        public int Unk01 { get; set; }
-        public int Unk02 { get; set; }
-        public int Unk03 { get; set; }//0
-        public int Unk04 { get; set; }
-        public int Unk05 { get; set; }
-        public int Unk06 { get; set; }
-        public int Unk07 { get; set; }
-        public int Unk08 { get; set; }
-        public int Unk09 { get; set; }
-        public int Unk10 { get; set; }
-        public int Unk11 { get; set; }
-        public int Unk12 { get; set; }
-        public int Unk13 { get; set; }
-        public int Unk14 { get; set; }
-        public int Unk15 { get; set; }
-        public int Unk16 { get; set; }
-        public int Unk17 { get; set; }
-        public int Unk18 { get; set; }
+        public int TimeBetweenLowRunBreaths { get; set; }
+        public int TimeBetweenHighRunBreaths { get; set; }
+        public int TimeBetweenExhaustedBreaths { get; set; }
+        public int TimeBetweenFinalBreaths { get; set; }
+        public int MinBreathStateChangeWaitToLow { get; set; }
+        public int MaxBreathStateChangeWaitToLow { get; set; }
+        public int MinBreathStateChangeLowToHighFromWait { get; set; }
+        public int MaxBreathStateChangeLowToHighFromWait { get; set; }
+        public int MinBreathStateChangeHighToLowFromLow { get; set; }
+        public int MaxBreathStateChangeHighToLowFromLow { get; set; }
+        public int MinBreathStateChangeLowToHighFromHigh { get; set; }
+        public int MaxBreathStateChangeLowToHighFromHigh { get; set; }
+        public int MinBreathStateChangeExhaustedToIdleFromLow { get; set; }
+        public int MaxBreathStateChangeExhaustedToIdleFromLow { get; set; }
+        public int MinBreathStateChangeExhaustedToIdleFromHigh { get; set; }
+        public int MaxBreathStateChangeExhaustedToIdleFromHigh { get; set; }
+        public int MinBreathStateChangeLowToHighFromExhausted { get; set; }
+        public int MaxBreathStateChangeLowToHighFromExhausted { get; set; }
 
         public Dat151PlayerBreathingSettings(RelFile rel) : base(rel)
         {
@@ -18069,99 +18275,99 @@ namespace CodeWalker.GameFiles
         }
         public Dat151PlayerBreathingSettings(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadInt32();
-            Unk02 = br.ReadInt32();
-            Unk03 = br.ReadInt32();
-            Unk04 = br.ReadInt32();
-            Unk05 = br.ReadInt32();
-            Unk06 = br.ReadInt32();
-            Unk07 = br.ReadInt32();
-            Unk08 = br.ReadInt32();
-            Unk09 = br.ReadInt32();
-            Unk10 = br.ReadInt32();
-            Unk11 = br.ReadInt32();
-            Unk12 = br.ReadInt32();
-            Unk13 = br.ReadInt32();
-            Unk14 = br.ReadInt32();
-            Unk15 = br.ReadInt32();
-            Unk16 = br.ReadInt32();
-            Unk17 = br.ReadInt32();
-            Unk18 = br.ReadInt32();
+            TimeBetweenLowRunBreaths = br.ReadInt32();
+            TimeBetweenHighRunBreaths = br.ReadInt32();
+            TimeBetweenExhaustedBreaths = br.ReadInt32();
+            TimeBetweenFinalBreaths = br.ReadInt32();
+            MinBreathStateChangeWaitToLow = br.ReadInt32();
+            MaxBreathStateChangeWaitToLow = br.ReadInt32();
+            MinBreathStateChangeLowToHighFromWait = br.ReadInt32();
+            MaxBreathStateChangeLowToHighFromWait = br.ReadInt32();
+            MinBreathStateChangeHighToLowFromLow = br.ReadInt32();
+            MaxBreathStateChangeHighToLowFromLow = br.ReadInt32();
+            MinBreathStateChangeLowToHighFromHigh = br.ReadInt32();
+            MaxBreathStateChangeLowToHighFromHigh = br.ReadInt32();
+            MinBreathStateChangeExhaustedToIdleFromLow = br.ReadInt32();
+            MaxBreathStateChangeExhaustedToIdleFromLow = br.ReadInt32();
+            MinBreathStateChangeExhaustedToIdleFromHigh = br.ReadInt32();
+            MaxBreathStateChangeExhaustedToIdleFromHigh = br.ReadInt32();
+            MinBreathStateChangeLowToHighFromExhausted = br.ReadInt32();
+            MaxBreathStateChangeLowToHighFromExhausted = br.ReadInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
-            bw.Write(Unk09);
-            bw.Write(Unk10);
-            bw.Write(Unk11);
-            bw.Write(Unk12);
-            bw.Write(Unk13);
-            bw.Write(Unk14);
-            bw.Write(Unk15);
-            bw.Write(Unk16);
-            bw.Write(Unk17);
-            bw.Write(Unk18);
+            bw.Write(TimeBetweenLowRunBreaths);
+            bw.Write(TimeBetweenHighRunBreaths);
+            bw.Write(TimeBetweenExhaustedBreaths);
+            bw.Write(TimeBetweenFinalBreaths);
+            bw.Write(MinBreathStateChangeWaitToLow);
+            bw.Write(MaxBreathStateChangeWaitToLow);
+            bw.Write(MinBreathStateChangeLowToHighFromWait);
+            bw.Write(MaxBreathStateChangeLowToHighFromWait);
+            bw.Write(MinBreathStateChangeHighToLowFromLow);
+            bw.Write(MaxBreathStateChangeHighToLowFromLow);
+            bw.Write(MinBreathStateChangeLowToHighFromHigh);
+            bw.Write(MaxBreathStateChangeLowToHighFromHigh);
+            bw.Write(MinBreathStateChangeExhaustedToIdleFromLow);
+            bw.Write(MaxBreathStateChangeExhaustedToIdleFromLow);
+            bw.Write(MinBreathStateChangeExhaustedToIdleFromHigh);
+            bw.Write(MaxBreathStateChangeExhaustedToIdleFromHigh);
+            bw.Write(MinBreathStateChangeLowToHighFromExhausted);
+            bw.Write(MaxBreathStateChangeLowToHighFromExhausted);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.ValueTag(sb, indent, "Unk01", Unk01.ToString());
-            RelXml.ValueTag(sb, indent, "Unk02", Unk02.ToString());
-            RelXml.ValueTag(sb, indent, "Unk03", Unk03.ToString());
-            RelXml.ValueTag(sb, indent, "Unk04", Unk04.ToString());
-            RelXml.ValueTag(sb, indent, "Unk05", Unk05.ToString());
-            RelXml.ValueTag(sb, indent, "Unk06", Unk06.ToString());
-            RelXml.ValueTag(sb, indent, "Unk07", Unk07.ToString());
-            RelXml.ValueTag(sb, indent, "Unk08", Unk08.ToString());
-            RelXml.ValueTag(sb, indent, "Unk09", Unk09.ToString());
-            RelXml.ValueTag(sb, indent, "Unk10", Unk10.ToString());
-            RelXml.ValueTag(sb, indent, "Unk11", Unk11.ToString());
-            RelXml.ValueTag(sb, indent, "Unk12", Unk12.ToString());
-            RelXml.ValueTag(sb, indent, "Unk13", Unk13.ToString());
-            RelXml.ValueTag(sb, indent, "Unk14", Unk14.ToString());
-            RelXml.ValueTag(sb, indent, "Unk15", Unk15.ToString());
-            RelXml.ValueTag(sb, indent, "Unk16", Unk16.ToString());
-            RelXml.ValueTag(sb, indent, "Unk17", Unk17.ToString());
-            RelXml.ValueTag(sb, indent, "Unk18", Unk18.ToString());
+            RelXml.ValueTag(sb, indent, "TimeBetweenLowRunBreaths", TimeBetweenLowRunBreaths.ToString());
+            RelXml.ValueTag(sb, indent, "TimeBetweenHighRunBreaths", TimeBetweenHighRunBreaths.ToString());
+            RelXml.ValueTag(sb, indent, "TimeBetweenExhaustedBreaths", TimeBetweenExhaustedBreaths.ToString());
+            RelXml.ValueTag(sb, indent, "TimeBetweenFinalBreaths", TimeBetweenFinalBreaths.ToString());
+            RelXml.ValueTag(sb, indent, "MinBreathStateChangeWaitToLow", MinBreathStateChangeWaitToLow.ToString());
+            RelXml.ValueTag(sb, indent, "MaxBreathStateChangeWaitToLow", MaxBreathStateChangeWaitToLow.ToString());
+            RelXml.ValueTag(sb, indent, "MinBreathStateChangeLowToHighFromWait", MinBreathStateChangeLowToHighFromWait.ToString());
+            RelXml.ValueTag(sb, indent, "MaxBreathStateChangeLowToHighFromWait", MaxBreathStateChangeLowToHighFromWait.ToString());
+            RelXml.ValueTag(sb, indent, "MinBreathStateChangeHighToLowFromLow", MinBreathStateChangeHighToLowFromLow.ToString());
+            RelXml.ValueTag(sb, indent, "MaxBreathStateChangeHighToLowFromLow", MaxBreathStateChangeHighToLowFromLow.ToString());
+            RelXml.ValueTag(sb, indent, "MinBreathStateChangeLowToHighFromHigh", MinBreathStateChangeLowToHighFromHigh.ToString());
+            RelXml.ValueTag(sb, indent, "MaxBreathStateChangeLowToHighFromHigh", MaxBreathStateChangeLowToHighFromHigh.ToString());
+            RelXml.ValueTag(sb, indent, "MinBreathStateChangeExhaustedToIdleFromLow", MinBreathStateChangeExhaustedToIdleFromLow.ToString());
+            RelXml.ValueTag(sb, indent, "MaxBreathStateChangeExhaustedToIdleFromLow", MaxBreathStateChangeExhaustedToIdleFromLow.ToString());
+            RelXml.ValueTag(sb, indent, "MinBreathStateChangeExhaustedToIdleFromHigh", MinBreathStateChangeExhaustedToIdleFromHigh.ToString());
+            RelXml.ValueTag(sb, indent, "MaxBreathStateChangeExhaustedToIdleFromHigh", MaxBreathStateChangeExhaustedToIdleFromHigh.ToString());
+            RelXml.ValueTag(sb, indent, "MinBreathStateChangeLowToHighFromExhausted", MinBreathStateChangeLowToHighFromExhausted.ToString());
+            RelXml.ValueTag(sb, indent, "MaxBreathStateChangeLowToHighFromExhausted", MaxBreathStateChangeLowToHighFromExhausted.ToString());
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = Xml.GetChildIntAttribute(node, "Unk01", "value");
-            Unk02 = Xml.GetChildIntAttribute(node, "Unk02", "value");
-            Unk03 = Xml.GetChildIntAttribute(node, "Unk03", "value");
-            Unk04 = Xml.GetChildIntAttribute(node, "Unk04", "value");
-            Unk05 = Xml.GetChildIntAttribute(node, "Unk05", "value");
-            Unk06 = Xml.GetChildIntAttribute(node, "Unk06", "value");
-            Unk07 = Xml.GetChildIntAttribute(node, "Unk07", "value");
-            Unk08 = Xml.GetChildIntAttribute(node, "Unk08", "value");
-            Unk09 = Xml.GetChildIntAttribute(node, "Unk09", "value");
-            Unk10 = Xml.GetChildIntAttribute(node, "Unk10", "value");
-            Unk11 = Xml.GetChildIntAttribute(node, "Unk11", "value");
-            Unk12 = Xml.GetChildIntAttribute(node, "Unk12", "value");
-            Unk13 = Xml.GetChildIntAttribute(node, "Unk13", "value");
-            Unk14 = Xml.GetChildIntAttribute(node, "Unk14", "value");
-            Unk15 = Xml.GetChildIntAttribute(node, "Unk15", "value");
-            Unk16 = Xml.GetChildIntAttribute(node, "Unk16", "value");
-            Unk17 = Xml.GetChildIntAttribute(node, "Unk17", "value");
-            Unk18 = Xml.GetChildIntAttribute(node, "Unk18", "value");
+            TimeBetweenLowRunBreaths = Xml.GetChildIntAttribute(node, "TimeBetweenLowRunBreaths", "value");
+            TimeBetweenHighRunBreaths = Xml.GetChildIntAttribute(node, "TimeBetweenHighRunBreaths", "value");
+            TimeBetweenExhaustedBreaths = Xml.GetChildIntAttribute(node, "TimeBetweenExhaustedBreaths", "value");
+            TimeBetweenFinalBreaths = Xml.GetChildIntAttribute(node, "TimeBetweenFinalBreaths", "value");
+            MinBreathStateChangeWaitToLow = Xml.GetChildIntAttribute(node, "MinBreathStateChangeWaitToLow", "value");
+            MaxBreathStateChangeWaitToLow = Xml.GetChildIntAttribute(node, "MaxBreathStateChangeWaitToLow", "value");
+            MinBreathStateChangeLowToHighFromWait = Xml.GetChildIntAttribute(node, "MinBreathStateChangeLowToHighFromWait", "value");
+            MaxBreathStateChangeLowToHighFromWait = Xml.GetChildIntAttribute(node, "MaxBreathStateChangeLowToHighFromWait", "value");
+            MinBreathStateChangeHighToLowFromLow = Xml.GetChildIntAttribute(node, "MinBreathStateChangeHighToLowFromLow", "value");
+            MaxBreathStateChangeHighToLowFromLow = Xml.GetChildIntAttribute(node, "MaxBreathStateChangeHighToLowFromLow", "value");
+            MinBreathStateChangeLowToHighFromHigh = Xml.GetChildIntAttribute(node, "MinBreathStateChangeLowToHighFromHigh", "value");
+            MaxBreathStateChangeLowToHighFromHigh = Xml.GetChildIntAttribute(node, "MaxBreathStateChangeLowToHighFromHigh", "value");
+            MinBreathStateChangeExhaustedToIdleFromLow = Xml.GetChildIntAttribute(node, "MinBreathStateChangeExhaustedToIdleFromLow", "value");
+            MaxBreathStateChangeExhaustedToIdleFromLow = Xml.GetChildIntAttribute(node, "MaxBreathStateChangeExhaustedToIdleFromLow", "value");
+            MinBreathStateChangeExhaustedToIdleFromHigh = Xml.GetChildIntAttribute(node, "MinBreathStateChangeExhaustedToIdleFromHigh", "value");
+            MaxBreathStateChangeExhaustedToIdleFromHigh = Xml.GetChildIntAttribute(node, "MaxBreathStateChangeExhaustedToIdleFromHigh", "value");
+            MinBreathStateChangeLowToHighFromExhausted = Xml.GetChildIntAttribute(node, "MinBreathStateChangeLowToHighFromExhausted", "value");
+            MaxBreathStateChangeLowToHighFromExhausted = Xml.GetChildIntAttribute(node, "MaxBreathStateChangeLowToHighFromExhausted", "value");
         }
     }
     [TC(typeof(EXP))] public class Dat151PedWallaSpeechSettingsItem : IMetaXmlItem
     {
-        public string Name { get; set; } //eg AGREE_ACROSS_STREET
-        public byte Unk1 { get; set; }// 1 or 255(-1?)
+        public string ContextName { get; set; }
+        public byte Variations { get; set; }
 
         public override string ToString()
         {
-            return Name + ", " + Unk1.ToString();
+            return ContextName + ", " + Variations.ToString();
         }
 
         public Dat151PedWallaSpeechSettingsItem()
@@ -18170,37 +18376,37 @@ namespace CodeWalker.GameFiles
         public Dat151PedWallaSpeechSettingsItem(BinaryReader br)
         {
             var data = br.ReadBytes(32);
-            Name = Encoding.ASCII.GetString(data).Replace("\0", "");
-            Unk1 = br.ReadByte();
+            ContextName = Encoding.ASCII.GetString(data).Replace("\0", "");
+            Variations = br.ReadByte();
         }
         public void Write(BinaryWriter bw)
         {
             var data = new byte[32];
-            int len = Math.Min(Name?.Length ?? 0, 32);
+            int len = Math.Min(ContextName?.Length ?? 0, 32);
             if (len > 0)
             {
-                Encoding.ASCII.GetBytes(Name, 0, len, data, 0);
+                Encoding.ASCII.GetBytes(ContextName, 0, len, data, 0);
             }
             bw.Write(data);
-            bw.Write(Unk1);
+            bw.Write(Variations);
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.StringTag(sb, indent, "Name", Name.Replace("\n", "\\n"));//hacky escape
-            RelXml.ValueTag(sb, indent, "Unk1", Unk1.ToString());
+            RelXml.StringTag(sb, indent, "ContextName", ContextName.Replace("\n", "\\n"));
+            RelXml.ValueTag(sb, indent, "Variations", Variations.ToString());
         }
         public void ReadXml(XmlNode node)
         {
-            Name = Xml.GetChildInnerText(node, "Name").Replace("\\n", "\n");//hacky unescape
-            Unk1 = (byte)Xml.GetChildUIntAttribute(node, "Unk1", "value");
+            ContextName = Xml.GetChildInnerText(node, "ContextName").Replace("\\n", "\n");
+            Variations = (byte)Xml.GetChildUIntAttribute(node, "Variations", "value");
         }
     }
-    [TC(typeof(EXP))] public class Dat151PedWallaSpeechSettings : Dat151RelData //conversation/speech related - for scenarios?
+    [TC(typeof(EXP))] public class Dat151PedWallaSpeechSettings : Dat151RelData
     {
-        public MetaHash Unk01 { get; set; }
-        public short Unk02 { get; set; }
-        public short Unk03 { get; set; }
-        public float Unk04 { get; set; }
+        public MetaHash SpeechSound { get; set; }
+        public short VolumeAboveRMSLevel { get; set; }
+        public short MaxVolume { get; set; }
+        public float PedDensityThreshold { get; set; }
         public byte ItemCount { get; set; }
         public Dat151PedWallaSpeechSettingsItem[] Items { get; set; }
 
@@ -18211,10 +18417,10 @@ namespace CodeWalker.GameFiles
         }
         public Dat151PedWallaSpeechSettings(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadUInt32();
-            Unk02 = br.ReadInt16();
-            Unk03 = br.ReadInt16();
-            Unk04 = br.ReadSingle();
+            SpeechSound = br.ReadUInt32();
+            VolumeAboveRMSLevel = br.ReadInt16();
+            MaxVolume = br.ReadInt16();
+            PedDensityThreshold = br.ReadSingle();
             ItemCount = br.ReadByte();
             Items = new Dat151PedWallaSpeechSettingsItem[ItemCount];
             for (int i = 0; i < ItemCount; i++)
@@ -18223,21 +18429,21 @@ namespace CodeWalker.GameFiles
             }
 
             var brem = (4 - ((ItemCount + 1) % 4)) % 4;
-            var pads = br.ReadBytes(brem); //read padding bytes
+            var pads = br.ReadBytes(brem);
             foreach (var b in pads)
             {
                 if (b != 0)
-                { } //just make sure all pad bytes are 0..
+                { }
             }
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
+            bw.Write(SpeechSound);
+            bw.Write(VolumeAboveRMSLevel);
+            bw.Write(MaxVolume);
+            bw.Write(PedDensityThreshold);
             bw.Write(ItemCount);
             for (int i = 0; i < ItemCount; i++)
             {
@@ -18247,29 +18453,29 @@ namespace CodeWalker.GameFiles
             var brem = (4 - ((ItemCount + 1) % 4)) % 4;
             for (int i = 0; i < brem; i++)
             {
-                bw.Write((byte)0); //write padding bytes..
+                bw.Write((byte)0);
             }
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.StringTag(sb, indent, "Unk01", RelXml.HashString(Unk01));
-            RelXml.ValueTag(sb, indent, "Unk02", Unk02.ToString());
-            RelXml.ValueTag(sb, indent, "Unk03", Unk03.ToString());
-            RelXml.ValueTag(sb, indent, "Unk04", FloatUtil.ToString(Unk04));
+            RelXml.StringTag(sb, indent, "SpeechSound", RelXml.HashString(SpeechSound));
+            RelXml.ValueTag(sb, indent, "VolumeAboveRMSLevel", VolumeAboveRMSLevel.ToString());
+            RelXml.ValueTag(sb, indent, "MaxVolume", MaxVolume.ToString());
+            RelXml.ValueTag(sb, indent, "PedDensityThreshold", FloatUtil.ToString(PedDensityThreshold));
             RelXml.WriteItemArray(sb, Items, indent, "Items");
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk01"));
-            Unk02 = (short)Xml.GetChildIntAttribute(node, "Unk02", "value");
-            Unk03 = (short)Xml.GetChildIntAttribute(node, "Unk03", "value");
-            Unk04 = Xml.GetChildFloatAttribute(node, "Unk04", "value");
+            SpeechSound = XmlRel.GetHash(Xml.GetChildInnerText(node, "SpeechSound"));
+            VolumeAboveRMSLevel = (short)Xml.GetChildIntAttribute(node, "VolumeAboveRMSLevel", "value");
+            MaxVolume = (short)Xml.GetChildIntAttribute(node, "MaxVolume", "value");
+            PedDensityThreshold = Xml.GetChildFloatAttribute(node, "PedDensityThreshold", "value");
             Items = XmlRel.ReadItemArray<Dat151PedWallaSpeechSettingsItem>(node, "Items");
             ItemCount = (byte)(Items?.Length ?? 0);
         }
         public override MetaHash[] GetSoundHashes()
         {
-            return new[] { Unk01 };
+            return new[] { SpeechSound };
         }
     }
     [TC(typeof(EXP))] public class Dat151AircraftWarningSettings : Dat151RelData
@@ -18694,13 +18900,13 @@ namespace CodeWalker.GameFiles
     }
     [TC(typeof(EXP))] public class Dat151CopDispatchInteractionSettings : Dat151RelData
     {
-        public int Unk01 { get; set; }
-        public int Unk02 { get; set; }
-        public int Unk03 { get; set; }
-        public int Unk04 { get; set; }
-        public int Unk05 { get; set; }
-        public int Unk06 { get; set; }
-        public int Unk07 { get; set; }
+        public int MinTimeBetweenInteractions { get; set; }
+        public int MinTimeBetweenInteractionsVariance { get; set; }
+        public int FirstLinePredelay { get; set; }
+        public int FirstLinePredelayVariance { get; set; }
+        public int SecondLinePredelay { get; set; }
+        public int SecondLinePredelayVariance { get; set; }
+        public int ScannerPredelay { get; set; }
         public int Unk08 { get; set; }
         public int Unk09 { get; set; }
         public int Unk10 { get; set; }
@@ -18744,13 +18950,13 @@ namespace CodeWalker.GameFiles
         }
         public Dat151CopDispatchInteractionSettings(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadInt32();
-            Unk02 = br.ReadInt32();
-            Unk03 = br.ReadInt32();
-            Unk04 = br.ReadInt32();
-            Unk05 = br.ReadInt32();
-            Unk06 = br.ReadInt32();
-            Unk07 = br.ReadInt32();
+            MinTimeBetweenInteractions = br.ReadInt32();
+            MinTimeBetweenInteractionsVariance = br.ReadInt32();
+            FirstLinePredelay = br.ReadInt32();
+            FirstLinePredelayVariance = br.ReadInt32();
+            SecondLinePredelay = br.ReadInt32();
+            SecondLinePredelayVariance = br.ReadInt32();
+            ScannerPredelay = br.ReadInt32();
             Unk08 = br.ReadInt32();
             Unk09 = br.ReadInt32();
             Unk10 = br.ReadInt32();
@@ -18791,13 +18997,13 @@ namespace CodeWalker.GameFiles
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
+            bw.Write(MinTimeBetweenInteractions);
+            bw.Write(MinTimeBetweenInteractionsVariance);
+            bw.Write(FirstLinePredelay);
+            bw.Write(FirstLinePredelayVariance);
+            bw.Write(SecondLinePredelay);
+            bw.Write(SecondLinePredelayVariance);
+            bw.Write(ScannerPredelay);
             bw.Write(Unk08);
             bw.Write(Unk09);
             bw.Write(Unk10);
@@ -18836,13 +19042,13 @@ namespace CodeWalker.GameFiles
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.ValueTag(sb, indent, "Unk01", Unk01.ToString());
-            RelXml.ValueTag(sb, indent, "Unk02", Unk02.ToString());
-            RelXml.ValueTag(sb, indent, "Unk03", Unk03.ToString());
-            RelXml.ValueTag(sb, indent, "Unk04", Unk04.ToString());
-            RelXml.ValueTag(sb, indent, "Unk05", Unk05.ToString());
-            RelXml.ValueTag(sb, indent, "Unk06", Unk06.ToString());
-            RelXml.ValueTag(sb, indent, "Unk07", Unk07.ToString());
+            RelXml.ValueTag(sb, indent, "Unk01", MinTimeBetweenInteractions.ToString());
+            RelXml.ValueTag(sb, indent, "Unk02", MinTimeBetweenInteractionsVariance.ToString());
+            RelXml.ValueTag(sb, indent, "Unk03", FirstLinePredelay.ToString());
+            RelXml.ValueTag(sb, indent, "Unk04", FirstLinePredelayVariance.ToString());
+            RelXml.ValueTag(sb, indent, "Unk05", SecondLinePredelay.ToString());
+            RelXml.ValueTag(sb, indent, "Unk06", SecondLinePredelayVariance.ToString());
+            RelXml.ValueTag(sb, indent, "Unk07", ScannerPredelay.ToString());
             RelXml.ValueTag(sb, indent, "Unk08", Unk08.ToString());
             RelXml.ValueTag(sb, indent, "Unk09", Unk09.ToString());
             RelXml.ValueTag(sb, indent, "Unk10", Unk10.ToString());
@@ -18881,13 +19087,13 @@ namespace CodeWalker.GameFiles
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = Xml.GetChildIntAttribute(node, "Unk01", "value");
-            Unk02 = Xml.GetChildIntAttribute(node, "Unk02", "value");
-            Unk03 = Xml.GetChildIntAttribute(node, "Unk03", "value");
-            Unk04 = Xml.GetChildIntAttribute(node, "Unk04", "value");
-            Unk05 = Xml.GetChildIntAttribute(node, "Unk05", "value");
-            Unk06 = Xml.GetChildIntAttribute(node, "Unk06", "value");
-            Unk07 = Xml.GetChildIntAttribute(node, "Unk07", "value");
+            MinTimeBetweenInteractions = Xml.GetChildIntAttribute(node, "Unk01", "value");
+            MinTimeBetweenInteractionsVariance = Xml.GetChildIntAttribute(node, "Unk02", "value");
+            FirstLinePredelay = Xml.GetChildIntAttribute(node, "Unk03", "value");
+            FirstLinePredelayVariance = Xml.GetChildIntAttribute(node, "Unk04", "value");
+            SecondLinePredelay = Xml.GetChildIntAttribute(node, "Unk05", "value");
+            SecondLinePredelayVariance = Xml.GetChildIntAttribute(node, "Unk06", "value");
+            ScannerPredelay = Xml.GetChildIntAttribute(node, "Unk07", "value");
             Unk08 = Xml.GetChildIntAttribute(node, "Unk08", "value");
             Unk09 = Xml.GetChildIntAttribute(node, "Unk09", "value");
             Unk10 = Xml.GetChildIntAttribute(node, "Unk10", "value");
@@ -19063,19 +19269,19 @@ namespace CodeWalker.GameFiles
             return new[] { StaticEmitter, VehicleEmitter };
         }
     }
-    [TC(typeof(EXP))] public class Dat151TennisVocalizationSettings : Dat151RelData //tennis_vfx_settings
+    [TC(typeof(EXP))] public class Dat151TennisVocalizationSettings : Dat151RelData
     {
-        public MetaHash Unk01 { get; set; }//0
+        public MetaHash Unk01 { get; set; }
         public float Unk02 { get; set; }
-        public MetaHash Unk03 { get; set; }//0
-        public MetaHash Unk04 { get; set; }//0
-        public MetaHash Unk05 { get; set; }//0
-        public MetaHash Unk06 { get; set; }//0
+        public MetaHash Unk03 { get; set; }
+        public MetaHash Unk04 { get; set; }
+        public MetaHash Unk05 { get; set; }
+        public MetaHash Unk06 { get; set; }
         public float Unk07 { get; set; }
-        public MetaHash Unk08 { get; set; }//0
-        public MetaHash Unk09 { get; set; }//0
-        public MetaHash Unk10 { get; set; }//0
-        public MetaHash Unk11 { get; set; }//0
+        public MetaHash Unk08 { get; set; }
+        public MetaHash Unk09 { get; set; }
+        public MetaHash Unk10 { get; set; }
+        public MetaHash Unk11 { get; set; }
         public float Unk12 { get; set; }
 
         public Dat151TennisVocalizationSettings(RelFile rel) : base(rel)
