@@ -5145,7 +5145,9 @@ namespace CodeWalker.GameFiles
             return Context.ToString() + ": " + SoundRef.ToString();
         }
     }
-    [TC(typeof(EXP))] public struct Dat151HashFloat : IMetaXmlItem
+
+    [TC(typeof(EXP))] 
+    public struct Dat151HashFloat : IMetaXmlItem
     {
         public MetaHash Hash { get; set; }
         public float Value { get; set; }
@@ -15411,19 +15413,19 @@ namespace CodeWalker.GameFiles
     [TC(typeof(EXP))] 
     public class Dat151ScannerSpecificLocation : Dat151RelData
     {
-        public MetaHash Unk01 { get; set; }//0
-        public MetaHash Unk02 { get; set; }//0
-        public MetaHash Unk03 { get; set; }//0
+        public MetaHash padding00 { get; set; }
+        public MetaHash padding01 { get; set; }
+        public MetaHash padding02 { get; set; }
         public Vector3 Position { get; set; }
-        public MetaHash Unk04 { get; set; }//0
+        public MetaHash padding03 { get; set; }
         public float Radius { get; set; }
-        public float Unk06 { get; set; }
-        public int Unk07 { get; set; }
-        public MetaHash Unk08 { get; set; }
+        public float ProbOfPlaying { get; set; }
+        public int NumSounds { get; set; }
+        public MetaHash Sound { get; set; }
         public MetaHash Location { get; set; }
-        public MetaHash Unk10 { get; set; }//0
-        public MetaHash Unk11 { get; set; }//0
-        public MetaHash Unk12 { get; set; }//0
+        public MetaHash padding04 { get; set; }
+        public MetaHash padding05 { get; set; }
+        public MetaHash padding06 { get; set; }
 
         public Dat151ScannerSpecificLocation(RelFile rel) : base(rel)
         {
@@ -15432,75 +15434,61 @@ namespace CodeWalker.GameFiles
         }
         public Dat151ScannerSpecificLocation(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadUInt32();//0
-            Unk02 = br.ReadUInt32();//0
-            Unk03 = br.ReadUInt32();//0
+            padding00 = br.ReadUInt32();
+            padding01 = br.ReadUInt32();
+            padding02 = br.ReadUInt32();
             Position = new Vector3(br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
-            Unk04 = br.ReadUInt32();//0
+            padding03 = br.ReadUInt32();
             Radius = br.ReadSingle();
-            Unk06 = br.ReadSingle();
-            Unk07 = br.ReadInt32();
-            Unk08 = br.ReadUInt32();
+            ProbOfPlaying = br.ReadSingle();
+            NumSounds = br.ReadInt32();
+            Sound = br.ReadUInt32();
             Location = br.ReadUInt32();
-            Unk10 = br.ReadUInt32();//0
-            Unk11 = br.ReadUInt32();//0
-            Unk12 = br.ReadUInt32();//0
+            padding04 = br.ReadUInt32();
+            padding05 = br.ReadUInt32();
+            padding06 = br.ReadUInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
+            bw.Write(padding00);
+            bw.Write(padding01);
+            bw.Write(padding02);
             bw.Write(Position.X);
             bw.Write(Position.Y);
             bw.Write(Position.Z);
-            bw.Write(Unk04);
+            bw.Write(padding03);
             bw.Write(Radius);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
+            bw.Write(ProbOfPlaying);
+            bw.Write(NumSounds);
+            bw.Write(Sound);
             bw.Write(Location);
-            bw.Write(Unk10);
-            bw.Write(Unk11);
-            bw.Write(Unk12);
+            bw.Write(padding04);
+            bw.Write(padding05);
+            bw.Write(padding06);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.StringTag(sb, indent, "Unk01", RelXml.HashString(Unk01));
-            RelXml.StringTag(sb, indent, "Unk02", RelXml.HashString(Unk02));
-            RelXml.StringTag(sb, indent, "Unk03", RelXml.HashString(Unk03));
             RelXml.SelfClosingTag(sb, indent, "Position " + FloatUtil.GetVector3XmlString(Position));
-            RelXml.StringTag(sb, indent, "Unk04", RelXml.HashString(Unk04));
             RelXml.ValueTag(sb, indent, "Radius", FloatUtil.ToString(Radius));
-            RelXml.ValueTag(sb, indent, "Unk06", FloatUtil.ToString(Unk06));
-            RelXml.ValueTag(sb, indent, "Unk07", Unk07.ToString());
-            RelXml.StringTag(sb, indent, "Unk08", RelXml.HashString(Unk08));
+            RelXml.ValueTag(sb, indent, "ProbOfPlaying", FloatUtil.ToString(ProbOfPlaying));
+            RelXml.ValueTag(sb, indent, "NumSounds", NumSounds.ToString());
+            RelXml.StringTag(sb, indent, "Sound", RelXml.HashString(Sound));
             RelXml.StringTag(sb, indent, "Location", RelXml.HashString(Location));
-            RelXml.StringTag(sb, indent, "Unk10", RelXml.HashString(Unk10));
-            RelXml.StringTag(sb, indent, "Unk11", RelXml.HashString(Unk11));
-            RelXml.StringTag(sb, indent, "Unk12", RelXml.HashString(Unk12));
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk01"));
-            Unk02 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk02"));
-            Unk03 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk03"));
             Position = Xml.GetChildVector3Attributes(node, "Position");
-            Unk04 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk04"));
             Radius = Xml.GetChildFloatAttribute(node, "Radius", "value");
-            Unk06 = Xml.GetChildFloatAttribute(node, "Unk06", "value");
-            Unk07 = Xml.GetChildIntAttribute(node, "Unk07", "value");
-            Unk08 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk08"));
+            ProbOfPlaying = Xml.GetChildFloatAttribute(node, "ProbOfPlaying", "value");
+            NumSounds = Xml.GetChildIntAttribute(node, "NumSounds", "value");
+            Sound = XmlRel.GetHash(Xml.GetChildInnerText(node, "Sound"));
             Location = XmlRel.GetHash(Xml.GetChildInnerText(node, "Location"));
-            Unk10 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk10"));
-            Unk11 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk11"));
-            Unk12 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk12"));
         }
         public override MetaHash[] GetSoundHashes()
         {
-            return new[] { Unk08, Location };
+            return new[] { Sound, Location };
         }
     }
 
@@ -16410,63 +16398,109 @@ namespace CodeWalker.GameFiles
     [TC(typeof(EXP))] 
     public class Dat151AnimalVocalAnimTriggerItem : IMetaXmlItem
     {
-        public byte Unk1 { get; set; }
-        public byte ItemCount1 { get; set; } //indicates how many are used
-        public Dat151HashFloat[] Items1 { get; set; } //always array of 8  - probably links to speech.dat somehow
-        public byte ItemCount2 { get; set; } //indicates how many are used
-        public Dat151HashFloat[] Items2 { get; set; } //always array of 8
-
+        public byte Animal { get; set; }
+        public byte AngryContextsCount { get; set; }
+        public Contexts[] AngryContexts { get; set; }
+        public byte PlayfulContextsCount { get; set; } 
+        public Contexts[] PlayfulContexts { get; set; }
+        public struct Contexts : IMetaXmlItem
+        {
+            public MetaHash Context { get; set; }
+            public float Weight { get; set; }
+            public Contexts(BinaryReader br)
+            {
+                Context = br.ReadUInt32();
+                Weight = br.ReadSingle();
+            }
+            public void Write(BinaryWriter bw)
+            {
+                bw.Write(Context);
+                bw.Write(Weight);
+            }
+            public void WriteXml(StringBuilder sb, int indent)
+            {
+                RelXml.StringTag(sb, indent, "Context", RelXml.HashString(Context));
+                RelXml.ValueTag(sb, indent, "Weight", FloatUtil.ToString(Weight));
+            }
+            public void ReadXml(XmlNode node)
+            {
+                Context = XmlRel.GetHash(Xml.GetChildInnerText(node, "Context"));
+                Weight = Xml.GetChildFloatAttribute(node, "Weight", "value");
+            }
+            public override string ToString()
+            {
+                return Context.ToString() + ": " + FloatUtil.ToString(Weight);
+            }
+        }
         public Dat151AnimalVocalAnimTriggerItem()
         { }
         public Dat151AnimalVocalAnimTriggerItem(BinaryReader br)
         {
-            Unk1 = br.ReadByte();
-            ItemCount1 = br.ReadByte();
-            Items1 = new Dat151HashFloat[8];
-            for (int i = 0; i < 8; i++)
+            Animal = br.ReadByte();
+
+            AngryContextsCount = br.ReadByte();
+            AngryContexts = new Contexts[AngryContextsCount];
+            for (int i = 0; i < AngryContextsCount; i++)
             {
-                Items1[i] = new Dat151HashFloat(br);
+                AngryContexts[i] = new Contexts(br);
             }
-            ItemCount2 = br.ReadByte();
-            Items2 = new Dat151HashFloat[8];
-            for (int i = 0; i < 8; i++)
+            if (AngryContextsCount < 8)
             {
-                Items2[i] = new Dat151HashFloat(br);
+                br.BaseStream.Seek((8 - AngryContextsCount) * 8, SeekOrigin.Current);
+            }
+
+            PlayfulContextsCount = br.ReadByte();
+            PlayfulContexts = new Contexts[PlayfulContextsCount];
+            for (int i = 0; i < PlayfulContextsCount; i++)
+            {
+                PlayfulContexts[i] = new Contexts(br);
+            }
+            if (PlayfulContextsCount < 8)
+            {
+                br.BaseStream.Seek((8 - PlayfulContextsCount) * 8, SeekOrigin.Current);
             }
         }
         public void Write(BinaryWriter bw)
         {
-            bw.Write(Unk1);
-            bw.Write(ItemCount1);
-            for (int i = 0; i < 8; i++)
+            bw.Write(Animal);
+
+            bw.Write(AngryContextsCount);
+            for (int i = 0; i < AngryContextsCount; i++)
             {
-                Items1[i].Write(bw);
+                AngryContexts[i].Write(bw);
             }
-            bw.Write(ItemCount2);
-            for (int i = 0; i < 8; i++)
+            if (AngryContextsCount < 8)
             {
-                Items2[i].Write(bw);
+                bw.Write(new byte[(8 - AngryContextsCount) * 8]);
+            }
+
+            bw.Write(PlayfulContextsCount);
+            for (int i = 0; i < PlayfulContextsCount; i++)
+            {
+                PlayfulContexts[i].Write(bw);
+            }
+            if (PlayfulContextsCount < 8)
+            {
+                bw.Write(new byte[(8 - PlayfulContextsCount) * 8]);
             }
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.ValueTag(sb, indent, "Unk1", Unk1.ToString());
-            RelXml.ValueTag(sb, indent, "ItemCount1", ItemCount1.ToString());
-            RelXml.WriteItemArray(sb, Items1, indent, "Items1");
-            RelXml.ValueTag(sb, indent, "ItemCount2", ItemCount2.ToString());
-            RelXml.WriteItemArray(sb, Items2, indent, "Items2");
+            RelXml.ValueTag(sb, indent, "Animal", Animal.ToString());
+            RelXml.WriteItemArray(sb, AngryContexts, indent, "AngryContexts");
+            RelXml.WriteItemArray(sb, PlayfulContexts, indent, "PlayfulContexts");
         }
         public void ReadXml(XmlNode node)
         {
-            Unk1 = (byte)Xml.GetChildUIntAttribute(node, "Unk1", "value");
-            ItemCount1 = (byte)Xml.GetChildUIntAttribute(node, "ItemCount1", "value");
-            Items1 = XmlRel.ReadItemArray<Dat151HashFloat>(node, "Items1");
-            ItemCount2 = (byte)Xml.GetChildUIntAttribute(node, "ItemCount2", "value");
-            Items2 = XmlRel.ReadItemArray<Dat151HashFloat>(node, "Items2");
+            Animal = (byte)Xml.GetChildUIntAttribute(node, "Animal", "value");
+            AngryContexts = XmlRel.ReadItemArray<Contexts>(node, "AngryContexts");
+            AngryContextsCount = (byte)(AngryContexts?.Length ?? 0);
+            PlayfulContexts = XmlRel.ReadItemArray<Contexts>(node, "PlayfulContexts");
+            PlayfulContextsCount = (byte)(PlayfulContexts?.Length ?? 0);
         }
         public override string ToString()
         {
-            return Unk1.ToString() + ": " + ItemCount1.ToString() + ", " + ItemCount2.ToString();
+            return Animal.ToString() + ": " + AngryContextsCount.ToString() + ", " + PlayfulContextsCount.ToString();
         }
     }
     [TC(typeof(EXP))] public class Dat151AnimalVocalAnimTrigger : Dat151RelData
@@ -16487,10 +16521,6 @@ namespace CodeWalker.GameFiles
             {
                 Items[i] = new Dat151AnimalVocalAnimTriggerItem(br);
             }
-
-            var bytesleft = br.BaseStream.Length - br.BaseStream.Position;
-            if (bytesleft != 0)
-            { }
         }
         public override void Write(BinaryWriter bw)
         {
@@ -18417,66 +18447,68 @@ namespace CodeWalker.GameFiles
             return new[] { SpeechSound };
         }
     }
-    [TC(typeof(EXP))] public class Dat151AircraftWarningSettings : Dat151RelData
+
+    [TC(typeof(EXP))] 
+    public class Dat151AircraftWarningSettings : Dat151RelData
     {
-        public int Unk01 { get; set; }
-        public MetaHash Unk02 { get; set; }//0
-        public int Unk03 { get; set; }
-        public int Unk04 { get; set; }
-        public MetaHash Unk05 { get; set; }//0
-        public int Unk06 { get; set; }
-        public int Unk07 { get; set; }
-        public MetaHash Unk08 { get; set; }//0
-        public int Unk09 { get; set; }
-        public int Unk10 { get; set; }
-        public MetaHash Unk11 { get; set; }//0
-        public int Unk12 { get; set; }
-        public int Unk13 { get; set; }
-        public MetaHash Unk14 { get; set; }//0
-        public int Unk15 { get; set; }
-        public int Unk16 { get; set; }
-        public MetaHash Unk17 { get; set; }//0
-        public int Unk18 { get; set; }
-        public int Unk19 { get; set; }
-        public MetaHash Unk20 { get; set; }//0
-        public int Unk21 { get; set; }
-        public int Unk22 { get; set; }
-        public float Unk23 { get; set; }
-        public MetaHash Unk24 { get; set; }//0
-        public int Unk25 { get; set; }
-        public int Unk26 { get; set; }
-        public MetaHash Unk27 { get; set; }//0
-        public int Unk28 { get; set; }
-        public int Unk29 { get; set; }
-        public MetaHash Unk30 { get; set; }//0
-        public int Unk31 { get; set; }
-        public int Unk32 { get; set; }
-        public MetaHash Unk33 { get; set; }//0
-        public int Unk34 { get; set; }
-        public int Unk35 { get; set; }
-        public MetaHash Unk36 { get; set; }//0
-        public int Unk37 { get; set; }
-        public int Unk38 { get; set; }
-        public MetaHash Unk39 { get; set; }//0
-        public int Unk40 { get; set; }
-        public int Unk41 { get; set; }
-        public MetaHash Unk42 { get; set; }//0
-        public int Unk43 { get; set; }
-        public int Unk44 { get; set; }
-        public MetaHash Unk45 { get; set; }//0
-        public int Unk46 { get; set; }
-        public int Unk47 { get; set; }
-        public MetaHash Unk48 { get; set; }//0
-        public int Unk49 { get; set; }
-        public int Unk50 { get; set; }
-        public float Unk51 { get; set; }
-        public MetaHash Unk52 { get; set; }//0
-        public int Unk53 { get; set; }
-        public int Unk54 { get; set; }
-        public int Unk55 { get; set; }
-        public MetaHash Unk56 { get; set; }//0
-        public int Unk57 { get; set; }
-        public int Unk58 { get; set; }
+        public int MinTimeBetweenDamageReports { get; set; }
+        public int TargetedLockedMinTimeInStateToTrigger { get; set; }
+        public int TargetedLockedMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int TargetedLockedMinTimeBetweenPlay { get; set; }
+        public int MissileFiredMinTimeInStateToTrigger { get; set; }
+        public int MissileFiredMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int MissileFiredMinTimeBetweenPlay { get; set; }
+        public int AcquiringTargetMinTimeInStateToTrigger { get; set; }
+        public int AcquiringTargetMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int AcquiringTargetMinTimeBetweenPlay { get; set; }
+        public int TargetAcquiredMinTimeInStateToTrigger { get; set; }
+        public int TargetAcquiredMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int TargetAcquiredMinTimeBetweenPlay { get; set; }
+        public int AllClearMinTimeInStateToTrigger { get; set; }
+        public int AllClearMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int AllClearMinTimeBetweenPlay { get; set; }
+        public int PlaneWarningStallMinTimeInStateToTrigger { get; set; }
+        public int PlaneWarningStallMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int PlaneWarningStallMinTimeBetweenPlay { get; set; }
+        public int AltitudeWarningLowMinTimeInStateToTrigger { get; set; }
+        public int AltitudeWarningLowMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int AltitudeWarningLowMinTimeBetweenPlay { get; set; }
+        public float AltitudeWarningLowDownProbeLength { get; set; }
+        public int AltitudeWarningHighMinTimeInStateToTrigger { get; set; }
+        public int AltitudeWarningHighMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int AltitudeWarningHighMinTimeBetweenPlay { get; set; }
+        public int Engine1FireMinTimeInStateToTrigger { get; set; }
+        public int Engine1FireMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int Engine1FireMinTimeBetweenPlay { get; set; }
+        public int Engine2FireMinTimeInStateToTrigger { get; set; }
+        public int Engine2FireMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int Engine2FireMinTimeBetweenPlay { get; set; }
+        public int Engine3FireMinTimeInStateToTrigger { get; set; }
+        public int Engine3FireMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int Engine3FireMinTimeBetweenPlay { get; set; }
+        public int Engine4FireMinTimeInStateToTrigger { get; set; }
+        public int Engine4FireMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int Engine4FireMinTimeBetweenPlay { get; set; }
+        public int DamagedSeriousMinTimeInStateToTrigger { get; set; }
+        public int DamagedSeriousMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int DamagedSeriousMinTimeBetweenPlay { get; set; }
+        public int DamagedCriticalMinTimeInStateToTrigger { get; set; }
+        public int DamagedCriticalMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int DamagedCriticalMinTimeBetweenPlay { get; set; }
+        public int OverspeedMinTimeInStateToTrigger { get; set; }
+        public int OverspeedMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int OverspeedMinTimeBetweenPlay { get; set; }
+        public int TerrainMinTimeInStateToTrigger { get; set; }
+        public int TerrainMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int TerrainMinTimeBetweenPlay { get; set; }
+        public float TerrainForwardProbeLength { get; set; }
+        public int PullUpMinTimeInStateToTrigger { get; set; }
+        public int PullUpMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int PullUpMinTimeBetweenPlay { get; set; }
+        public int PullUpMaxTimeSinceTerrainTriggerToPlay { get; set; }
+        public int LowFuelMinTimeInStateToTrigger { get; set; }
+        public int LowFuelMaxTimeBetweenTriggerAndPlay { get; set; }
+        public int LowFuelMinTimeBetweenPlay { get; set; }
 
 
         public Dat151AircraftWarningSettings(RelFile rel) : base(rel)
@@ -18486,252 +18518,254 @@ namespace CodeWalker.GameFiles
         }
         public Dat151AircraftWarningSettings(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk01 = br.ReadInt32();
-            Unk02 = br.ReadUInt32();
-            Unk03 = br.ReadInt32();
-            Unk04 = br.ReadInt32();
-            Unk05 = br.ReadUInt32();
-            Unk06 = br.ReadInt32();
-            Unk07 = br.ReadInt32();
-            Unk08 = br.ReadUInt32();
-            Unk09 = br.ReadInt32();
-            Unk10 = br.ReadInt32();
-            Unk11 = br.ReadUInt32();
-            Unk12 = br.ReadInt32();
-            Unk13 = br.ReadInt32();
-            Unk14 = br.ReadUInt32();
-            Unk15 = br.ReadInt32();
-            Unk16 = br.ReadInt32();
-            Unk17 = br.ReadUInt32();
-            Unk18 = br.ReadInt32();
-            Unk19 = br.ReadInt32();
-            Unk20 = br.ReadUInt32();
-            Unk21 = br.ReadInt32();
-            Unk22 = br.ReadInt32();
-            Unk23 = br.ReadSingle();
-            Unk24 = br.ReadUInt32();
-            Unk25 = br.ReadInt32();
-            Unk26 = br.ReadInt32();
-            Unk27 = br.ReadUInt32();
-            Unk28 = br.ReadInt32();
-            Unk29 = br.ReadInt32();
-            Unk30 = br.ReadUInt32();
-            Unk31 = br.ReadInt32();
-            Unk32 = br.ReadInt32();
-            Unk33 = br.ReadUInt32();
-            Unk34 = br.ReadInt32();
-            Unk35 = br.ReadInt32();
-            Unk36 = br.ReadUInt32();
-            Unk37 = br.ReadInt32();
-            Unk38 = br.ReadInt32();
-            Unk39 = br.ReadUInt32();
-            Unk40 = br.ReadInt32();
-            Unk41 = br.ReadInt32();
-            Unk42 = br.ReadUInt32();
-            Unk43 = br.ReadInt32();
-            Unk44 = br.ReadInt32();
-            Unk45 = br.ReadUInt32();
-            Unk46 = br.ReadInt32();
-            Unk47 = br.ReadInt32();
-            Unk48 = br.ReadUInt32();
-            Unk49 = br.ReadInt32();
-            Unk50 = br.ReadInt32();
-            Unk51 = br.ReadSingle();
-            Unk52 = br.ReadUInt32();
-            Unk53 = br.ReadInt32();
-            Unk54 = br.ReadInt32();
-            Unk55 = br.ReadInt32();
-            Unk56 = br.ReadUInt32();
-            Unk57 = br.ReadInt32();
-            Unk58 = br.ReadInt32();
+            MinTimeBetweenDamageReports = br.ReadInt32();
+            TargetedLockedMinTimeInStateToTrigger = br.ReadInt32();
+            TargetedLockedMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            TargetedLockedMinTimeBetweenPlay = br.ReadInt32();
+            MissileFiredMinTimeInStateToTrigger = br.ReadInt32();
+            MissileFiredMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            MissileFiredMinTimeBetweenPlay = br.ReadInt32();
+            AcquiringTargetMinTimeInStateToTrigger = br.ReadInt32();
+            AcquiringTargetMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            AcquiringTargetMinTimeBetweenPlay = br.ReadInt32();
+            TargetAcquiredMinTimeInStateToTrigger = br.ReadInt32();
+            TargetAcquiredMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            TargetAcquiredMinTimeBetweenPlay = br.ReadInt32();
+            AllClearMinTimeInStateToTrigger = br.ReadInt32();
+            AllClearMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            AllClearMinTimeBetweenPlay = br.ReadInt32();
+            PlaneWarningStallMinTimeInStateToTrigger = br.ReadInt32();
+            PlaneWarningStallMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            PlaneWarningStallMinTimeBetweenPlay = br.ReadInt32();
+            AltitudeWarningLowMinTimeInStateToTrigger = br.ReadInt32();
+            AltitudeWarningLowMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            AltitudeWarningLowMinTimeBetweenPlay = br.ReadInt32();
+            AltitudeWarningLowDownProbeLength = br.ReadSingle();
+            AltitudeWarningHighMinTimeInStateToTrigger = br.ReadInt32();
+            AltitudeWarningHighMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            AltitudeWarningHighMinTimeBetweenPlay = br.ReadInt32();
+            Engine1FireMinTimeInStateToTrigger = br.ReadInt32();
+            Engine1FireMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            Engine1FireMinTimeBetweenPlay = br.ReadInt32();
+            Engine2FireMinTimeInStateToTrigger = br.ReadInt32();
+            Engine2FireMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            Engine2FireMinTimeBetweenPlay = br.ReadInt32();
+            Engine3FireMinTimeInStateToTrigger = br.ReadInt32();
+            Engine3FireMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            Engine3FireMinTimeBetweenPlay = br.ReadInt32();
+            Engine4FireMinTimeInStateToTrigger = br.ReadInt32();
+            Engine4FireMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            Engine4FireMinTimeBetweenPlay = br.ReadInt32();
+            DamagedSeriousMinTimeInStateToTrigger = br.ReadInt32();
+            DamagedSeriousMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            DamagedSeriousMinTimeBetweenPlay = br.ReadInt32();
+            DamagedCriticalMinTimeInStateToTrigger = br.ReadInt32();
+            DamagedCriticalMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            DamagedCriticalMinTimeBetweenPlay = br.ReadInt32();
+            OverspeedMinTimeInStateToTrigger = br.ReadInt32();
+            OverspeedMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            OverspeedMinTimeBetweenPlay = br.ReadInt32();
+            TerrainMinTimeInStateToTrigger = br.ReadInt32();
+            TerrainMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            TerrainMinTimeBetweenPlay = br.ReadInt32();
+            TerrainForwardProbeLength = br.ReadSingle();
+            PullUpMinTimeInStateToTrigger = br.ReadInt32();
+            PullUpMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            PullUpMinTimeBetweenPlay = br.ReadInt32();
+            PullUpMaxTimeSinceTerrainTriggerToPlay = br.ReadInt32();
+            LowFuelMinTimeInStateToTrigger = br.ReadInt32();
+            LowFuelMaxTimeBetweenTriggerAndPlay = br.ReadInt32();
+            LowFuelMinTimeBetweenPlay = br.ReadInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             WriteTypeAndOffset(bw);
 
-            bw.Write(Unk01);
-            bw.Write(Unk02);
-            bw.Write(Unk03);
-            bw.Write(Unk04);
-            bw.Write(Unk05);
-            bw.Write(Unk06);
-            bw.Write(Unk07);
-            bw.Write(Unk08);
-            bw.Write(Unk09);
-            bw.Write(Unk10);
-            bw.Write(Unk11);
-            bw.Write(Unk12);
-            bw.Write(Unk13);
-            bw.Write(Unk14);
-            bw.Write(Unk15);
-            bw.Write(Unk16);
-            bw.Write(Unk17);
-            bw.Write(Unk18);
-            bw.Write(Unk19);
-            bw.Write(Unk20);
-            bw.Write(Unk21);
-            bw.Write(Unk22);
-            bw.Write(Unk23);
-            bw.Write(Unk24);
-            bw.Write(Unk25);
-            bw.Write(Unk26);
-            bw.Write(Unk27);
-            bw.Write(Unk28);
-            bw.Write(Unk29);
-            bw.Write(Unk30);
-            bw.Write(Unk31);
-            bw.Write(Unk32);
-            bw.Write(Unk33);
-            bw.Write(Unk34);
-            bw.Write(Unk35);
-            bw.Write(Unk36);
-            bw.Write(Unk37);
-            bw.Write(Unk38);
-            bw.Write(Unk39);
-            bw.Write(Unk40);
-            bw.Write(Unk41);
-            bw.Write(Unk42);
-            bw.Write(Unk43);
-            bw.Write(Unk44);
-            bw.Write(Unk45);
-            bw.Write(Unk46);
-            bw.Write(Unk47);
-            bw.Write(Unk48);
-            bw.Write(Unk49);
-            bw.Write(Unk50);
-            bw.Write(Unk51);
-            bw.Write(Unk52);
-            bw.Write(Unk53);
-            bw.Write(Unk54);
-            bw.Write(Unk55);
-            bw.Write(Unk56);
-            bw.Write(Unk57);
-            bw.Write(Unk58);
+            bw.Write(MinTimeBetweenDamageReports);
+            bw.Write(TargetedLockedMinTimeInStateToTrigger);
+            bw.Write(TargetedLockedMaxTimeBetweenTriggerAndPlay);
+            bw.Write(TargetedLockedMinTimeBetweenPlay);
+            bw.Write(MissileFiredMinTimeInStateToTrigger);
+            bw.Write(MissileFiredMaxTimeBetweenTriggerAndPlay);
+            bw.Write(MissileFiredMinTimeBetweenPlay);
+            bw.Write(AcquiringTargetMinTimeInStateToTrigger);
+            bw.Write(AcquiringTargetMaxTimeBetweenTriggerAndPlay);
+            bw.Write(AcquiringTargetMinTimeBetweenPlay);
+            bw.Write(TargetAcquiredMinTimeInStateToTrigger);
+            bw.Write(TargetAcquiredMaxTimeBetweenTriggerAndPlay);
+            bw.Write(TargetAcquiredMinTimeBetweenPlay);
+            bw.Write(AllClearMinTimeInStateToTrigger);
+            bw.Write(AllClearMaxTimeBetweenTriggerAndPlay);
+            bw.Write(AllClearMinTimeBetweenPlay);
+            bw.Write(PlaneWarningStallMinTimeInStateToTrigger);
+            bw.Write(PlaneWarningStallMaxTimeBetweenTriggerAndPlay);
+            bw.Write(PlaneWarningStallMinTimeBetweenPlay);
+            bw.Write(AltitudeWarningLowMinTimeInStateToTrigger);
+            bw.Write(AltitudeWarningLowMaxTimeBetweenTriggerAndPlay);
+            bw.Write(AltitudeWarningLowMinTimeBetweenPlay);
+            bw.Write(AltitudeWarningLowDownProbeLength);
+            bw.Write(AltitudeWarningHighMinTimeInStateToTrigger);
+            bw.Write(AltitudeWarningHighMaxTimeBetweenTriggerAndPlay);
+            bw.Write(AltitudeWarningHighMinTimeBetweenPlay);
+            bw.Write(Engine1FireMinTimeInStateToTrigger);
+            bw.Write(Engine1FireMaxTimeBetweenTriggerAndPlay);
+            bw.Write(Engine1FireMinTimeBetweenPlay);
+            bw.Write(Engine2FireMinTimeInStateToTrigger);
+            bw.Write(Engine2FireMaxTimeBetweenTriggerAndPlay);
+            bw.Write(Engine2FireMinTimeBetweenPlay);
+            bw.Write(Engine3FireMinTimeInStateToTrigger);
+            bw.Write(Engine3FireMaxTimeBetweenTriggerAndPlay);
+            bw.Write(Engine3FireMinTimeBetweenPlay);
+            bw.Write(Engine4FireMinTimeInStateToTrigger);
+            bw.Write(Engine4FireMaxTimeBetweenTriggerAndPlay);
+            bw.Write(Engine4FireMinTimeBetweenPlay);
+            bw.Write(DamagedSeriousMinTimeInStateToTrigger);
+            bw.Write(DamagedSeriousMaxTimeBetweenTriggerAndPlay);
+            bw.Write(DamagedSeriousMinTimeBetweenPlay);
+            bw.Write(DamagedCriticalMinTimeInStateToTrigger);
+            bw.Write(DamagedCriticalMaxTimeBetweenTriggerAndPlay);
+            bw.Write(DamagedCriticalMinTimeBetweenPlay);
+            bw.Write(OverspeedMinTimeInStateToTrigger);
+            bw.Write(OverspeedMaxTimeBetweenTriggerAndPlay);
+            bw.Write(OverspeedMinTimeBetweenPlay);
+            bw.Write(TerrainMinTimeInStateToTrigger);
+            bw.Write(TerrainMaxTimeBetweenTriggerAndPlay);
+            bw.Write(TerrainMinTimeBetweenPlay);
+            bw.Write(TerrainForwardProbeLength);
+            bw.Write(PullUpMinTimeInStateToTrigger);
+            bw.Write(PullUpMaxTimeBetweenTriggerAndPlay);
+            bw.Write(PullUpMinTimeBetweenPlay);
+            bw.Write(PullUpMaxTimeSinceTerrainTriggerToPlay);
+            bw.Write(LowFuelMinTimeInStateToTrigger);
+            bw.Write(LowFuelMaxTimeBetweenTriggerAndPlay);
+            bw.Write(LowFuelMinTimeBetweenPlay);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
-            RelXml.ValueTag(sb, indent, "Unk01", Unk01.ToString());
-            RelXml.StringTag(sb, indent, "Unk02", RelXml.HashString(Unk02));
-            RelXml.ValueTag(sb, indent, "Unk03", Unk03.ToString());
-            RelXml.ValueTag(sb, indent, "Unk04", Unk04.ToString());
-            RelXml.StringTag(sb, indent, "Unk05", RelXml.HashString(Unk05));
-            RelXml.ValueTag(sb, indent, "Unk06", Unk06.ToString());
-            RelXml.ValueTag(sb, indent, "Unk07", Unk07.ToString());
-            RelXml.StringTag(sb, indent, "Unk08", RelXml.HashString(Unk08));
-            RelXml.ValueTag(sb, indent, "Unk09", Unk09.ToString());
-            RelXml.ValueTag(sb, indent, "Unk10", Unk10.ToString());
-            RelXml.StringTag(sb, indent, "Unk11", RelXml.HashString(Unk11));
-            RelXml.ValueTag(sb, indent, "Unk12", Unk12.ToString());
-            RelXml.ValueTag(sb, indent, "Unk13", Unk13.ToString());
-            RelXml.StringTag(sb, indent, "Unk14", RelXml.HashString(Unk14));
-            RelXml.ValueTag(sb, indent, "Unk15", Unk15.ToString());
-            RelXml.ValueTag(sb, indent, "Unk16", Unk16.ToString());
-            RelXml.StringTag(sb, indent, "Unk17", RelXml.HashString(Unk17));
-            RelXml.ValueTag(sb, indent, "Unk18", Unk18.ToString());
-            RelXml.ValueTag(sb, indent, "Unk19", Unk19.ToString());
-            RelXml.StringTag(sb, indent, "Unk20", RelXml.HashString(Unk20));
-            RelXml.ValueTag(sb, indent, "Unk21", Unk21.ToString());
-            RelXml.ValueTag(sb, indent, "Unk22", Unk22.ToString());
-            RelXml.ValueTag(sb, indent, "Unk23", FloatUtil.ToString(Unk23));
-            RelXml.StringTag(sb, indent, "Unk24", RelXml.HashString(Unk24));
-            RelXml.ValueTag(sb, indent, "Unk25", Unk25.ToString());
-            RelXml.ValueTag(sb, indent, "Unk26", Unk26.ToString());
-            RelXml.StringTag(sb, indent, "Unk27", RelXml.HashString(Unk27));
-            RelXml.ValueTag(sb, indent, "Unk28", Unk28.ToString());
-            RelXml.ValueTag(sb, indent, "Unk29", Unk29.ToString());
-            RelXml.StringTag(sb, indent, "Unk30", RelXml.HashString(Unk30));
-            RelXml.ValueTag(sb, indent, "Unk31", Unk31.ToString());
-            RelXml.ValueTag(sb, indent, "Unk32", Unk32.ToString());
-            RelXml.StringTag(sb, indent, "Unk33", RelXml.HashString(Unk33));
-            RelXml.ValueTag(sb, indent, "Unk34", Unk34.ToString());
-            RelXml.ValueTag(sb, indent, "Unk35", Unk35.ToString());
-            RelXml.StringTag(sb, indent, "Unk36", RelXml.HashString(Unk36));
-            RelXml.ValueTag(sb, indent, "Unk37", Unk37.ToString());
-            RelXml.ValueTag(sb, indent, "Unk38", Unk38.ToString());
-            RelXml.StringTag(sb, indent, "Unk39", RelXml.HashString(Unk39));
-            RelXml.ValueTag(sb, indent, "Unk40", Unk40.ToString());
-            RelXml.ValueTag(sb, indent, "Unk41", Unk41.ToString());
-            RelXml.StringTag(sb, indent, "Unk42", RelXml.HashString(Unk42));
-            RelXml.ValueTag(sb, indent, "Unk43", Unk43.ToString());
-            RelXml.ValueTag(sb, indent, "Unk44", Unk44.ToString());
-            RelXml.StringTag(sb, indent, "Unk45", RelXml.HashString(Unk45));
-            RelXml.ValueTag(sb, indent, "Unk46", Unk46.ToString());
-            RelXml.ValueTag(sb, indent, "Unk47", Unk47.ToString());
-            RelXml.StringTag(sb, indent, "Unk48", RelXml.HashString(Unk48));
-            RelXml.ValueTag(sb, indent, "Unk49", Unk49.ToString());
-            RelXml.ValueTag(sb, indent, "Unk50", Unk50.ToString());
-            RelXml.ValueTag(sb, indent, "Unk51", FloatUtil.ToString(Unk51));
-            RelXml.StringTag(sb, indent, "Unk52", RelXml.HashString(Unk52));
-            RelXml.ValueTag(sb, indent, "Unk53", Unk53.ToString());
-            RelXml.ValueTag(sb, indent, "Unk54", Unk54.ToString());
-            RelXml.ValueTag(sb, indent, "Unk55", Unk55.ToString());
-            RelXml.StringTag(sb, indent, "Unk56", RelXml.HashString(Unk56));
-            RelXml.ValueTag(sb, indent, "Unk57", Unk57.ToString());
-            RelXml.ValueTag(sb, indent, "Unk58", Unk58.ToString());
+            RelXml.ValueTag(sb, indent, "MinTimeBetweenDamageReports", MinTimeBetweenDamageReports.ToString());
+            RelXml.ValueTag(sb, indent, "TargetedLockedMinTimeInStateToTrigger", TargetedLockedMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "TargetedLockedMaxTimeBetweenTriggerAndPlay", TargetedLockedMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "TargetedLockedMinTimeBetweenPlay", TargetedLockedMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "MissileFiredMinTimeInStateToTrigger", MissileFiredMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "MissileFiredMaxTimeBetweenTriggerAndPlay", MissileFiredMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "MissileFiredMinTimeBetweenPlay", MissileFiredMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "AcquiringTargetMinTimeInStateToTrigger", AcquiringTargetMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "AcquiringTargetMaxTimeBetweenTriggerAndPlay", AcquiringTargetMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "AcquiringTargetMinTimeBetweenPlay", AcquiringTargetMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "TargetAcquiredMinTimeInStateToTrigger", TargetAcquiredMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "TargetAcquiredMaxTimeBetweenTriggerAndPlay", TargetAcquiredMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "TargetAcquiredMinTimeBetweenPlay", TargetAcquiredMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "AllClearMinTimeInStateToTrigger", AllClearMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "AllClearMaxTimeBetweenTriggerAndPlay", AllClearMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "AllClearMinTimeBetweenPlay", AllClearMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "PlaneWarningStallMinTimeInStateToTrigger", PlaneWarningStallMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "PlaneWarningStallMaxTimeBetweenTriggerAndPlay", PlaneWarningStallMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "PlaneWarningStallMinTimeBetweenPlay", PlaneWarningStallMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "AltitudeWarningLowMinTimeInStateToTrigger", AltitudeWarningLowMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "AltitudeWarningLowMaxTimeBetweenTriggerAndPlay", AltitudeWarningLowMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "AltitudeWarningLowMinTimeBetweenPlay", AltitudeWarningLowMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "AltitudeWarningLowDownProbeLength", FloatUtil.ToString(AltitudeWarningLowDownProbeLength));
+            RelXml.ValueTag(sb, indent, "AltitudeWarningHighMinTimeInStateToTrigger", AltitudeWarningHighMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "AltitudeWarningHighMaxTimeBetweenTriggerAndPlay", AltitudeWarningHighMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "AltitudeWarningHighMinTimeBetweenPlay", AltitudeWarningHighMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "Engine1FireMinTimeInStateToTrigger", Engine1FireMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "Engine1FireMaxTimeBetweenTriggerAndPlay", Engine1FireMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "Engine1FireMinTimeBetweenPlay", Engine1FireMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "Engine2FireMinTimeInStateToTrigger", Engine2FireMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "Engine2FireMaxTimeBetweenTriggerAndPlay", Engine2FireMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "Engine2FireMinTimeBetweenPlay", Engine2FireMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "Engine3FireMinTimeInStateToTrigger", Engine3FireMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "Engine3FireMaxTimeBetweenTriggerAndPlay", Engine3FireMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "Engine3FireMinTimeBetweenPlay", Engine3FireMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "Engine4FireMinTimeInStateToTrigger", Engine4FireMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "Engine4FireMaxTimeBetweenTriggerAndPlay", Engine4FireMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "Engine4FireMinTimeBetweenPlay", Engine4FireMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "DamagedSeriousMinTimeInStateToTrigger", DamagedSeriousMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "DamagedSeriousMaxTimeBetweenTriggerAndPlay", DamagedSeriousMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "DamagedSeriousMinTimeBetweenPlay", DamagedSeriousMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "DamagedCriticalMinTimeInStateToTrigger", DamagedCriticalMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "DamagedCriticalMaxTimeBetweenTriggerAndPlay", DamagedCriticalMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "DamagedCriticalMinTimeBetweenPlay", DamagedCriticalMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "OverspeedMinTimeInStateToTrigger", OverspeedMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "OverspeedMaxTimeBetweenTriggerAndPlay", OverspeedMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "OverspeedMinTimeBetweenPlay", OverspeedMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "TerrainMinTimeInStateToTrigger", TerrainMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "TerrainMaxTimeBetweenTriggerAndPlay", TerrainMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "TerrainMinTimeBetweenPlay", TerrainMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "TerrainForwardProbeLength", FloatUtil.ToString(TerrainForwardProbeLength));
+            RelXml.ValueTag(sb, indent, "PullUpMinTimeInStateToTrigger", PullUpMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "PullUpMaxTimeBetweenTriggerAndPlay", PullUpMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "PullUpMinTimeBetweenPlay", PullUpMinTimeBetweenPlay.ToString());
+            RelXml.ValueTag(sb, indent, "PullUpMaxTimeSinceTerrainTriggerToPlay", PullUpMaxTimeSinceTerrainTriggerToPlay.ToString());
+            RelXml.ValueTag(sb, indent, "LowFuelMinTimeInStateToTrigger", LowFuelMinTimeInStateToTrigger.ToString());
+            RelXml.ValueTag(sb, indent, "LowFuelMaxTimeBetweenTriggerAndPlay", LowFuelMaxTimeBetweenTriggerAndPlay.ToString());
+            RelXml.ValueTag(sb, indent, "LowFuelMinTimeBetweenPlay", LowFuelMinTimeBetweenPlay.ToString());
         }
         public override void ReadXml(XmlNode node)
         {
-            Unk01 = Xml.GetChildIntAttribute(node, "Unk01", "value");
-            Unk02 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk02"));
-            Unk03 = Xml.GetChildIntAttribute(node, "Unk03", "value");
-            Unk04 = Xml.GetChildIntAttribute(node, "Unk04", "value");
-            Unk05 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk05"));
-            Unk06 = Xml.GetChildIntAttribute(node, "Unk06", "value");
-            Unk07 = Xml.GetChildIntAttribute(node, "Unk07", "value");
-            Unk08 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk08"));
-            Unk09 = Xml.GetChildIntAttribute(node, "Unk09", "value");
-            Unk10 = Xml.GetChildIntAttribute(node, "Unk10", "value");
-            Unk11 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk11"));
-            Unk12 = Xml.GetChildIntAttribute(node, "Unk12", "value");
-            Unk13 = Xml.GetChildIntAttribute(node, "Unk13", "value");
-            Unk14 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk14"));
-            Unk15 = Xml.GetChildIntAttribute(node, "Unk15", "value");
-            Unk16 = Xml.GetChildIntAttribute(node, "Unk16", "value");
-            Unk17 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk17"));
-            Unk18 = Xml.GetChildIntAttribute(node, "Unk18", "value");
-            Unk19 = Xml.GetChildIntAttribute(node, "Unk19", "value");
-            Unk20 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk20"));
-            Unk21 = Xml.GetChildIntAttribute(node, "Unk21", "value");
-            Unk22 = Xml.GetChildIntAttribute(node, "Unk22", "value");
-            Unk23 = Xml.GetChildFloatAttribute(node, "Unk23", "value");
-            Unk24 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk24"));
-            Unk25 = Xml.GetChildIntAttribute(node, "Unk25", "value");
-            Unk26 = Xml.GetChildIntAttribute(node, "Unk26", "value");
-            Unk27 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk27"));
-            Unk28 = Xml.GetChildIntAttribute(node, "Unk28", "value");
-            Unk29 = Xml.GetChildIntAttribute(node, "Unk29", "value");
-            Unk30 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk30"));
-            Unk31 = Xml.GetChildIntAttribute(node, "Unk31", "value");
-            Unk32 = Xml.GetChildIntAttribute(node, "Unk32", "value");
-            Unk33 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk33"));
-            Unk34 = Xml.GetChildIntAttribute(node, "Unk34", "value");
-            Unk35 = Xml.GetChildIntAttribute(node, "Unk35", "value");
-            Unk36 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk36"));
-            Unk37 = Xml.GetChildIntAttribute(node, "Unk37", "value");
-            Unk38 = Xml.GetChildIntAttribute(node, "Unk38", "value");
-            Unk39 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk39"));
-            Unk40 = Xml.GetChildIntAttribute(node, "Unk40", "value");
-            Unk41 = Xml.GetChildIntAttribute(node, "Unk41", "value");
-            Unk42 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk42"));
-            Unk43 = Xml.GetChildIntAttribute(node, "Unk43", "value");
-            Unk44 = Xml.GetChildIntAttribute(node, "Unk44", "value");
-            Unk45 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk45"));
-            Unk46 = Xml.GetChildIntAttribute(node, "Unk46", "value");
-            Unk47 = Xml.GetChildIntAttribute(node, "Unk47", "value");
-            Unk48 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk48"));
-            Unk49 = Xml.GetChildIntAttribute(node, "Unk49", "value");
-            Unk50 = Xml.GetChildIntAttribute(node, "Unk50", "value");
-            Unk51 = Xml.GetChildFloatAttribute(node, "Unk51", "value");
-            Unk52 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk52"));
-            Unk53 = Xml.GetChildIntAttribute(node, "Unk53", "value");
-            Unk54 = Xml.GetChildIntAttribute(node, "Unk54", "value");
-            Unk55 = Xml.GetChildIntAttribute(node, "Unk55", "value");
-            Unk56 = XmlRel.GetHash(Xml.GetChildInnerText(node, "Unk56"));
-            Unk57 = Xml.GetChildIntAttribute(node, "Unk57", "value");
-            Unk58 = Xml.GetChildIntAttribute(node, "Unk58", "value");
+            MinTimeBetweenDamageReports = Xml.GetChildIntAttribute(node, "MinTimeBetweenDamageReports", "value");
+            TargetedLockedMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "TargetedLockedMinTimeInStateToTrigger", "value");
+            TargetedLockedMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "TargetedLockedMaxTimeBetweenTriggerAndPlay", "value");
+            TargetedLockedMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "TargetedLockedMinTimeBetweenPlay", "value");
+            MissileFiredMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "MissileFiredMinTimeInStateToTrigger", "value");
+            MissileFiredMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "MissileFiredMaxTimeBetweenTriggerAndPlay", "value");
+            MissileFiredMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "MissileFiredMinTimeBetweenPlay", "value");
+            AcquiringTargetMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "AcquiringTargetMinTimeInStateToTrigger", "value");
+            AcquiringTargetMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "AcquiringTargetMaxTimeBetweenTriggerAndPlay", "value");
+            AcquiringTargetMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "AcquiringTargetMinTimeBetweenPlay", "value");
+            TargetAcquiredMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "TargetAcquiredMinTimeInStateToTrigger", "value");
+            TargetAcquiredMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "TargetAcquiredMaxTimeBetweenTriggerAndPlay", "value");
+            TargetAcquiredMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "TargetAcquiredMinTimeBetweenPlay", "value");
+            AllClearMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "AllClearMinTimeInStateToTrigger", "value");
+            AllClearMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "AllClearMaxTimeBetweenTriggerAndPlay", "value");
+            AllClearMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "AllClearMinTimeBetweenPlay", "value");
+            PlaneWarningStallMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "PlaneWarningStallMinTimeInStateToTrigger", "value");
+            PlaneWarningStallMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "PlaneWarningStallMaxTimeBetweenTriggerAndPlay", "value");
+            PlaneWarningStallMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "PlaneWarningStallMinTimeBetweenPlay", "value");
+            AltitudeWarningLowMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "AltitudeWarningLowMinTimeInStateToTrigger", "value");
+            AltitudeWarningLowMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "AltitudeWarningLowMaxTimeBetweenTriggerAndPlay", "value");
+            AltitudeWarningLowMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "AltitudeWarningLowMinTimeBetweenPlay", "value");
+            AltitudeWarningLowDownProbeLength = Xml.GetChildFloatAttribute(node, "AltitudeWarningLowDownProbeLength", "value");
+            AltitudeWarningHighMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "AltitudeWarningHighMinTimeInStateToTrigger", "value");
+            AltitudeWarningHighMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "AltitudeWarningHighMaxTimeBetweenTriggerAndPlay", "value");
+            AltitudeWarningHighMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "AltitudeWarningHighMinTimeBetweenPlay", "value");
+            Engine1FireMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "Engine1FireMinTimeInStateToTrigger", "value");
+            Engine1FireMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "Engine1FireMaxTimeBetweenTriggerAndPlay", "value");
+            Engine1FireMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "Engine1FireMinTimeBetweenPlay", "value");
+            Engine2FireMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "Engine2FireMinTimeInStateToTrigger", "value");
+            Engine2FireMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "Engine2FireMaxTimeBetweenTriggerAndPlay", "value");
+            Engine2FireMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "Engine2FireMinTimeBetweenPlay", "value");
+            Engine3FireMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "Engine3FireMinTimeInStateToTrigger", "value");
+            Engine3FireMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "Engine3FireMaxTimeBetweenTriggerAndPlay", "value");
+            Engine3FireMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "Engine3FireMinTimeBetweenPlay", "value");
+            Engine4FireMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "Engine4FireMinTimeInStateToTrigger", "value");
+            Engine4FireMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "Engine4FireMaxTimeBetweenTriggerAndPlay", "value");
+            Engine4FireMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "Engine4FireMinTimeBetweenPlay", "value");
+            DamagedSeriousMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "DamagedSeriousMinTimeInStateToTrigger", "value");
+            DamagedSeriousMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "DamagedSeriousMaxTimeBetweenTriggerAndPlay", "value");
+            DamagedSeriousMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "DamagedSeriousMinTimeBetweenPlay", "value");
+            DamagedCriticalMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "DamagedCriticalMinTimeInStateToTrigger", "value");
+            DamagedCriticalMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "DamagedCriticalMaxTimeBetweenTriggerAndPlay", "value");
+            DamagedCriticalMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "DamagedCriticalMinTimeBetweenPlay", "value");
+            OverspeedMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "OverspeedMinTimeInStateToTrigger", "value");
+            OverspeedMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "OverspeedMaxTimeBetweenTriggerAndPlay", "value");
+            OverspeedMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "OverspeedMinTimeBetweenPlay", "value");
+            TerrainMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "TerrainMinTimeInStateToTrigger", "value");
+            TerrainMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "TerrainMaxTimeBetweenTriggerAndPlay", "value");
+            TerrainMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "TerrainMinTimeBetweenPlay", "value");
+            TerrainForwardProbeLength = Xml.GetChildFloatAttribute(node, "TerrainForwardProbeLength", "value");
+            PullUpMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "PullUpMinTimeInStateToTrigger", "value");
+            PullUpMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "PullUpMaxTimeBetweenTriggerAndPlay", "value");
+            PullUpMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "PullUpMinTimeBetweenPlay", "value");
+            PullUpMaxTimeSinceTerrainTriggerToPlay = Xml.GetChildIntAttribute(node, "PullUpMaxTimeSinceTerrainTriggerToPlay", "value");
+            LowFuelMinTimeInStateToTrigger = Xml.GetChildIntAttribute(node, "LowFuelMinTimeInStateToTrigger", "value");
+            LowFuelMaxTimeBetweenTriggerAndPlay = Xml.GetChildIntAttribute(node, "LowFuelMaxTimeBetweenTriggerAndPlay", "value");
+            LowFuelMinTimeBetweenPlay = Xml.GetChildIntAttribute(node, "LowFuelMinTimeBetweenPlay", "value");
         }
     }
-    [TC(typeof(EXP))] public class Dat151PedWallaSpeechSettingsListItem : IMetaXmlItem
+
+    [TC(typeof(EXP))] 
+    public class Dat151PedWallaSpeechSettingsListItem : IMetaXmlItem
     {
         public MetaHash Unk01 { get; set; }
         public float Unk02 { get; set; }
