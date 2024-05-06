@@ -1087,29 +1087,26 @@ namespace CodeWalker.World
 
         public void GetVisibleYmaps(Camera cam, int hour, MetaHash weather, Dictionary<MetaHash, YmapFile> ymaps)
         {
-            if (!Inited) return;
-            if (MapDataStore == null) return;
+            if (!Inited || MapDataStore == null) return;
+
             CurrentHour = hour;
             CurrentWeather = weather;
             var items = MapDataStore.GetItems(ref cam.Position);
-            for (int i = 0; i < items.Count; i++)
+
+            foreach (var item in items)
             {
-                var item = items[i];
-                if (item == null)
-                {
-                    continue;
-                }
+                if (item == null) continue;
 
                 var hash = item.Name;
-                if (!ymaps.ContainsKey(hash))
+                if (!ymaps.TryGetValue(hash, out var ymap))
                 {
-                    var ymap = (hash > 0) ? GameFileCache.GetYmap(hash) : null;
+                    ymap = (hash > 0) ? GameFileCache.GetYmap(hash) : null;
                     while ((ymap != null) && (ymap.Loaded))
                     {
                         if (!IsYmapAvailable(hash, hour, weather)) break;
                         ymaps[hash] = ymap;
                         hash = ymap._CMapData.parent;
-                        if (ymaps.ContainsKey(hash)) break;
+                        if (ymaps.TryGetValue(hash, out ymap)) break;
                         ymap = (hash > 0) ? GameFileCache.GetYmap(hash) : null;
                     }
                 }

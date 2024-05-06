@@ -232,22 +232,13 @@ namespace CodeWalker
 
         private void Init()
         {
-            //called from WorldForm_Load
-
-            if (!initedOk)
+            if (!initedOk || !GTAFolder.UpdateGTAFolder(true))
             {
                 Close();
                 return;
             }
-
 
             MouseWheel += WorldForm_MouseWheel;
-
-            if (!GTAFolder.UpdateGTAFolder(true))
-            {
-                Close();
-                return;
-            }
 
             Widget.Position = new Vector3(1.0f, 10.0f, 100.0f);
             Widget.Rotation = Quaternion.Identity;
@@ -258,54 +249,41 @@ namespace CodeWalker
             Widget.OnScaleChange += Widget_OnScaleChange;
 
             ymaplist = YmapsTextBox.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            ViewModeComboBox.SelectedIndex = startupviewmode;
-            BoundsStyleComboBox.SelectedIndex = 0; //LoadSettings will handle this
 
-            SelectionModeComboBox.SelectedIndex = 0; //Entity mode
+            ViewModeComboBox.SelectedIndex = startupviewmode;
+            BoundsStyleComboBox.SelectedIndex = 0;
+            SelectionModeComboBox.SelectedIndex = 0;
+            WorldMaxLodComboBox.SelectedIndex = 0;
+            WeatherComboBox.SelectedIndex = 0;
+            CameraModeComboBox.SelectedIndex = 0;
+            DlcLevelComboBox.SelectedIndex = 0;
+
             ShowSelectedExtensionTab(false);
 
-            toolspanellastwidth = ToolsPanel.Width * 2; //default expanded size
-
+            toolspanellastwidth = ToolsPanel.Width * 2;
 
             Icons = new List<MapIcon>();
             AddIcon("Google Marker", "icon_google_marker_64x64.png", 64, 64, 11.0f, 40.0f, 1.0f);
             AddIcon("Glokon Marker", "icon_glokon_normal_32x32.png", 32, 32, 11.0f, 32.0f, 1.0f);
             AddIcon("Glokon Debug", "icon_glokon_debug_32x32.png", 32, 32, 11.5f, 32.0f, 1.0f);
+
             MarkerIcon = Icons[1];
             LocatorIcon = Icons[2];
-            foreach (MapIcon icon in Icons)
-            {
-                MarkerStyleComboBox.Items.Add(icon);
-                LocatorStyleComboBox.Items.Add(icon);
-            }
-            MarkerStyleComboBox.SelectedItem = MarkerIcon; //LoadSettings will handle this
+
+            MarkerStyleComboBox.Items.AddRange(Icons.ToArray());
+            LocatorStyleComboBox.Items.AddRange(Icons.ToArray());
+
+            MarkerStyleComboBox.SelectedItem = MarkerIcon;
             LocatorStyleComboBox.SelectedItem = LocatorIcon;
-            LocatorMarker = new MapMarker();
-            LocatorMarker.Icon = LocatorIcon;
-            LocatorMarker.IsMovable = true;
-            //AddDefaultMarkers(); //some POI to start with
 
-            ShaderParamNames[] texsamplers = RenderableGeometry.GetTextureSamplerList();
-            foreach (var texsampler in texsamplers)
-            {
-                TextureSamplerComboBox.Items.Add(texsampler);
-            }
-            //TextureSamplerComboBox.SelectedIndex = 0; //LoadSettings will handle this
-            //RenderModeComboBox.SelectedIndex = 0; //Default
+            LocatorMarker = new MapMarker { Icon = LocatorIcon, IsMovable = true };
 
-            WorldMaxLodComboBox.SelectedIndex = 0;//should this be a setting?
+            TextureSamplerComboBox.Items.AddRange(RenderableGeometry.GetTextureSamplerList().Cast<object>().ToArray());
 
-            WeatherComboBox.SelectedIndex = 0;//show "<Loading...>" until weather types are loaded
-
-            CameraModeComboBox.SelectedIndex = 0; //"Perspective"
-
-            DlcLevelComboBox.SelectedIndex = 0; //show "<Loading...>" until DLC list is loaded
 
             UpdateToolbarShortcutsText();
 
-
             Input.Init();
-
 
             Renderer.Start();
         }
@@ -384,7 +362,7 @@ namespace CodeWalker
             }
 
             int count = 0;
-            while (running && (count < 5000)) //wait for the content thread to exit gracefully
+            while (running && (count < 5000))
             {
                 Thread.Sleep(1);
                 count++;
@@ -396,38 +374,26 @@ namespace CodeWalker
         }
         public void RenderScene(DeviceContext context)
         {
+            if (pauserendering) return;
+
             float elapsed = (float)frametimer.Elapsed.TotalSeconds;
             frametimer.Restart();
-
-            if (pauserendering) return;
 
             GameFileCache.BeginFrame();
 
             if (!Monitor.TryEnter(Renderer.RenderSyncRoot, 50))
-            { return; } //couldn't get a lock, try again next time
+            { return; }
 
             UpdateControlInputs(elapsed);
-
             space.Update(elapsed);
 
-            if (CutsceneForm != null)
-            {
-                CutsceneForm.UpdateAnimation(elapsed);
-            }
+            CutsceneForm?.UpdateAnimation(elapsed);
 
             Renderer.Update(elapsed, MouseLastPoint.X, MouseLastPoint.Y);
-
-
-
             UpdateWidgets();
-
             BeginMouseHitTest();
 
-
-
-
             Renderer.BeginRender(context);
-
             Renderer.RenderSkyAndClouds();
 
             Renderer.SelectedDrawable = SelectedItem.Drawable;
@@ -446,21 +412,15 @@ namespace CodeWalker
             }
 
             UpdateMouseHits();
-
             RenderSelection();
-
             RenderMoused();
 
             Renderer.RenderQueued();
-
             Renderer.RenderBounds(SelectionMode);
-
             Renderer.RenderSelectionGeometry(SelectionMode);
-
             Renderer.RenderFinalPass();
 
             RenderMarkers();
-
             RenderWidgets();
 
             Renderer.EndRender();
@@ -677,7 +637,6 @@ namespace CodeWalker
 
             renderworldVisibleYmapDict.Clear();
 
-
             int hour = worldymaptimefilter ? (int)Renderer.timeofday : -1;
             MetaHash weathertype = worldymapweatherfilter ? ((weather.CurrentWeatherType != null) ? weather.CurrentWeatherType.NameHash : new MetaHash(0)) : new MetaHash(0);
 
@@ -690,25 +649,15 @@ namespace CodeWalker
                 spaceEnts = space.TemporaryEntities;
             }
 
-            if (ProjectForm != null)
-            {
-                ProjectForm.GetVisibleYmaps(camera, renderworldVisibleYmapDict);
-            }
-
-            if (CutsceneForm != null)
-            {
-                CutsceneForm.GetVisibleYmaps(camera, renderworldVisibleYmapDict);
-            }
+            ProjectForm?.GetVisibleYmaps(camera, renderworldVisibleYmapDict);
+            CutsceneForm?.GetVisibleYmaps(camera, renderworldVisibleYmapDict);
 
             Renderer.RenderWorld(renderworldVisibleYmapDict, spaceEnts);
-
 
             foreach (var ymap in Renderer.VisibleYmaps)
             {
                 UpdateMouseHits(ymap);
             }
-
-
 
             if (renderwaterquads || (SelectionMode == MapSelectionMode.WaterQuad))
             {
@@ -758,7 +707,6 @@ namespace CodeWalker
             {
                 RenderWorldAudioZones();
             }
-
         }
 
         private void RenderWorldCollisionMeshes()

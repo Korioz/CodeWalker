@@ -270,73 +270,61 @@ namespace CodeWalker.Rendering
             dxform.InitScene(device);
             StartRenderLoop();
         }
+
         private void StartRenderLoop()
         {
             Running = true;
-            new Thread(new ThreadStart(RenderLoop)).Start();
+            new Thread(RenderLoop) { IsBackground = true }.Start();
         }
+
         private void RenderLoop()
         {
             while (Running)
             {
-                while (Resizing)
+                if (Resizing)
                 {
-                    swapchain.Present(1, PresentFlags.None); //just flip buffers when resizing; don't draw
-                }
-                while (dxform.Form.WindowState == FormWindowState.Minimized)
-                {
-                    Thread.Sleep(10); //don't hog CPU when minimised
-                    if (dxform.Form.IsDisposed) return; //if closed while minimised
-                }
-                if (Form.ActiveForm == null)
-                {
-                    Thread.Sleep(100); //reduce the FPS when the app isn't active (maybe this should be configurable?)
-                    if (context.IsDisposed) return; //if form closed while sleeping (eg from rightclick on taskbar)
-                }
-
-                Rendering = true;
-                if(!Monitor.TryEnter(syncroot, 50))
-                {
-                    Thread.Sleep(10); //don't hog CPU when not able to render...
+                    swapchain.Present(1, PresentFlags.None);
                     continue;
                 }
 
-                bool ok = true;
+                if (dxform.Form.WindowState == FormWindowState.Minimized || Form.ActiveForm == null)
+                {
+                    Thread.Sleep(100);
+                    if (dxform.Form.IsDisposed || context.IsDisposed) return;
+                    continue;
+                }
+
+                Rendering = true;
+                if (!Monitor.TryEnter(syncroot, 50))
+                {
+                    Thread.Sleep(10);
+                    continue;
+                }
+
                 try
                 {
                     context.OutputMerger.SetRenderTargets(depthview, targetview);
                     context.Rasterizer.SetViewport(0, 0, dxform.Form.ClientSize.Width, dxform.Form.ClientSize.Height);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error setting main render target!\n" + ex.ToString());
-                    ok = false;
-                }
 
-                if (ok)
-                {
                     if (dxform.Form.IsDisposed)
                     {
                         Monitor.Exit(syncroot);
                         Rendering = false;
-                        return; //the form was closed... stop!!
+                        return;
                     }
 
                     dxform.RenderScene(context);
-
-                    try
-                    {
-                        swapchain.Present(1, PresentFlags.None);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error presenting swap chain!\n" + ex.ToString());
-                    }
+                    swapchain.Present(1, PresentFlags.None);
                 }
-
-                Monitor.Exit(syncroot);
-                Rendering = false;
-
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    Monitor.Exit(syncroot);
+                    Rendering = false;
+                }
             }
         }
 

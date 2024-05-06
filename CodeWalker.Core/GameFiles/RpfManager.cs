@@ -272,13 +272,13 @@ namespace CodeWalker.GameFiles
         }
         public byte[] GetFileData(string path)
         {
-            byte[] data = null;
             RpfFileEntry entry = GetEntry(path) as RpfFileEntry;
             if (entry != null)
             {
-                data = entry.File.ExtractFile(entry);
+                byte[] data = entry.File.ExtractFile(entry);
+                return data;
             }
-            return data;
+            return null;
         }
         public string GetFileUTF8Text(string path)
         {

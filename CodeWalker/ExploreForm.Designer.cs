@@ -274,7 +274,7 @@
             this.EditExportXmlMenu.ShortcutKeyDisplayString = "Ctrl+S";
             this.EditExportXmlMenu.Size = new System.Drawing.Size(208, 22);
             this.EditExportXmlMenu.Text = "Export XML...";
-            this.EditExportXmlMenu.Click += new System.EventHandler(this.EditExportXmlMenu_Click);
+            this.EditExportXmlMenu.Click += new System.EventHandler(this.EditExportXmlMenu_ClickAsync);
             // 
             // EditExtractRawMenu
             // 
@@ -884,7 +884,7 @@
             this.MainListView.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.MainListView_RetrieveVirtualItem);
             this.MainListView.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainListView_DragDrop);
             this.MainListView.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainListView_DragEnter);
-            this.MainListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainListView_KeyDown);
+            this.MainListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainListView_KeyDownAsync);
             this.MainListView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainListView_KeyUp);
             this.MainListView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainListView_MouseUp);
             // 
@@ -1042,7 +1042,7 @@
             this.ListContextExportXmlMenu.ShortcutKeyDisplayString = "Ctrl+S";
             this.ListContextExportXmlMenu.Size = new System.Drawing.Size(208, 22);
             this.ListContextExportXmlMenu.Text = "Export XML...";
-            this.ListContextExportXmlMenu.Click += new System.EventHandler(this.ListContextExportXmlMenu_Click);
+            this.ListContextExportXmlMenu.Click += new System.EventHandler(this.ListContextExportXmlMenu_ClickAsync);
             // 
             // ListContextExtractRawMenu
             // 

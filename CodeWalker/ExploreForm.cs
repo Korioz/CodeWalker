@@ -67,10 +67,6 @@ namespace CodeWalker
 
         private void SetTheme(string themestr, bool changing = true)
         {
-            //string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.temp.config");
-            //MainDockPanel.SaveAsXml(configFile);
-            //CloseAllContents();
-
             foreach (ToolStripMenuItem menu in ViewThemeMenu.DropDownItems)
             {
                 menu.Checked = false;
@@ -83,7 +79,6 @@ namespace CodeWalker
             {
                 default:
                 case "Windows":
-                    //Theme = new VS2005Theme();
                     ViewThemeWindowsMenu.Checked = true;
                     version = VisualStudioToolStripExtender.VsVersion.Unknown;
                     if (changing)
@@ -112,9 +107,6 @@ namespace CodeWalker
             }
 
 
-            //Theme.Extender.FloatWindowFactory = new ExplorerFloatWindowFactory();
-            //MainDockPanel.Theme = Theme;
-
             if (Theme != null)
             {
                 VSExtender.SetStyle(MainMenu, version, Theme);
@@ -125,9 +117,6 @@ namespace CodeWalker
 
                 MainSplitContainer.BackColor = Theme.ColorPalette.MainWindowActive.Background;
             }
-
-
-            //if (File.Exists(configFile)) MainDockPanel.LoadFromXml(configFile, m_deserializeDockContent);
         }
 
         private void LoadSettings()
@@ -2101,9 +2090,10 @@ namespace CodeWalker
                 }
             }
         }
-        private void ExportXml()
+        private async Task ExportXmlAsync()
         {
-            bool needfolder = false;//need a folder to output ytd XML to, for the texture .dds files
+            var extensions = new HashSet<string> { ".ytd", ".ydr", ".ydd", ".yft", ".ypt", ".awc", ".fxc" };
+            bool needfolder = false;
             if (MainListView.SelectedIndices.Count == 1)
             {
                 var idx = MainListView.SelectedIndices[0];
@@ -2112,7 +2102,7 @@ namespace CodeWalker
                 var nl = file?.File?.NameLower ?? file?.Name?.ToLowerInvariant();
                 if (!string.IsNullOrEmpty(nl))
                 {
-                    needfolder = nl.EndsWith(".ytd") || nl.EndsWith(".ydr") || nl.EndsWith(".ydd") || nl.EndsWith(".yft") || nl.EndsWith(".ypt") || nl.EndsWith(".awc") || nl.EndsWith(".fxc");
+                    needfolder = extensions.Any(extension => nl.EndsWith(extension));
                 }
             }
 
@@ -2136,7 +2126,6 @@ namespace CodeWalker
                         var fentry = file?.File;
                         if (fentry == null)
                         {
-                            //this should only happen when opening a file from filesystem...
                             var name = new FileInfo(file.FullPath).Name;
                             fentry = CreateFileEntry(name, file.FullPath, ref data);
                         }
@@ -2154,7 +2143,10 @@ namespace CodeWalker
                             string path = SaveFileDialog.FileName;
                             try
                             {
-                                File.WriteAllText(path, xml);
+                                using (StreamWriter writer = new StreamWriter(path))
+                                {
+                                    await writer.WriteAsync(xml);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -2171,9 +2163,8 @@ namespace CodeWalker
 
                 StringBuilder errors = new StringBuilder();
 
-                for (int i = 0; i < MainListView.SelectedIndices.Count; i++)
+                foreach (var idx in MainListView.SelectedIndices.Cast<int>())
                 {
-                    var idx = MainListView.SelectedIndices[i];
                     if ((idx < 0) || (idx >= CurrentFiles.Count)) continue;
                     var file = CurrentFiles[idx];
                     if (file.Folder == null)
@@ -2191,7 +2182,6 @@ namespace CodeWalker
                         var fentry = file?.File;
                         if (fentry == null)
                         {
-                            //this should only happen when opening a file from filesystem...
                             var name = new FileInfo(file.FullPath).Name;
                             fentry = CreateFileEntry(name, file.FullPath, ref data);
                         }
@@ -2206,11 +2196,14 @@ namespace CodeWalker
                         var path = folderpath + newfn;
                         try
                         {
-                            File.WriteAllText(path, xml);
+                            using (StreamWriter writer = new StreamWriter(path))
+                            {
+                                await writer.WriteAsync(xml);
+                            }
                         }
                         catch (Exception ex)
                         {
-                            errors.AppendLine("Error saving file " + path + ":\n" + ex.ToString());
+                            errors.AppendLine($"Error saving file {path}:\n{ex}");
                         }
                     }
                 }
@@ -2218,7 +2211,7 @@ namespace CodeWalker
                 string errstr = errors.ToString();
                 if (!string.IsNullOrEmpty(errstr))
                 {
-                    MessageBox.Show("Errors were encountered:\n" + errstr);
+                    MessageBox.Show($"Errors were encountered:\n{errstr}");
                 }
             }
         }
@@ -3526,7 +3519,7 @@ namespace CodeWalker
             UpdateSelectionUI(); //need to use this instead of SelectedIndexChanged because of shift-click bug :/
         }
 
-        private void MainListView_KeyDown(object sender, KeyEventArgs e)
+        private async void MainListView_KeyDownAsync(object sender, KeyEventArgs e)
         {
             var ctrl = (e.Control && !e.Shift);
             var ctrlshft = (e.Control && e.Shift);
@@ -3541,7 +3534,7 @@ namespace CodeWalker
                     if (ctrl) ViewSelectedHex();
                     break;
                 case Keys.S:
-                    if (ctrl) ExportXml();
+                    if (ctrl) await ExportXmlAsync();
                     break;
                 case Keys.E:
                     if (ctrlshft) ExtractAll();
@@ -3914,9 +3907,9 @@ namespace CodeWalker
             ViewSelectedHex();
         }
 
-        private void ListContextExportXmlMenu_Click(object sender, EventArgs e)
+        private async void ListContextExportXmlMenu_ClickAsync(object sender, EventArgs e)
         {
-            ExportXml();
+            await ExportXmlAsync();
         }
 
         private void ListContextExtractRawMenu_Click(object sender, EventArgs e)
@@ -4029,9 +4022,9 @@ namespace CodeWalker
             ViewSelectedHex();
         }
 
-        private void EditExportXmlMenu_Click(object sender, EventArgs e)
+        private async void EditExportXmlMenu_ClickAsync(object sender, EventArgs e)
         {
-            ExportXml();
+            await ExportXmlAsync();
         }
 
         private void EditExtractRawMenu_Click(object sender, EventArgs e)

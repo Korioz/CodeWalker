@@ -177,65 +177,21 @@ namespace CodeWalker.GameFiles
 
             if (RpfMan == null)
             {
-                //EnableDlc = !string.IsNullOrEmpty(SelectedDlc);
-
-
-
                 RpfMan = new RpfManager();
                 RpfMan.ExcludePaths = GetExcludePaths();
                 RpfMan.EnableMods = EnableMods;
                 RpfMan.BuildExtendedJenkIndex = BuildExtendedJenkIndex;
-                RpfMan.Init(GTAFolder, UpdateStatus, ErrorLog);//, true);
-
+                RpfMan.Init(GTAFolder, UpdateStatus, ErrorLog);
 
                 InitGlobal();
-
                 InitDlc();
-
-
-
-                //RE test area!
-                //TestAudioRels();
-                //TestAudioYmts();
-                //TestAudioAwcs();
-                //TestMetas();
-                //TestPsos();
-                //TestRbfs();
-                //TestCuts();
-                //TestYlds();
-                //TestYeds();
-                //TestYcds();
-                //TestYtds();
-                //TestYbns();
-                //TestYdrs();
-                //TestYdds();
-                //TestYfts();
-                //TestYpts();
-                //TestYnvs();
-                //TestYvrs();
-                //TestYwrs();
-                //TestYmaps();
-                //TestYpdbs();
-                //TestYfds();
-                //TestMrfs();
-                //TestFxcs();
-                //TestPlacements();
-                //TestDrawables();
-                //TestCacheFiles();
-                //TestHeightmaps();
-                //TestWatermaps();
-                //GetShadersXml();
-                //GetArchetypeTimesList();
-                //string typestr = PsoTypes.GetTypesString();
             }
             else
             {
-                GC.Collect(); //try free up some of the previously used memory..
+                GC.Collect();
             }
 
             UpdateStatus("Scan complete");
-
-
             IsInited = true;
         }
         public void Init(Action<string> updateStatus, Action<string> errorLog, List<RpfFile> allRpfs)
@@ -326,13 +282,8 @@ namespace CodeWalker.GameFiles
 
         private void InitDlcList()
         {
-            //if (!EnableDlc) return;
 
             string dlclistpath = "update\\update.rpf\\common\\data\\dlclist.xml";
-            //if (!EnableDlc)
-            //{
-            //    dlclistpath = "common.rpf\\data\\dlclist.xml";
-            //}
             var dlclistxml = RpfMan.GetFileXml(dlclistpath);
 
             DlcPaths.Clear();
@@ -914,14 +865,14 @@ namespace CodeWalker.GameFiles
 
         private List<RpfFile> GetModdedRpfList(List<RpfFile> list)
         {
-            //if (!EnableMods) return new List<RpfFile>(list);
-            List<RpfFile> rlist = new List<RpfFile>();
+            List<RpfFile> rlist = new List<RpfFile>(list.Count);
             RpfFile f;
+
             if (!EnableMods)
             {
                 foreach (var file in list)
                 {
-                    if (!file.Path.StartsWith("mods"))
+                    if (!file.Path.StartsWith("mods", StringComparison.Ordinal))
                     {
                         rlist.Add(file);
                     }
@@ -931,27 +882,26 @@ namespace CodeWalker.GameFiles
             {
                 foreach (var file in list)
                 {
+                    bool startsWithMods = file.Path.StartsWith("mods", StringComparison.Ordinal);
                     if (RpfMan.ModRpfDict.TryGetValue(file.Path, out f))
                     {
                         rlist.Add(f);
                     }
-                    else
+                    else if (startsWithMods)
                     {
-                        if (file.Path.StartsWith("mods"))
-                        {
-                            var basepath = file.Path.Substring(5);
-                            if (!RpfMan.RpfDict.ContainsKey(basepath)) //this file isn't overriding anything
-                            {
-                                rlist.Add(file);
-                            }
-                        }
-                        else
+                        var basepath = file.Path.Substring(5);
+                        if (!RpfMan.RpfDict.ContainsKey(basepath))
                         {
                             rlist.Add(file);
                         }
                     }
+                    else
+                    {
+                        rlist.Add(file);
+                    }
                 }
             }
+
             return rlist;
         }
 
@@ -1007,136 +957,94 @@ namespace CodeWalker.GameFiles
             YmapDict = new Dictionary<uint, RpfFileEntry>();
             YbnDict = new Dictionary<uint, RpfFileEntry>();
             YnvDict = new Dictionary<uint, RpfFileEntry>();
-            foreach (var rpffile in ActiveMapRpfFiles.Values) //RpfMan.BaseRpfs)
-            {
-                if (rpffile.AllEntries == null) continue;
-                foreach (var entry in rpffile.AllEntries)
-                {
-                    if (entry is RpfFileEntry)
-                    {
-                        RpfFileEntry fentry = entry as RpfFileEntry;
-                        if (entry.NameLower.EndsWith(".ymap"))
-                        {
-                            //YmapDict[entry.NameHash] = fentry;
-                            YmapDict[entry.ShortNameHash] = fentry;
-                        }
-                        else if (entry.NameLower.EndsWith(".ybn"))
-                        {
-                            //YbnDict[entry.NameHash] = fentry;
-                            YbnDict[entry.ShortNameHash] = fentry;
-                        }
-                        else if (entry.NameLower.EndsWith(".ynv"))
-                        {
-                            YnvDict[entry.ShortNameHash] = fentry;
-                        }
-                    }
-                }
-            }
-
             AllYmapsDict = new Dictionary<uint, RpfFileEntry>();
-            foreach (var rpffile in AllRpfs)
+
+            foreach (var rpffile in ActiveMapRpfFiles.Values.Concat(AllRpfs))
             {
                 if (rpffile.AllEntries == null) continue;
-                foreach (var entry in rpffile.AllEntries)
+
+                foreach (var entry in rpffile.AllEntries.OfType<RpfFileEntry>())
                 {
-                    if (entry is RpfFileEntry)
+                    var nameLower = entry.NameLower;
+                    var isYmap = nameLower.EndsWith(".ymap");
+                    var isYbn = nameLower.EndsWith(".ybn");
+                    var isYnv = nameLower.EndsWith(".ynv");
+
+                    if (isYmap)
                     {
-                        RpfFileEntry fentry = entry as RpfFileEntry;
-                        if (entry.NameLower.EndsWith(".ymap"))
+                        YmapDict[entry.ShortNameHash] = entry;
+                        if (AllRpfs.Contains(rpffile))
                         {
-                            AllYmapsDict[entry.ShortNameHash] = fentry;
+                            AllYmapsDict[entry.ShortNameHash] = entry;
                         }
+                    }
+                    else if (isYbn)
+                    {
+                        YbnDict[entry.ShortNameHash] = entry;
+                    }
+                    else if (isYnv)
+                    {
+                        YnvDict[entry.ShortNameHash] = entry;
                     }
                 }
             }
-
         }
 
         private void InitManifestDicts()
         {
             AllManifests = new List<YmfFile>();
             hdtexturelookup = new Dictionary<MetaHash, MetaHash>();
-            IEnumerable<RpfFile> rpfs = PreloadedMode ? AllRpfs : (IEnumerable<RpfFile>)ActiveMapRpfFiles.Values;
+            IEnumerable<RpfFile> rpfs = PreloadedMode ? AllRpfs : ActiveMapRpfFiles.Values.ToList();
+
             foreach (RpfFile file in rpfs)
             {
                 if (file.AllEntries == null) continue;
-                //manifest and meta parsing..
+
                 foreach (RpfEntry entry in file.AllEntries)
                 {
-                    //sp_manifest.ymt
-                    //if (entry.NameLower.EndsWith("zonebind.ymt")/* || entry.Name.EndsWith("vinewood.ymt")*/)
-                    //{
-                    //    YmtFile ymt = GetFile<YmtFile>(entry);
-                    //}
-                    if (entry.Name.EndsWith(".ymf"))// || entry.Name.EndsWith(".ymt"))
+                    if (!entry.Name.EndsWith(".ymf")) continue;
+
+                    try
                     {
-                        try
+                        UpdateStatus(entry.Path);
+                        YmfFile ymffile = RpfMan.GetFile<YmfFile>(entry);
+                        if (ymffile == null) continue;
+
+                        AllManifests.Add(ymffile);
+
+                        if (ymffile.HDTxdAssetBindings == null) continue;
+
+                        foreach (var b in ymffile.HDTxdAssetBindings)
                         {
-                            UpdateStatus(string.Format(entry.Path));
-                            YmfFile ymffile = RpfMan.GetFile<YmfFile>(entry);
-                            if (ymffile != null)
-                            {
-                                AllManifests.Add(ymffile);
-
-                                if (ymffile.Pso != null)
-                                { }
-                                else if (ymffile.Rbf != null)
-                                { }
-                                else if (ymffile.Meta != null)
-                                { }
-                                else
-                                { }
-
-
-                                if (ymffile.HDTxdAssetBindings != null)
-                                {
-                                    for (int i = 0; i < ymffile.HDTxdAssetBindings.Length; i++)
-                                    {
-                                        var b = ymffile.HDTxdAssetBindings[i];
-                                        var targetasset = JenkHash.GenHash(b.targetAsset.ToString().ToLowerInvariant());
-                                        var hdtxd = JenkHash.GenHash(b.HDTxd.ToString().ToLowerInvariant());
-                                        hdtexturelookup[targetasset] = hdtxd;
-                                    }
-                                }
-
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            string errstr = entry.Path + "\n" + ex.ToString();
-                            ErrorLog(errstr);
+                            var targetasset = JenkHash.GenHash(b.targetAsset.ToString().ToLowerInvariant());
+                            var hdtxd = JenkHash.GenHash(b.HDTxd.ToString().ToLowerInvariant());
+                            hdtexturelookup[targetasset] = hdtxd;
                         }
                     }
-
+                    catch (Exception ex)
+                    {
+                        ErrorLog($"{entry.Path}\n{ex}");
+                    }
                 }
-
             }
         }
 
         private void InitGtxds()
         {
-
             var parentTxds = new Dictionary<MetaHash, MetaHash>();
+            var rpfs = PreloadedMode ? AllRpfs : ActiveMapRpfFiles.Values.ToList();
 
-            IEnumerable<RpfFile> rpfs = PreloadedMode ? AllRpfs : (IEnumerable<RpfFile>)ActiveMapRpfFiles.Values;
-
-            var addTxdRelationships = new Action<Dictionary<string, string>>((from) =>
+            Action<Dictionary<string, string>> addTxdRelationships = from =>
             {
                 foreach (var kvp in from)
                 {
                     uint chash = JenkHash.GenHash(kvp.Key.ToLowerInvariant());
                     uint phash = JenkHash.GenHash(kvp.Value.ToLowerInvariant());
-                    if (!parentTxds.ContainsKey(chash))
-                    {
-                        parentTxds.Add(chash, phash);
-                    }
-                    else
-                    {
-                    }
+                    parentTxds[chash] = phash;
                 }
-            });
+            };
 
-            var addRpfTxdRelationships = new Action<IEnumerable<RpfFile>>((from) =>
+            Action<IEnumerable<RpfFile>> addRpfTxdRelationships = from =>
             {
                 foreach (RpfFile file in from)
                 {
@@ -1148,15 +1056,15 @@ namespace CodeWalker.GameFiles
                             if ((entry.NameLower == "gtxd.ymt") || (entry.NameLower == "gtxd.meta") || (entry.NameLower == "mph4_gtxd.ymt"))
                             {
                                 GtxdFile ymt = RpfMan.GetFile<GtxdFile>(entry);
-                                if (ymt.TxdRelationships != null)
+                                if (ymt?.TxdRelationships != null)
                                 {
                                     addTxdRelationships(ymt.TxdRelationships);
                                 }
                             }
                             else if (entry.NameLower == "vehicles.meta")
                             {
-                                VehiclesFile vf = RpfMan.GetFile<VehiclesFile>(entry);//could also get loaded in InitVehicles...
-                                if (vf.TxdRelationships != null)
+                                VehiclesFile vf = RpfMan.GetFile<VehiclesFile>(entry);
+                                if (vf?.TxdRelationships != null)
                                 {
                                     addTxdRelationships(vf.TxdRelationships);
                                 }
@@ -1164,47 +1072,37 @@ namespace CodeWalker.GameFiles
                         }
                         catch (Exception ex)
                         {
-                            string errstr = entry.Path + "\n" + ex.ToString();
-                            ErrorLog(errstr);
+                            ErrorLog($"{entry.Path}\n{ex}");
                         }
                     }
                 }
-
-            });
-
+            };
 
             addRpfTxdRelationships(rpfs);
-
 
             if (EnableDlc)
             {
                 addRpfTxdRelationships(DlcActiveRpfs);
             }
 
-
             textureParents = parentTxds;
 
-
-
-
             //ensure resident global texture dicts:
-            YtdFile ytd1 = new YtdFile(GetYtdEntry(JenkHash.GenHash("mapdetail")));
-            LoadFile(ytd1);
-            AddTextureLookups(ytd1);
+            LoadAndAddTextureLookup("mapdetail");
+            LoadAndAddTextureLookup("vehshare");
+        }
 
-            YtdFile ytd2 = new YtdFile(GetYtdEntry(JenkHash.GenHash("vehshare")));
-            LoadFile(ytd2);
-            AddTextureLookups(ytd2);
-
-
-
+        private void LoadAndAddTextureLookup(string name)
+        {
+            YtdFile ytd = new YtdFile(GetYtdEntry(JenkHash.GenHash(name)));
+            LoadFile(ytd);
+            AddTextureLookups(ytd);
         }
 
         private void InitMapCaches()
         {
             AllCacheFiles = new List<CacheDatFile>();
             YmapHierarchyDict = new Dictionary<uint, MapDataStoreNode>();
-
 
             CacheDatFile loadCacheFile(string path, bool finalAttempt)
             {
@@ -1220,43 +1118,23 @@ namespace CodeWalker.GameFiles
                             {
                                 YmapHierarchyDict[node.Name] = node;
                             }
-                            else
-                            { } //ymap not found...
                         }
                     }
                     else if (finalAttempt)
                     {
-                        ErrorLog(path + ": main cachefile not loaded! Possibly an unsupported GTAV installation version.");
+                        ErrorLog($"{path}: main cachefile not loaded! Possibly an unsupported GTAV installation version.");
                     }
-                    else //update\x64\dlcpacks\mpspecialraces\dlc.rpf\x64\data\cacheloaderdata_dlc\mpspecialraces_3336915258_cache_y.dat (hash of: mpspecialraces_interior_additions)
-                    { }
                     return cache;
                 }
                 catch (Exception ex)
                 {
-                    ErrorLog(path + ": " + ex.ToString());
+                    ErrorLog($"{path}: {ex}");
                 }
                 return null;
             }
 
-
-            CacheDatFile maincache = null;
-            if (EnableDlc)
-            {
-                maincache = loadCacheFile("update\\update.rpf\\common\\data\\gta5_cache_y.dat", false);
-                if (maincache == null)
-                {
-                    maincache = loadCacheFile("update\\update2.rpf\\common\\data\\gta5_cache_y.dat", true);
-                }
-            }
-            else
-            {
-                maincache = loadCacheFile("common.rpf\\data\\gta5_cache_y.dat", true);
-            }
-
-
-
-
+            string mainCachePath = EnableDlc ? "update\\update.rpf\\common\\data\\gta5_cache_y.dat" : "common.rpf\\data\\gta5_cache_y.dat";
+            CacheDatFile maincache = loadCacheFile(mainCachePath, false) ?? loadCacheFile("update\\update2.rpf\\common\\data\\gta5_cache_y.dat", true);
 
             if (EnableDlc)
             {
@@ -1265,24 +1143,19 @@ namespace CodeWalker.GameFiles
                     loadCacheFile(dlccachefile, false);
                 }
             }
-
-
         }
 
         private void InitArchetypeDicts()
         {
-
             YtypDict = new Dictionary<uint, YtypFile>();
-
             archetypesLoaded = false;
             archetypeDict.Clear();
 
             if (!LoadArchetypes) return;
 
-
             var rpfs = EnableDlc ? AllRpfs : BaseRpfs;
 
-            foreach (RpfFile file in rpfs) //RpfMan.BaseRpfs)RpfMan.AllRpfs)//ActiveMapRpfFiles.Values) // 
+            foreach (RpfFile file in rpfs)
             {
                 if (file.AllEntries == null) continue;
                 if (!EnableDlc && file.Path.StartsWith("update")) continue;
@@ -1299,18 +1172,17 @@ namespace CodeWalker.GameFiles
                     }
                     catch (Exception ex)
                     {
-                        ErrorLog(entry.Path + ": " + ex.Message);
+                        ErrorLog($"{entry.Path}: {ex.Message}");
                     }
                 }
             }
 
             archetypesLoaded = true;
-
         }
 
         private void AddYtypToDictionary(RpfEntry entry)
         {
-            UpdateStatus(string.Format(entry.Path));
+            UpdateStatus(entry.Path);
             YtypFile ytypfile = RpfMan.GetFile<YtypFile>(entry);
             if (ytypfile == null)
             {
@@ -1320,66 +1192,28 @@ namespace CodeWalker.GameFiles
             {
                 throw new Exception("ytyp file was not in meta format.");
             }
-            if (YtypDict.ContainsKey(ytypfile.NameHash))
-            {
-                //throw new Exception("ytyp " + JenkIndex.GetString(ytypfile.NameHash) + " already loaded.");
-                //errorAction(entry.Path + ": ytyp " + JenkIndex.GetString(ytypfile.NameHash) + " already loaded.");
-                YtypDict[ytypfile.NameHash] = ytypfile; //override ytyp and continue anyway, could be unique archetypes in here still...
-            }
-            else
-            {
-                YtypDict.Add(ytypfile.NameHash, ytypfile);
-            }
-
-
+            YtypDict[ytypfile.NameHash] = ytypfile; //override ytyp and continue anyway, could be unique archetypes in here still...
 
             if ((ytypfile.AllArchetypes == null) || (ytypfile.AllArchetypes.Length == 0))
             {
-                ErrorLog(entry.Path + ": no archetypes found");
+                ErrorLog($"{entry.Path}: no archetypes found");
             }
             else
             {
                 foreach (var arch in ytypfile.AllArchetypes)
                 {
                     uint hash = arch.Hash;
-                    if (hash == 0) continue;
-                    if (archetypeDict.ContainsKey(hash))
+                    if (hash != 0)
                     {
-                        var oldval = archetypeDict[hash]; //replace old archetype?
+                        archetypeDict[hash] = arch;
                     }
-                    archetypeDict[hash] = arch;
                 }
             }
-
-
-            ////if (ytypfile.AudioEmitters != null)
-            ////{
-            ////    foreach (CExtensionDefAudioEmitter emitter in ytypfile.AudioEmitters)
-            ////    {
-            ////        //audioind++;
-            ////        //uint hash = emitter.name;
-            ////        //if (hash == 0) hash = archetype.name;
-            ////        //if (hash == 0)
-            ////        //    continue;
-            ////        //if (AudioArchetypes.ContainsKey(hash))
-            ////        //{
-            ////        //    var oldval = AudioArchetypes[hash];
-            ////        //    //errorAction(entry.Path + ": " + emitter.ToString() + ": (CTimeArchetypeDef) Already in archetype dict. Was in: " + oldval.ToString());
-            ////        //    //overwrite with new definition? how to tell?
-            ////        //    AudioArchetypes[hash] = new Tuple<YtypFile, int>(ytypfile, audioind);
-            ////        //}
-            ////        //else
-            ////        //{
-            ////        //    AudioArchetypes.Add(hash, new Tuple<YtypFile, int>(ytypfile, audioind));
-            ////        //}
-            ////    }
-            ////}
-
         }
 
         public void InitStringDicts()
         {
-            string langstr = "american_rel"; //todo: make this variable?
+            string langstr = "american_rel";
             string langstr2 = "americandlc.rpf";
             string langstr3 = "american.rpf";
 
@@ -1387,27 +1221,23 @@ namespace CodeWalker.GameFiles
             var gxt2files = new List<Gxt2File>();
             foreach (var rpf in AllRpfs)
             {
-                foreach (var entry in rpf.AllEntries)
+                foreach (var entry in rpf.AllEntries.OfType<RpfFileEntry>())
                 {
-                    if (entry is RpfFileEntry fentry)
+                    var p = entry.Path;
+                    if (entry.NameLower.EndsWith(".gxt2") && (p.Contains(langstr) || p.Contains(langstr2) || p.Contains(langstr3)))
                     {
-                        var p = entry.Path;
-                        if (entry.NameLower.EndsWith(".gxt2") && (p.Contains(langstr) || p.Contains(langstr2) || p.Contains(langstr3)))
-                        {
-                            Gxt2Dict[entry.ShortNameHash] = fentry;
+                        Gxt2Dict[entry.ShortNameHash] = entry;
 
-                            if (DoFullStringIndex)
+                        if (DoFullStringIndex)
+                        {
+                            var gxt2 = RpfMan.GetFile<Gxt2File>(entry);
+                            if (gxt2 != null)
                             {
-                                var gxt2 = RpfMan.GetFile<Gxt2File>(entry);
-                                if (gxt2 != null)
+                                foreach (var e in gxt2.TextEntries)
                                 {
-                                    for (int i = 0; i < gxt2.TextEntries.Length; i++)
-                                    {
-                                        var e = gxt2.TextEntries[i];
-                                        GlobalText.Ensure(e.Text, e.Hash);
-                                    }
-                                    gxt2files.Add(gxt2);
+                                    GlobalText.Ensure(e.Text, e.Hash);
                                 }
+                                gxt2files.Add(gxt2);
                             }
                         }
                     }
@@ -1420,21 +1250,15 @@ namespace CodeWalker.GameFiles
                 var globalgxt2 = RpfMan.GetFile<Gxt2File>(globalgxt2path);
                 if (globalgxt2 != null)
                 {
-                    for (int i = 0; i < globalgxt2.TextEntries.Length; i++)
+                    foreach (var e in globalgxt2.TextEntries)
                     {
-                        var e = globalgxt2.TextEntries[i];
                         GlobalText.Ensure(e.Text, e.Hash);
                     }
                 }
                 return;
             }
 
-
             GlobalText.FullIndexBuilt = true;
-
-
-
-
 
             foreach (var rpf in AllRpfs)
             {
@@ -1468,7 +1292,6 @@ namespace CodeWalker.GameFiles
                     }
                 }
             }
-
             StatsNames.FullIndexBuilt = true;
         }
 
@@ -1476,26 +1299,7 @@ namespace CodeWalker.GameFiles
         {
             if (!LoadVehicles) return;
 
-
-            //Neos7
-            //Involved files(at least for rendering purpose )
-            //Vehicles.meta
-            //Carcols.meta
-            //Carvariations.meta
-            //Vehiclelayouts.meta
-            //The other metas shouldn't be important for rendering
-            //Then the global carcols.ymt is required too
-            //As it contains the general shared tuning options
-            //Carcols for modkits and lights kits definitions
-            //Carvariations links such modkits and lights kits to each vehicle plus defines colours combinations of spawned vehicles
-            //Vehiclelayouts mostly to handle ped interactions with the vehicle
-
-
-
-
-
             IEnumerable<RpfFile> rpfs = PreloadedMode ? AllRpfs : (IEnumerable<RpfFile>)ActiveMapRpfFiles.Values;
-
 
             var allVehicles = new Dictionary<MetaHash, VehicleInitData>();
             var allCarCols = new List<CarColsFile>();
@@ -1511,11 +1315,10 @@ namespace CodeWalker.GameFiles
                     if (file.AllEntries == null) continue;
                     foreach (RpfEntry entry in file.AllEntries)
                     {
-#if !DEBUG
                         try
-#endif
                         {
-                            if (entry.NameLower == "vehicles.meta")
+                            var entryNameLower = entry.NameLower;
+                            if (entryNameLower == "vehicles.meta")
                             {
                                 VehiclesFile vf = RpfMan.GetFile<VehiclesFile>(entry);
                                 if (vf.InitDatas != null)
@@ -1524,27 +1327,21 @@ namespace CodeWalker.GameFiles
                                     {
                                         var name = initData.modelName.ToLowerInvariant();
                                         var hash = JenkHash.GenHash(name);
-                                        if (allVehicles.ContainsKey(hash))
-                                        { }
                                         allVehicles[hash] = initData;
                                     }
                                 }
                             }
-                            if ((entry.NameLower == "carcols.ymt") || (entry.NameLower == "carcols.meta"))
+                            else if (entryNameLower == "carcols.ymt" || entryNameLower == "carcols.meta")
                             {
                                 var cf = RpfMan.GetFile<CarColsFile>(entry);
-                                if (cf.VehicleModelInfo != null)
-                                { }
                                 allCarCols.Add(cf);
                             }
-                            if (entry.NameLower == "carmodcols.ymt")
+                            else if (entryNameLower == "carmodcols.ymt")
                             {
                                 var cf = RpfMan.GetFile<CarModColsFile>(entry);
-                                if (cf.VehicleModColours != null)
-                                { }
                                 allCarModCols.Add(cf);
                             }
-                            if ((entry.NameLower == "carvariations.ymt") || (entry.NameLower == "carvariations.meta"))
+                            else if (entryNameLower == "carvariations.ymt" || entryNameLower == "carvariations.meta")
                             {
                                 var cf = RpfMan.GetFile<CarVariationsFile>(entry);
                                 if (cf.VehicleModelInfo?.variationData != null)
@@ -1558,26 +1355,20 @@ namespace CodeWalker.GameFiles
                                 }
                                 allCarVariations.Add(cf);
                             }
-                            if (entry.NameLower.StartsWith("vehiclelayouts") && entry.NameLower.EndsWith(".meta"))
+                            else if (entryNameLower.StartsWith("vehiclelayouts") && entryNameLower.EndsWith(".meta"))
                             {
                                 var lf = RpfMan.GetFile<VehicleLayoutsFile>(entry);
-                                if (lf.Xml != null)
-                                { }
                                 allVehicleLayouts.Add(lf);
                             }
                         }
-#if !DEBUG
                         catch (Exception ex)
                         {
                             string errstr = entry.Path + "\n" + ex.ToString();
                             ErrorLog(errstr);
                         }
-#endif
                     }
                 }
-
             });
-
 
             addVehicleFiles(rpfs);
 
@@ -1585,10 +1376,7 @@ namespace CodeWalker.GameFiles
             {
                 addVehicleFiles(DlcActiveRpfs);
             }
-
-
             VehiclesInitDict = allVehicles;
-
         }
 
         public void InitPeds()
@@ -1596,7 +1384,7 @@ namespace CodeWalker.GameFiles
             if (!LoadPeds) return;
 
             IEnumerable<RpfFile> rpfs = PreloadedMode ? AllRpfs : (IEnumerable<RpfFile>)ActiveMapRpfFiles.Values;
-            List<RpfFile> dlcrpfs = new List<RpfFile>();
+            HashSet<RpfFile> dlcrpfs = new HashSet<RpfFile>();
             if (EnableDlc)
             {
                 foreach (var rpf in DlcActiveRpfs)
@@ -1606,13 +1394,9 @@ namespace CodeWalker.GameFiles
                     foreach (var crpf in rpf.Children)
                     {
                         dlcrpfs.Add(crpf);
-                        if (crpf.Children?.Count > 0)
-                        { }
                     }
                 }
             }
-
-
 
             var allPeds = new Dictionary<MetaHash, CPedModelInfo__InitData>();
             var allPedsFiles = new List<PedsFile>();
@@ -1621,11 +1405,9 @@ namespace CodeWalker.GameFiles
             var allPedTexDicts = new Dictionary<MetaHash, Dictionary<MetaHash, RpfFileEntry>>();
             var allPedClothDicts = new Dictionary<MetaHash, Dictionary<MetaHash, RpfFileEntry>>();
 
-
             Dictionary<MetaHash, RpfFileEntry> ensureDict(Dictionary<MetaHash, Dictionary<MetaHash, RpfFileEntry>> coll, MetaHash hash)
             {
-                Dictionary<MetaHash, RpfFileEntry> dict;
-                if (!coll.TryGetValue(hash, out dict))
+                if (!coll.TryGetValue(hash, out var dict))
                 {
                     dict = new Dictionary<MetaHash, RpfFileEntry>();
                     coll[hash] = dict;
@@ -1692,34 +1474,20 @@ namespace CodeWalker.GameFiles
                     if (file.AllEntries == null) continue;
                     foreach (RpfEntry entry in file.AllEntries)
                     {
-#if !DEBUG
-                        try
-#endif
+                        if ((entry.NameLower == "peds.ymt") || (entry.NameLower == "peds.meta"))
                         {
-                            if ((entry.NameLower == "peds.ymt") || (entry.NameLower == "peds.meta"))
+                            var pf = RpfMan.GetFile<PedsFile>(entry);
+                            if (pf.InitDataList?.InitDatas != null)
                             {
-                                var pf = RpfMan.GetFile<PedsFile>(entry);
-                                if (pf.InitDataList?.InitDatas != null)
+                                foreach (var initData in pf.InitDataList.InitDatas)
                                 {
-                                    foreach (var initData in pf.InitDataList.InitDatas)
-                                    {
-                                        var name = initData.Name.ToLowerInvariant();
-                                        var hash = JenkHash.GenHash(name);
-                                        if (allPeds.ContainsKey(hash))
-                                        { }
-                                        allPeds[hash] = initData;
-                                    }
+                                    var name = initData.Name.ToLowerInvariant();
+                                    var hash = JenkHash.GenHash(name);
+                                    allPeds[hash] = initData;
                                 }
-                                allPedsFiles.Add(pf);
                             }
+                            allPedsFiles.Add(pf);
                         }
-#if !DEBUG
-                        catch (Exception ex)
-                        {
-                            string errstr = entry.Path + "\n" + ex.ToString();
-                            ErrorLog(errstr);
-                        }
-#endif
                     }
                 }
             });
@@ -1731,60 +1499,32 @@ namespace CodeWalker.GameFiles
                     if (file.AllEntries == null) continue;
                     foreach (RpfEntry entry in file.AllEntries)
                     {
-#if !DEBUG
-                        try
-#endif
+                        if (entry.NameLower.EndsWith(".ymt"))
                         {
-                            if (entry.NameLower.EndsWith(".ymt"))
+                            var testname = entry.GetShortNameLower();
+                            var testhash = JenkHash.GenHash(testname);
+                            if (allPeds.ContainsKey(testhash))
                             {
-                                var testname = entry.GetShortNameLower();
-                                var testhash = JenkHash.GenHash(testname);
-                                if (allPeds.ContainsKey(testhash))
+                                var pf = RpfMan.GetFile<PedFile>(entry);
+                                if (pf != null)
                                 {
-                                    var pf = RpfMan.GetFile<PedFile>(entry);
-                                    if (pf != null)
-                                    {
-                                        allPedYmts[testhash] = pf;
-                                        addPedDicts(testname, testhash, entry.Parent);
-                                    }
+                                    allPedYmts[testhash] = pf;
+                                    addPedDicts(testname, testhash, entry.Parent);
                                 }
                             }
                         }
-#if !DEBUG
-                        catch (Exception ex)
-                        {
-                            string errstr = entry.Path + "\n" + ex.ToString();
-                            ErrorLog(errstr);
-                        }
-#endif
                     }
                 }
             });
 
-
-
-            addPedsFiles(rpfs);
-            addPedsFiles(dlcrpfs);
-
             addPedFiles(rpfs);
             addPedFiles(dlcrpfs);
-
-
 
             PedsInitDict = allPeds;
             PedVariationsDict = allPedYmts;
             PedDrawableDicts = allPedDrwDicts;
             PedTextureDicts = allPedTexDicts;
             PedClothDicts = allPedClothDicts;
-
-
-            foreach (var kvp in PedsInitDict)
-            {
-                if (!PedVariationsDict.ContainsKey(kvp.Key))
-                { }//checking we found them all!
-            }
-
-
         }
 
         public void InitAudio()
@@ -1797,13 +1537,9 @@ namespace CodeWalker.GameFiles
                 if (rpffile.AllEntries == null) return;
                 foreach (var entry in rpffile.AllEntries)
                 {
-                    if (entry is RpfFileEntry)
+                    if (entry is RpfFileEntry fentry && entry.NameLower.EndsWith(".rel"))
                     {
-                        RpfFileEntry fentry = entry as RpfFileEntry;
-                        if (entry.NameLower.EndsWith(".rel"))
-                        {
-                            datrelentries[entry.NameHash] = fentry;
-                        }
+                        datrelentries[entry.NameHash] = fentry;
                     }
                 }
             }
@@ -1821,7 +1557,7 @@ namespace CodeWalker.GameFiles
                 {
                     addRpfDatRelEntries(updrpf);
                 }
-                foreach (var dlcrpf in DlcActiveRpfs) //load from current dlc rpfs
+                foreach (var dlcrpf in DlcActiveRpfs)
                 {
                     addRpfDatRelEntries(dlcrpf);
                 }
@@ -1837,8 +1573,7 @@ namespace CodeWalker.GameFiles
                 }
             }
 
-
-            var audioDatRelFiles = new List<RelFile>();
+            var audioDatRelFiles = new List<RelFile>(datrelentries.Count);
             var audioConfigDict = new Dictionary<MetaHash, RelData>();
             var audioSpeechDict = new Dictionary<MetaHash, RelData>();
             var audioSynthsDict = new Dictionary<MetaHash, RelData>();
@@ -1847,8 +1582,6 @@ namespace CodeWalker.GameFiles
             var audioCategsDict = new Dictionary<MetaHash, RelData>();
             var audioSoundsDict = new Dictionary<MetaHash, RelData>();
             var audioGameDict = new Dictionary<MetaHash, RelData>();
-
-
 
             foreach (var datrelentry in datrelentries.Values)
             {
@@ -1861,8 +1594,8 @@ namespace CodeWalker.GameFiles
                 var t = relfile.RelType;
                 switch (t)
                 {
-                    case RelDatFileType.Dat4: 
-                        d = relfile.IsAudioConfig ? audioConfigDict : audioSpeechDict; 
+                    case RelDatFileType.Dat4:
+                        d = relfile.IsAudioConfig ? audioConfigDict : audioSpeechDict;
                         break;
                     case RelDatFileType.Dat10ModularSynth:
                         d = audioSynthsDict;
@@ -1890,15 +1623,9 @@ namespace CodeWalker.GameFiles
                 foreach (var reldata in relfile.RelDatas)
                 {
                     if (reldata.NameHash == 0) continue;
-                    //if (d.TryGetValue(reldata.NameHash, out var exdata) && (exdata.TypeID != reldata.TypeID))
-                    //{ }//sanity check
                     d[reldata.NameHash] = reldata;
                 }
-
             }
-
-
-
 
             AudioDatRelFiles = audioDatRelFiles;
             AudioConfigDict = audioConfigDict;
@@ -1909,7 +1636,6 @@ namespace CodeWalker.GameFiles
             AudioCategsDict = audioCategsDict;
             AudioSoundsDict = audioSoundsDict;
             AudioGameDict = audioGameDict;
-
         }
 
 
@@ -1926,12 +1652,10 @@ namespace CodeWalker.GameFiles
             {
                 lock (updateSyncRoot)
                 {
-                    //lock (textureSyncRoot)
                     {
                         SelectedDlc = dlc;
                         EnableDlc = enable;
 
-                        //mainCache.Clear();
                         ClearCachedMaps();
 
                         InitDlc();
@@ -1950,7 +1674,6 @@ namespace CodeWalker.GameFiles
             {
                 lock (updateSyncRoot)
                 {
-                    //lock (textureSyncRoot)
                     {
                         EnableMods = enable;
                         RpfMan.EnableMods = enable;
