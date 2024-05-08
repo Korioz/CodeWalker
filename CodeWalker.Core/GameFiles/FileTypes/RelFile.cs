@@ -5276,7 +5276,7 @@ namespace CodeWalker.GameFiles
         public float MaxWindInfluence { get; set; }
         public float MinWindInfluence { get; set; }
         public uint WindElevationSounds { get; set; }
-        public MetaHash EnviromentRule { get; set; }
+        public MetaHash EnvironmentRule { get; set; }
         public MetaHash AudioScene { get; set; }
         public float UnderwaterCreakFactor { get; set; }
         public MetaHash PedWallaSettings { get; set; }
@@ -5368,7 +5368,7 @@ namespace CodeWalker.GameFiles
             MaxWindInfluence = br.ReadSingle();
             MinWindInfluence = br.ReadSingle();
             WindElevationSounds = br.ReadUInt32();
-            EnviromentRule = br.ReadUInt32();
+            EnvironmentRule = br.ReadUInt32();
             AudioScene = br.ReadUInt32();
             UnderwaterCreakFactor = br.ReadSingle();
             PedWallaSettings = br.ReadUInt32();
@@ -5453,7 +5453,7 @@ namespace CodeWalker.GameFiles
             bw.Write(MaxWindInfluence);
             bw.Write(MinWindInfluence);
             bw.Write(WindElevationSounds);
-            bw.Write(EnviromentRule);
+            bw.Write(EnvironmentRule);
             bw.Write(AudioScene);
             bw.Write(UnderwaterCreakFactor);
             bw.Write(PedWallaSettings);
@@ -5502,7 +5502,7 @@ namespace CodeWalker.GameFiles
             RelXml.ValueTag(sb, indent, "MaxWindInfluence", FloatUtil.ToString(MaxWindInfluence));
             RelXml.ValueTag(sb, indent, "MinWindInfluence", FloatUtil.ToString(MinWindInfluence));
             RelXml.ValueTag(sb, indent, "WindElevationSounds", WindElevationSounds.ToString());
-            RelXml.StringTag(sb, indent, "EnviromentRule", RelXml.HashString(EnviromentRule));
+            RelXml.StringTag(sb, indent, "EnvironmentRule", RelXml.HashString(EnvironmentRule));
             RelXml.StringTag(sb, indent, "AudioScene", RelXml.HashString(AudioScene));
             RelXml.ValueTag(sb, indent, "UnderwaterCreakFactor", FloatUtil.ToString(UnderwaterCreakFactor));
             RelXml.StringTag(sb, indent, "PedWallaSettings", RelXml.HashString(PedWallaSettings));
@@ -5534,7 +5534,7 @@ namespace CodeWalker.GameFiles
             MaxWindInfluence = Xml.GetChildFloatAttribute(node, "MaxWindInfluence", "value");
             MinWindInfluence = Xml.GetChildFloatAttribute(node, "MinWindInfluence", "value");
             WindElevationSounds = Xml.GetChildUIntAttribute(node, "WindElevationSounds", "value");
-            EnviromentRule = XmlRel.GetHash(Xml.GetChildInnerText(node, "EnviromentRule"));
+            EnvironmentRule = XmlRel.GetHash(Xml.GetChildInnerText(node, "EnvironmentRule"));
             AudioScene = XmlRel.GetHash(Xml.GetChildInnerText(node, "AudioScene"));
             UnderwaterCreakFactor = Xml.GetChildFloatAttribute(node, "UnderwaterCreakFactor", "value");
             PedWallaSettings = XmlRel.GetHash(Xml.GetChildInnerText(node, "PedWallaSettings"));
@@ -5552,7 +5552,7 @@ namespace CodeWalker.GameFiles
         }
         public override MetaHash[] GetGameHashes()
         {
-            var hashes = new List<MetaHash> { EnviromentRule };
+            var hashes = new List<MetaHash> { EnvironmentRule };
             if (Rules != null)
                 hashes.AddRange(Rules);
             if (DirAmbiences != null)

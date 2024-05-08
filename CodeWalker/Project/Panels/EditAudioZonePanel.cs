@@ -108,7 +108,7 @@ namespace CodeWalker.Project.Panels
 
                 WindElevationSoundsTextBox.Text = z.WindElevationSounds.ToString();
                 RandomRadioSettingsTextBox.Text = z.RandomisedRadioSettings.ToString();
-                EnviromentRuleTextBox.Text = z.EnviromentRule.ToString();
+                EnviromentRuleTextBox.Text = z.EnvironmentRule.ToString();
                 AudioSceneTextBox.Text = z.AudioScene.ToString();
 
                 StringBuilder sb = new StringBuilder();
@@ -298,9 +298,9 @@ namespace CodeWalker.Project.Panels
                 JenkIndex.Ensure(hashstr);
             }
 
-            if (CurrentZone.AudioZone.EnviromentRule != hash)
+            if (CurrentZone.AudioZone.EnvironmentRule != hash)
             {
-                CurrentZone.AudioZone.EnviromentRule = hash;
+                CurrentZone.AudioZone.EnvironmentRule = hash;
 
                 ProjectItemChanged();
             }

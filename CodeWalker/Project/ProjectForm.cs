@@ -6440,7 +6440,7 @@ namespace CodeWalker.Project
             zone.MaxWindInfluence = cp ? copy.AudioZone.MaxWindInfluence : 0;
             zone.MinWindInfluence = cp ? copy.AudioZone.MinWindInfluence : 0;
             zone.WindElevationSounds = cp ? copy.AudioZone.WindElevationSounds : 0;
-            zone.EnviromentRule = cp ? copy.AudioZone.EnviromentRule : 0;
+            zone.EnvironmentRule = cp ? copy.AudioZone.EnvironmentRule : 0;
             zone.AudioScene = cp ? copy.AudioZone.AudioScene : 0;
             zone.UnderwaterCreakFactor = cp ? copy.AudioZone.UnderwaterCreakFactor : 0;
             zone.PedWallaSettings = cp ? copy.AudioZone.PedWallaSettings : 0;
