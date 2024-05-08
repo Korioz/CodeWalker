@@ -5271,7 +5271,7 @@ namespace CodeWalker.GameFiles
         public float BuiltUpFactor { get; set; }
         public float MinPedDensity { get; set; }
         public float MaxPedDensity { get; set; }
-        public uint PedDensityTOD { get; set; }
+        public MetaHash PedDensityTOD { get; set; }
         public float PedDensityScalar { get; set; }
         public float MaxWindInfluence { get; set; }
         public float MinWindInfluence { get; set; }
@@ -5497,7 +5497,7 @@ namespace CodeWalker.GameFiles
             RelXml.ValueTag(sb, indent, "BuiltUpFactor", FloatUtil.ToString(BuiltUpFactor));
             RelXml.ValueTag(sb, indent, "MinPedDensity", FloatUtil.ToString(MinPedDensity));
             RelXml.ValueTag(sb, indent, "MaxPedDensity", FloatUtil.ToString(MaxPedDensity));
-            RelXml.ValueTag(sb, indent, "PedDensityTOD", PedDensityTOD.ToString());
+            RelXml.ValueTag(sb, indent, "PedDensityTOD", RelXml.HashString(PedDensityTOD));
             RelXml.ValueTag(sb, indent, "PedDensityScalar", FloatUtil.ToString(PedDensityScalar));
             RelXml.ValueTag(sb, indent, "MaxWindInfluence", FloatUtil.ToString(MaxWindInfluence));
             RelXml.ValueTag(sb, indent, "MinWindInfluence", FloatUtil.ToString(MinWindInfluence));
@@ -5529,7 +5529,7 @@ namespace CodeWalker.GameFiles
             BuiltUpFactor = Xml.GetChildFloatAttribute(node, "BuiltUpFactor", "value");
             MinPedDensity = Xml.GetChildFloatAttribute(node, "MinPedDensity", "value");
             MaxPedDensity = Xml.GetChildFloatAttribute(node, "MaxPedDensity", "value");
-            PedDensityTOD = Xml.GetChildUIntAttribute(node, "PedDensityTOD", "value");
+            PedDensityTOD = XmlRel.GetHash(Xml.GetChildInnerText(node, "PedDensityTOD"));
             PedDensityScalar = Xml.GetChildFloatAttribute(node, "PedDensityScalar", "value");
             MaxWindInfluence = Xml.GetChildFloatAttribute(node, "MaxWindInfluence", "value");
             MinWindInfluence = Xml.GetChildFloatAttribute(node, "MinWindInfluence", "value");
@@ -5548,7 +5548,7 @@ namespace CodeWalker.GameFiles
         }
         public override MetaHash[] GetMixerHashes()
         {
-            return new[] { AudioScene };
+            return new[] { AudioScene, PedDensityTOD };
         }
         public override MetaHash[] GetGameHashes()
         {
