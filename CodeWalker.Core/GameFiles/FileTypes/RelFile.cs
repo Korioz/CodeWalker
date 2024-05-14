@@ -5497,7 +5497,7 @@ namespace CodeWalker.GameFiles
             RelXml.ValueTag(sb, indent, "BuiltUpFactor", FloatUtil.ToString(BuiltUpFactor));
             RelXml.ValueTag(sb, indent, "MinPedDensity", FloatUtil.ToString(MinPedDensity));
             RelXml.ValueTag(sb, indent, "MaxPedDensity", FloatUtil.ToString(MaxPedDensity));
-            RelXml.ValueTag(sb, indent, "PedDensityTOD", RelXml.HashString(PedDensityTOD));
+            RelXml.StringTag(sb, indent, "PedDensityTOD", RelXml.HashString(PedDensityTOD));
             RelXml.ValueTag(sb, indent, "PedDensityScalar", FloatUtil.ToString(PedDensityScalar));
             RelXml.ValueTag(sb, indent, "MaxWindInfluence", FloatUtil.ToString(MaxWindInfluence));
             RelXml.ValueTag(sb, indent, "MinWindInfluence", FloatUtil.ToString(MinWindInfluence));

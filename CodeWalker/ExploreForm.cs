@@ -2215,7 +2215,7 @@ namespace CodeWalker
                 }
             }
         }
-        private void ExtractRaw()
+        private async Task ExtractRawAsync()
         {
             if (MainListView.SelectedIndices.Count == 1)
             {
@@ -2238,7 +2238,10 @@ namespace CodeWalker
                         string path = SaveFileDialog.FileName;
                         try
                         {
-                            File.WriteAllBytes(path, data);
+                            using (var stream = new FileStream(path, FileMode.Create))
+                            {
+                                await stream.WriteAsync(data, 0, data.Length);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -2271,7 +2274,10 @@ namespace CodeWalker
                                 continue;
                             }
 
-                            File.WriteAllBytes(path, data);
+                            using (var stream = new FileStream(path, FileMode.Create))
+                            {
+                                await stream.WriteAsync(data, 0, data.Length);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -2671,7 +2677,7 @@ namespace CodeWalker
             RefreshMainListView();
 
         }
-        private void ImportXmlDialog()
+        private async Task ImportXmlDialogAsync()
         {
             if (!EditMode) return;
             if (CurrentFolder?.IsSearchResults ?? false) return;
@@ -2682,19 +2688,17 @@ namespace CodeWalker
 
             OpenFileDialog.Filter = "XML Files|*.xml";
             if (OpenFileDialog.ShowDialog(this) != DialogResult.OK) return;
-            ImportXml(OpenFileDialog.FileNames);
+            await ImportXmlAsync(OpenFileDialog.FileNames);
         }
-        private void ImportXml(string[] fpaths)
+        private async Task ImportXmlAsync(string[] fpaths)
         {
             foreach (var fpath in fpaths)
             {
-#if !DEBUG
                 try
-#endif
                 {
                     if (!File.Exists(fpath))
                     {
-                        continue;//this shouldn't happen...
+                        continue;
                     }
 
                     var fi = new FileInfo(fpath);
@@ -2734,7 +2738,10 @@ namespace CodeWalker
                         else if (!string.IsNullOrEmpty(CurrentFolder.FullPath))
                         {
                             var outfpath = Path.Combine(CurrentFolder.FullPath, fname);
-                            File.WriteAllBytes(outfpath, data);
+                            using (var sourceStream = new FileStream(outfpath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
+                            {
+                                await sourceStream.WriteAsync(data, 0, data.Length);
+                            }
                             CurrentFolder.EnsureFile(outfpath);
                         }
                     }
@@ -2744,19 +2751,14 @@ namespace CodeWalker
                     }
 
                 }
-#if !DEBUG
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Unable to import file");
                 }
-#endif
-
             }
-
             RefreshMainListView();
-
         }
-        private void ImportRaw()
+        private async Task ImportRawAsync()
         {
             if (!EditMode) return;
             if (CurrentFolder?.IsSearchResults ?? false) return;
@@ -2771,9 +2773,9 @@ namespace CodeWalker
 
             var fpaths = OpenFileDialog.FileNames;
 
-            ImportRaw(fpaths, false);//already checked encryption before the file dialog...
+            await ImportRawAsync(fpaths, false);//already checked encryption before the file dialog...
         }
-        private void ImportRaw(string[] fpaths, bool checkEncryption = true)
+        private async Task ImportRawAsync(string[] fpaths, bool checkEncryption = true)
         {
             if (!EditMode) return;
             if (CurrentFolder?.IsSearchResults ?? false) return;
@@ -2838,8 +2840,6 @@ namespace CodeWalker
 
                         EnsureImportedFolder(direntry, CurrentFolder.RpfFolder);
                     }
-                    else
-                    { } //nothing to see here!
                 }
                 catch (Exception ex)
                 {
@@ -2854,7 +2854,7 @@ namespace CodeWalker
                 {
                     if (!File.Exists(fpath))
                     {
-                        continue;//this shouldn't happen...
+                        continue;
                     }
 
                     var fi = new FileInfo(fpath);
@@ -2868,7 +2868,12 @@ namespace CodeWalker
 
                     Cursor = Cursors.WaitCursor;
 
-                    byte[] data = File.ReadAllBytes(fpath);
+                    byte[] data;
+                    using (var sourceStream = new FileStream(fpath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 4096, useAsync: true))
+                    {
+                        data = new byte[sourceStream.Length];
+                        await sourceStream.ReadAsync(data, 0, (int)sourceStream.Length);
+                    }
 
                     if (CurrentFolder.RpfFolder != null)
                     {
@@ -2880,16 +2885,16 @@ namespace CodeWalker
 
                         var entry = RpfFile.CreateFile(rpffldr, fname, data);
 
-                        EnsureImportedRpf(entry, rpffldr); //make sure structure is created if an RPF was imported
+                        EnsureImportedRpf(entry, rpffldr);
                     }
                     else
                     {
-
                         var outfpath = Path.Combine(CurrentFolder.FullPath, fname);
-                        File.WriteAllBytes(outfpath, data);
+                        using (var destinationStream = new FileStream(outfpath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
+                        {
+                            await destinationStream.WriteAsync(data, 0, data.Length);
+                        }
                         CurrentFolder.EnsureFile(outfpath);
-
-                        //TODO: folders...
                     }
 
                     Cursor = Cursors.Default;
@@ -3538,11 +3543,11 @@ namespace CodeWalker
                     break;
                 case Keys.E:
                     if (ctrlshft) ExtractAll();
-                    else if (ctrl) ExtractRaw();
+                    else if (ctrl) await ExtractRawAsync();
                     break;
                 case Keys.Insert:
-                    if (shft) ImportXmlDialog();
-                    else if (!ctrl) ImportRaw();
+                    if (shft) await ImportXmlDialogAsync();
+                    else if (!ctrl) await ImportRawAsync();
                     break;
                 case Keys.C:
                     if (ctrlshft) CopyPath();
@@ -3711,7 +3716,7 @@ namespace CodeWalker
             }
         }
 
-        private void MainListView_DragDrop(object sender, DragEventArgs e)
+        private async void MainListView_DragDropAsync(object sender, DragEventArgs e)
         {
             if (!EditMode) return;
             if (CurrentFolder?.IsSearchResults ?? false) return;
@@ -3724,15 +3729,15 @@ namespace CodeWalker
                 //Import as raw regardless of file type while pressing shift
                 if ((e.KeyState & 4) == 4)
                 {
-                    ImportRaw(files);
+                    await ImportRawAsync(files);
                     return;
                 }
 
                 var xml = files.Where(x => x.EndsWith(".xml") && (x.IndexOf('.') != x.LastIndexOf('.')));
                 var raw = files.Except(xml);
 
-                if (raw.Count() > 0) ImportRaw(raw.ToArray());
-                if (xml.Count() > 0) ImportXml(xml.ToArray());
+                if (raw.Count() > 0) await ImportRawAsync(raw.ToArray());
+                if (xml.Count() > 0) await ImportXmlAsync(xml.ToArray());
             }
         }
 
@@ -3912,9 +3917,9 @@ namespace CodeWalker
             await ExportXmlAsync();
         }
 
-        private void ListContextExtractRawMenu_Click(object sender, EventArgs e)
+        private async void ListContextExtractRawMenu_ClickAsync(object sender, EventArgs e)
         {
-            ExtractRaw();
+            await ExtractRawAsync();
         }
 
         private void ListContextExtractUncompressedMenu_Click(object sender, EventArgs e)
@@ -3947,14 +3952,14 @@ namespace CodeWalker
             ImportFbx();
         }
 
-        private void ListContextImportXmlMenu_Click(object sender, EventArgs e)
+        private async void ListContextImportXmlMenu_ClickAsync(object sender, EventArgs e)
         {
-            ImportXmlDialog();
+            await ImportXmlDialogAsync();
         }
 
-        private void ListContextImportRawMenu_Click(object sender, EventArgs e)
+        private async void ListContextImportRawMenu_Click(object sender, EventArgs e)
         {
-            ImportRaw();
+            await ImportRawAsync();
         }
 
         private void ListContextCopyMenu_Click(object sender, EventArgs e)
@@ -4027,9 +4032,9 @@ namespace CodeWalker
             await ExportXmlAsync();
         }
 
-        private void EditExtractRawMenu_Click(object sender, EventArgs e)
+        private async void EditExtractRawMenu_ClickAsync(object sender, EventArgs e)
         {
-            ExtractRaw();
+            await ExtractRawAsync();
         }
 
         private void EditExtractAllMenu_Click(object sender, EventArgs e)
@@ -4042,14 +4047,14 @@ namespace CodeWalker
             ImportFbx();
         }
 
-        private void EditImportXmlMenu_Click(object sender, EventArgs e)
+        private async void EditImportXmlMenu_Click(object sender, EventArgs e)
         {
-            ImportXmlDialog();
+            await ImportXmlDialogAsync();
         }
 
-        private void EditImportRawMenu_Click(object sender, EventArgs e)
+        private async void EditImportRawMenu_Click(object sender, EventArgs e)
         {
-            ImportRaw();
+            await ImportRawAsync();
         }
 
         private void EditCopyMenu_Click(object sender, EventArgs e)

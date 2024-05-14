@@ -283,7 +283,7 @@
             this.EditExtractRawMenu.ShortcutKeyDisplayString = "Ctrl+E";
             this.EditExtractRawMenu.Size = new System.Drawing.Size(208, 22);
             this.EditExtractRawMenu.Text = "Extract Raw...";
-            this.EditExtractRawMenu.Click += new System.EventHandler(this.EditExtractRawMenu_Click);
+            this.EditExtractRawMenu.Click += new System.EventHandler(this.EditExtractRawMenu_ClickAsync);
             // 
             // EditExtractAllMenu
             // 
@@ -882,7 +882,7 @@
             this.MainListView.ItemActivate += new System.EventHandler(this.MainListView_ItemActivate);
             this.MainListView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.MainListView_ItemDrag);
             this.MainListView.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.MainListView_RetrieveVirtualItem);
-            this.MainListView.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainListView_DragDrop);
+            this.MainListView.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainListView_DragDropAsync);
             this.MainListView.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainListView_DragEnter);
             this.MainListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainListView_KeyDownAsync);
             this.MainListView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainListView_KeyUp);
@@ -1051,7 +1051,7 @@
             this.ListContextExtractRawMenu.ShortcutKeyDisplayString = "Ctrl+E";
             this.ListContextExtractRawMenu.Size = new System.Drawing.Size(208, 22);
             this.ListContextExtractRawMenu.Text = "Extract Raw...";
-            this.ListContextExtractRawMenu.Click += new System.EventHandler(this.ListContextExtractRawMenu_Click);
+            this.ListContextExtractRawMenu.Click += new System.EventHandler(this.ListContextExtractRawMenu_ClickAsync);
             // 
             // ListContextExtractUncompressedMenu
             // 
@@ -1124,7 +1124,7 @@
             this.ListContextImportXmlMenu.ShortcutKeyDisplayString = "Shift+Ins";
             this.ListContextImportXmlMenu.Size = new System.Drawing.Size(208, 22);
             this.ListContextImportXmlMenu.Text = "Import XML...";
-            this.ListContextImportXmlMenu.Click += new System.EventHandler(this.ListContextImportXmlMenu_Click);
+            this.ListContextImportXmlMenu.Click += new System.EventHandler(this.ListContextImportXmlMenu_ClickAsync);
             // 
             // ListContextImportRawMenu
             // 
