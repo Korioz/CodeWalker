@@ -19946,14 +19946,15 @@ namespace CodeWalker.GameFiles
             VariableCount = (Variables?.Length ?? 0);
         }
     }
-    [TC(typeof(EXP))] public class Dat4ConfigWaveSlot : Dat4ConfigData
+    [TC(typeof(EXP))]
+    public class Dat4ConfigWaveSlot : Dat4ConfigData
     {
-        public int Unk1 { get; set; }
-        public int MaxHeaderSize { get; set; }
-        public int Size { get; set; }
+        public int LoadType { get; set; }
+        public uint MaxHeaderSize { get; set; }
+        public uint Size { get; set; }
         public MetaHash StaticBank { get; set; }
-        public int MaxDataSize { get; set; }
-        public int Unk6 { get; set; }
+        public uint MaxMetadataSize { get; set; }
+        public uint MaxDataSize { get; set; }
 
         public Dat4ConfigWaveSlot(RelFile rel) : base(rel)
         {
@@ -19962,42 +19963,43 @@ namespace CodeWalker.GameFiles
         }
         public Dat4ConfigWaveSlot(RelData d, BinaryReader br) : base(d, br)
         {
-            Unk1 = br.ReadInt32();
-            MaxHeaderSize = br.ReadInt32();
-            Size = br.ReadInt32();
+            LoadType = br.ReadInt32();
+            MaxHeaderSize = br.ReadUInt32();
+            Size = br.ReadUInt32();
             StaticBank = br.ReadUInt32();
-            MaxDataSize = br.ReadInt32();
-            Unk6 = br.ReadInt32();
+            MaxMetadataSize = br.ReadUInt32();
+            MaxDataSize = br.ReadUInt32();
         }
         public override void Write(BinaryWriter bw)
         {
             base.Write(bw);
-            bw.Write(Unk1);
+
+            bw.Write(LoadType);
             bw.Write(MaxHeaderSize);
             bw.Write(Size);
             bw.Write(StaticBank);
+            bw.Write(MaxMetadataSize);
             bw.Write(MaxDataSize);
-            bw.Write(Unk6);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
             base.WriteXml(sb, indent);
-            RelXml.ValueTag(sb, indent, "Unk1", Unk1.ToString());
+            RelXml.ValueTag(sb, indent, "LoadType", LoadType.ToString());
             RelXml.ValueTag(sb, indent, "MaxHeaderSize", MaxHeaderSize.ToString());
             RelXml.ValueTag(sb, indent, "Size", Size.ToString());
             RelXml.StringTag(sb, indent, "StaticBank", RelXml.HashString(StaticBank));
+            RelXml.ValueTag(sb, indent, "MaxMetadataSize", MaxMetadataSize.ToString());
             RelXml.ValueTag(sb, indent, "MaxDataSize", MaxDataSize.ToString());
-            RelXml.ValueTag(sb, indent, "Unk6", Unk6.ToString());
         }
         public override void ReadXml(XmlNode node)
         {
             base.ReadXml(node);
-            Unk1 = Xml.GetChildIntAttribute(node, "Unk1", "value");
-            MaxHeaderSize = Xml.GetChildIntAttribute(node, "MaxHeaderSize", "value");
-            Size = Xml.GetChildIntAttribute(node, "Size", "value");
+            LoadType = Xml.GetChildIntAttribute(node, "LoadType", "value");
+            MaxHeaderSize = Xml.GetChildUIntAttribute(node, "MaxHeaderSize", "value");
+            Size = Xml.GetChildUIntAttribute(node, "Size", "value");
             StaticBank = XmlRel.GetHash(Xml.GetChildInnerText(node, "StaticBank"));
-            MaxDataSize = Xml.GetChildIntAttribute(node, "MaxDataSize", "value");
-            Unk6 = Xml.GetChildIntAttribute(node, "Unk6", "value");
+            MaxMetadataSize = Xml.GetChildUIntAttribute(node, "MaxMetadataSize", "value");
+            MaxDataSize = Xml.GetChildUIntAttribute(node, "MaxDataSize", "value");
         }
     }
     [TC(typeof(EXP))] public class Dat4ConfigWaveSlotsList : Dat4ConfigData
@@ -20053,20 +20055,20 @@ namespace CodeWalker.GameFiles
     {
         // hashes appear in companion
         float RoomSize { get; set; }
-        Vector3 hash_1F616274 { get; set; }
+        Vector3 RoomDimensions { get; set; }
         Vector3 ListenerPos { get; set; }
         int AllPassesCount { get; set; }
         Pass[] AllPasses { get; set; }
-        Vector4[] hash_84F123DC { get; set; } // fixed length 6
-        Vector4 hash_526F5F8A { get; set; }
-        Vector4 hash_5071232B { get; set; }
-        Vector4 hash_7D4AA574 { get; set; }
-        int hash_0776BC75_Count { get; set; }
-        Vector4[] hash_0776BC75 { get; set; }
-        int hash_7475AA16_Count { get; set; }
-        Vector4[] hash_7475AA16 { get; set; }
-        int hash_EACC7FE3_Count { get; set; }
-        Vector4[] hash_EACC7FE3 { get; set; }
+        Vector4[] NodeGainMatrix { get; set; } // fixed length 6
+        Vector4 Gain_1stOrder { get; set; }
+        Vector4 Gain_2ndOrder { get; set; }
+        Vector4 Gain_3rdOrder { get; set; }
+        int NodeLPF_1stOrdersCount { get; set; }
+        Vector4[] NodeLPF_1stOrder { get; set; }
+        int NodeLPF_2ndOrdersCount { get; set; }
+        Vector4[] NodeLPF_2ndOrder { get; set; }
+        int NodeLPF_3rdOrders { get; set; }
+        Vector4[] NodeLPF_3rdOrder { get; set; }
 
 
         public class Pass : IMetaXmlItem
@@ -20110,7 +20112,7 @@ namespace CodeWalker.GameFiles
         public Dat4ConfigERSettings(RelData d, BinaryReader br) : base(d, br)
         {
             RoomSize = br.ReadSingle();
-            hash_1F616274 = new Vector3(br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+            RoomDimensions = new Vector3(br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
             ListenerPos = new Vector3(br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
             AllPassesCount = br.ReadInt32();
             AllPasses = new Pass[AllPassesCount];
@@ -20118,40 +20120,40 @@ namespace CodeWalker.GameFiles
             {
                 AllPasses[i] = new Pass(br);
             }
-            hash_84F123DC = new Vector4[6];
-            for (int i = 0; i < hash_84F123DC.Length; i++)
+            NodeGainMatrix = new Vector4[6];
+            for (int i = 0; i < NodeGainMatrix.Length; i++)
             {
-                hash_84F123DC[i] = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+                NodeGainMatrix[i] = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
             }
-            hash_526F5F8A = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
-            hash_5071232B = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
-            hash_7D4AA574 = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
-            hash_0776BC75_Count = br.ReadInt32();
-            hash_0776BC75 = new Vector4[hash_0776BC75_Count];
-            for (int i = 0; i < hash_0776BC75_Count; i++)
+            Gain_1stOrder = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+            Gain_2ndOrder = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+            Gain_3rdOrder = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+            NodeLPF_1stOrdersCount = br.ReadInt32();
+            NodeLPF_1stOrder = new Vector4[NodeLPF_1stOrdersCount];
+            for (int i = 0; i < NodeLPF_1stOrdersCount; i++)
             {
-                hash_0776BC75[i] = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+                NodeLPF_1stOrder[i] = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
             }
-            hash_7475AA16_Count = br.ReadInt32();
-            hash_7475AA16 = new Vector4[hash_0776BC75_Count];
-            for (int i = 0; i < hash_7475AA16_Count; i++)
+            NodeLPF_2ndOrdersCount = br.ReadInt32();
+            NodeLPF_2ndOrder = new Vector4[NodeLPF_1stOrdersCount];
+            for (int i = 0; i < NodeLPF_2ndOrdersCount; i++)
             {
-                hash_7475AA16[i] = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+                NodeLPF_2ndOrder[i] = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
             }
-            hash_EACC7FE3_Count = br.ReadInt32();
-            hash_EACC7FE3 = new Vector4[hash_0776BC75_Count];
-            for (int i = 0; i < hash_EACC7FE3_Count; i++)
+            NodeLPF_3rdOrders = br.ReadInt32();
+            NodeLPF_3rdOrder = new Vector4[NodeLPF_1stOrdersCount];
+            for (int i = 0; i < NodeLPF_3rdOrders; i++)
             {
-                hash_EACC7FE3[i] = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+                NodeLPF_3rdOrder[i] = new Vector4(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
             }
         }
         public override void Write(BinaryWriter bw)
         {
             base.Write(bw);
             bw.Write(RoomSize);
-            bw.Write(hash_1F616274.X);
-            bw.Write(hash_1F616274.Y);
-            bw.Write(hash_1F616274.Z);
+            bw.Write(RoomDimensions.X);
+            bw.Write(RoomDimensions.Y);
+            bw.Write(RoomDimensions.Z);
             bw.Write(ListenerPos.X);
             bw.Write(ListenerPos.Y);
             bw.Write(ListenerPos.Z);
@@ -20160,113 +20162,85 @@ namespace CodeWalker.GameFiles
             {
                 AllPasses[i].Write(bw);
             }
-            for (int i = 0; i < hash_84F123DC.Length; i++)
+            for (int i = 0; i < NodeGainMatrix.Length; i++)
             {
-                bw.Write(hash_84F123DC[i].X);
-                bw.Write(hash_84F123DC[i].Y);
-                bw.Write(hash_84F123DC[i].Z);
-                bw.Write(hash_84F123DC[i].W);
+                bw.Write(NodeGainMatrix[i].X);
+                bw.Write(NodeGainMatrix[i].Y);
+                bw.Write(NodeGainMatrix[i].Z);
+                bw.Write(NodeGainMatrix[i].W);
             }
-            bw.Write(hash_526F5F8A.X);
-            bw.Write(hash_526F5F8A.Y);
-            bw.Write(hash_526F5F8A.Z);
-            bw.Write(hash_526F5F8A.W);
-            bw.Write(hash_5071232B.X);
-            bw.Write(hash_5071232B.Y);
-            bw.Write(hash_5071232B.Z);
-            bw.Write(hash_5071232B.W);
-            bw.Write(hash_7D4AA574.X);
-            bw.Write(hash_7D4AA574.Y);
-            bw.Write(hash_7D4AA574.Z);
-            bw.Write(hash_7D4AA574.W);
-            bw.Write(hash_0776BC75_Count);
-            for (int i = 0; i < hash_0776BC75_Count; i++)
+            bw.Write(Gain_1stOrder.X);
+            bw.Write(Gain_1stOrder.Y);
+            bw.Write(Gain_1stOrder.Z);
+            bw.Write(Gain_1stOrder.W);
+            bw.Write(Gain_2ndOrder.X);
+            bw.Write(Gain_2ndOrder.Y);
+            bw.Write(Gain_2ndOrder.Z);
+            bw.Write(Gain_2ndOrder.W);
+            bw.Write(Gain_3rdOrder.X);
+            bw.Write(Gain_3rdOrder.Y);
+            bw.Write(Gain_3rdOrder.Z);
+            bw.Write(Gain_3rdOrder.W);
+            bw.Write(NodeLPF_1stOrdersCount);
+            for (int i = 0; i < NodeLPF_1stOrdersCount; i++)
             {
-                bw.Write(hash_0776BC75[i].X);
-                bw.Write(hash_0776BC75[i].Y);
-                bw.Write(hash_0776BC75[i].Z);
-                bw.Write(hash_0776BC75[i].W);
+                bw.Write(NodeLPF_1stOrder[i].X);
+                bw.Write(NodeLPF_1stOrder[i].Y);
+                bw.Write(NodeLPF_1stOrder[i].Z);
+                bw.Write(NodeLPF_1stOrder[i].W);
             }
-            bw.Write(hash_7475AA16_Count);
-            for (int i = 0; i < hash_7475AA16_Count; i++)
+            bw.Write(NodeLPF_2ndOrdersCount);
+            for (int i = 0; i < NodeLPF_2ndOrdersCount; i++)
             {
-                bw.Write(hash_7475AA16[i].X);
-                bw.Write(hash_7475AA16[i].Y);
-                bw.Write(hash_7475AA16[i].Z);
-                bw.Write(hash_7475AA16[i].W);
+                bw.Write(NodeLPF_2ndOrder[i].X);
+                bw.Write(NodeLPF_2ndOrder[i].Y);
+                bw.Write(NodeLPF_2ndOrder[i].Z);
+                bw.Write(NodeLPF_2ndOrder[i].W);
             }
-            bw.Write(hash_EACC7FE3_Count);
-            for (int i = 0; i < hash_EACC7FE3_Count; i++)
+            bw.Write(NodeLPF_3rdOrders);
+            for (int i = 0; i < NodeLPF_3rdOrders; i++)
             {
-                bw.Write(hash_EACC7FE3[i].X);
-                bw.Write(hash_EACC7FE3[i].Y);
-                bw.Write(hash_EACC7FE3[i].Z);
-                bw.Write(hash_EACC7FE3[i].W);
+                bw.Write(NodeLPF_3rdOrder[i].X);
+                bw.Write(NodeLPF_3rdOrder[i].Y);
+                bw.Write(NodeLPF_3rdOrder[i].Z);
+                bw.Write(NodeLPF_3rdOrder[i].W);
             }
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
             base.WriteXml(sb, indent);
             RelXml.ValueTag(sb, indent, "RoomSize", FloatUtil.ToString(RoomSize));
-            RelXml.SelfClosingTag(sb, indent, "hash_1F616274 " + FloatUtil.GetVector3XmlString(hash_1F616274));
+            RelXml.SelfClosingTag(sb, indent, "RoomDimensions " + FloatUtil.GetVector3XmlString(RoomDimensions));
             RelXml.SelfClosingTag(sb, indent, "ListenerPos " + FloatUtil.GetVector3XmlString(ListenerPos));
             RelXml.WriteItemArray(sb, AllPasses, indent, "AllPasses");
-            RelXml.WriteRawArray(sb, hash_84F123DC, indent, "hash_84F123DC", "", RelXml.FormatVector4, 1);
-            RelXml.SelfClosingTag(sb, indent, "hash_526F5F8A " + FloatUtil.GetVector4XmlString(hash_526F5F8A));
-            RelXml.SelfClosingTag(sb, indent, "hash_5071232B " + FloatUtil.GetVector4XmlString(hash_5071232B));
-            RelXml.SelfClosingTag(sb, indent, "hash_7D4AA574 " + FloatUtil.GetVector4XmlString(hash_7D4AA574));
-            RelXml.WriteRawArray(sb, hash_0776BC75, indent, "hash_0776BC75", "", RelXml.FormatVector4, 1);
-            RelXml.WriteRawArray(sb, hash_7475AA16, indent, "hash_7475AA16", "", RelXml.FormatVector4, 1);
-            RelXml.WriteRawArray(sb, hash_EACC7FE3, indent, "hash_EACC7FE3", "", RelXml.FormatVector4, 1);
+            RelXml.WriteRawArray(sb, NodeGainMatrix, indent, "NodeGainMatrix", "", RelXml.FormatVector4, 1);
+            RelXml.SelfClosingTag(sb, indent, "Gain_1stOrder " + FloatUtil.GetVector4XmlString(Gain_1stOrder));
+            RelXml.SelfClosingTag(sb, indent, "Gain_2ndOrder " + FloatUtil.GetVector4XmlString(Gain_2ndOrder));
+            RelXml.SelfClosingTag(sb, indent, "Gain_3rdOrder " + FloatUtil.GetVector4XmlString(Gain_3rdOrder));
+            RelXml.WriteRawArray(sb, NodeLPF_1stOrder, indent, "NodeLPF_1stOrder", "", RelXml.FormatVector4, 1);
+            RelXml.WriteRawArray(sb, NodeLPF_2ndOrder, indent, "NodeLPF_2ndOrder", "", RelXml.FormatVector4, 1);
+            RelXml.WriteRawArray(sb, NodeLPF_3rdOrder, indent, "NodeLPF_3rdOrder", "", RelXml.FormatVector4, 1);
         }
         public override void ReadXml(XmlNode node)
         {
             base.ReadXml(node);
             RoomSize = Xml.GetChildFloatAttribute(node, "RoomSize", "value");
-            hash_1F616274 = Xml.GetChildVector3Attributes(node, "hash_1F616274");
+            RoomDimensions = Xml.GetChildVector3Attributes(node, "RoomDimensions");
             ListenerPos = Xml.GetChildVector3Attributes(node, "ListenerPos");
             AllPasses = XmlRel.ReadItemArray<Pass>(node, "AllPasses");
             AllPassesCount = (AllPasses?.Length ?? 0);
-            hash_84F123DC = Xml.GetChildRawVector4Array(node, "hash_84F123DC");
-            hash_526F5F8A = Xml.GetChildVector4Attributes(node, "hash_526F5F8A");
-            hash_5071232B = Xml.GetChildVector4Attributes(node, "hash_5071232B");
-            hash_7D4AA574 = Xml.GetChildVector4Attributes(node, "hash_7D4AA574");
-            hash_0776BC75 = Xml.GetChildRawVector4Array(node, "hash_0776BC75");
-            hash_7475AA16 = Xml.GetChildRawVector4Array(node, "hash_7475AA16");
-            hash_EACC7FE3 = Xml.GetChildRawVector4Array(node, "hash_EACC7FE3");
-            hash_0776BC75_Count = hash_0776BC75?.Length ?? 0;
-            hash_7475AA16_Count = hash_7475AA16?.Length ?? 0;
-            hash_EACC7FE3_Count = hash_EACC7FE3?.Length ?? 0;
+            NodeGainMatrix = Xml.GetChildRawVector4Array(node, "NodeGainMatrix");
+            Gain_1stOrder = Xml.GetChildVector4Attributes(node, "Gain_1stOrder");
+            Gain_2ndOrder = Xml.GetChildVector4Attributes(node, "Gain_2ndOrder");
+            Gain_3rdOrder = Xml.GetChildVector4Attributes(node, "Gain_3rdOrder");
+            NodeLPF_1stOrder = Xml.GetChildRawVector4Array(node, "NodeLPF_1stOrder");
+            NodeLPF_2ndOrder = Xml.GetChildRawVector4Array(node, "NodeLPF_2ndOrder");
+            NodeLPF_3rdOrder = Xml.GetChildRawVector4Array(node, "NodeLPF_3rdOrder");
+            NodeLPF_1stOrdersCount = NodeLPF_1stOrder?.Length ?? 0;
+            NodeLPF_2ndOrdersCount = NodeLPF_2ndOrder?.Length ?? 0;
+            NodeLPF_3rdOrders = NodeLPF_3rdOrder?.Length ?? 0;
         }
     }
-
-
-    //[TC(typeof(EXP))] public class Dat4ConfigBlankTemplateItem : Dat4ConfigData
-    //{
-    //    public Dat4ConfigBlankTemplateItem(RelFile rel) : base(rel)
-    //    {
-    //        Type = Dat4ConfigType.RELTYPE;
-    //        TypeID = (byte)Type;
-    //    }
-    //    public Dat4ConfigBlankTemplateItem(RelData d, BinaryReader br) : base(d, br)
-    //    {
-    //        var bytesleft = br.BaseStream.Length - br.BaseStream.Position;
-    //        if (bytesleft != 0)
-    //        { }
-    //    }
-    //    public override void Write(BinaryWriter bw)
-    //    {
-    //        base.Write(bw);
-    //    }
-    //    public override void WriteXml(StringBuilder sb, int indent)
-    //    {
-    //        base.WriteXml(sb, indent);
-    //    }
-    //    public override void ReadXml(XmlNode node)
-    //    {
-    //        base.ReadXml(node);
-    //    }
-    //}
 
 
 
