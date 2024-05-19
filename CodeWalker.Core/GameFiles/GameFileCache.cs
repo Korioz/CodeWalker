@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace CodeWalker.GameFiles
@@ -2216,91 +2217,78 @@ namespace CodeWalker.GameFiles
             }
         }
 
-
         public bool ContentThreadProc()
         {
             Monitor.Enter(updateSyncRoot);
 
             GameFile req;
-            //bool loadedsomething = false;
 
             int itemcount = 0;
 
             while (requestQueue.TryDequeue(out req) && (itemcount < MaxItemsPerLoop))
             {
-                //process content requests.
                 if (req.Loaded)
-                    continue; //it's already loaded... (somehow)
+                    continue;
 
                 if ((req.LastUseTime - DateTime.Now).TotalSeconds > 0.5)
-                    continue; //hasn't been requested lately..! ignore, will try again later if necessary
+                    continue;
 
                 itemcount++;
-                //if (!loadedsomething)
-                //{
-                //UpdateStatus("Loading " + req.RpfFileEntry.Name + "...");
-                //}
-
-                switch (req.Type)
+                try
                 {
-                    case GameFileType.Ydr:
-                        req.Loaded = LoadFile(req as YdrFile);
-                        break;
-                    case GameFileType.Ydd:
-                        req.Loaded = LoadFile(req as YddFile);
-                        break;
-                    case GameFileType.Ytd:
-                        req.Loaded = LoadFile(req as YtdFile);
-                        //if (req.Loaded) AddTextureLookups(req as YtdFile);
-                        break;
-                    case GameFileType.Ymap:
-                        YmapFile y = req as YmapFile;
-                        req.Loaded = LoadFile(y);
-                        if (req.Loaded) y.InitYmapEntityArchetypes(this);
-                        break;
-                    case GameFileType.Yft:
-                        req.Loaded = LoadFile(req as YftFile);
-                        break;
-                    case GameFileType.Ybn:
-                        req.Loaded = LoadFile(req as YbnFile);
-                        break;
-                    case GameFileType.Ycd:
-                        req.Loaded = LoadFile(req as YcdFile);
-                        break;
-                    case GameFileType.Yed:
-                        req.Loaded = LoadFile(req as YedFile);
-                        break;
-                    case GameFileType.Ynv:
-                        req.Loaded = LoadFile(req as YnvFile);
-                        break;
-                    case GameFileType.Yld:
-                        req.Loaded = LoadFile(req as YldFile);
-                        break;
-                    default:
-                        break;
+                    switch (req.Type)
+                    {
+                        case GameFileType.Ydr:
+                            req.Loaded = LoadFile(req as YdrFile);
+                            break;
+                        case GameFileType.Ydd:
+                            req.Loaded = LoadFile(req as YddFile);
+                            break;
+                        case GameFileType.Ytd:
+                            req.Loaded = LoadFile(req as YtdFile);
+                            break;
+                        case GameFileType.Ymap:
+                            YmapFile y = req as YmapFile;
+                            req.Loaded = LoadFile(y);
+                            if (req.Loaded) y.InitYmapEntityArchetypes(this);
+                            break;
+                        case GameFileType.Yft:
+                            req.Loaded = LoadFile(req as YftFile);
+                            break;
+                        case GameFileType.Ybn:
+                            req.Loaded = LoadFile(req as YbnFile);
+                            break;
+                        case GameFileType.Ycd:
+                            req.Loaded = LoadFile(req as YcdFile);
+                            break;
+                        case GameFileType.Yed:
+                            req.Loaded = LoadFile(req as YedFile);
+                            break;
+                        case GameFileType.Ynv:
+                            req.Loaded = LoadFile(req as YnvFile);
+                            break;
+                        case GameFileType.Yld:
+                            req.Loaded = LoadFile(req as YldFile);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error loading file of type {req.Type}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 string str = (req.Loaded ? "Loaded " : "Error loading ") + req.ToString();
-                //string str = string.Format("{0}: {1}: {2}", requestQueue.Count, (req.Loaded ? "Loaded" : "Error loading"), req);
 
                 UpdateStatus(str);
-                //ErrorLog(str);
                 if (!req.Loaded)
                 {
                     ErrorLog("Error loading " + req.ToString());
                 }
-
-
-                //loadedsomething = true;
             }
-
-            //whether or not we need another content thread loop
             bool itemsStillPending = (itemcount >= MaxItemsPerLoop);
-
-
             Monitor.Exit(updateSyncRoot);
-
-
             return itemsStillPending;
         }
 
