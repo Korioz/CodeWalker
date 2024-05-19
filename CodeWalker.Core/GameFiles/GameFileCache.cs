@@ -2111,12 +2111,7 @@ namespace CodeWalker.GameFiles
                         else
                         {
                             ynv.LoadQueued = false;
-                            //ErrorLog("Out of cache space - couldn't load ycd: " + JenkIndex.GetString(hash)); //too spammy...
                         }
-                    }
-                    else
-                    {
-                        //ErrorLog("Ycd not found: " + JenkIndex.GetString(hash)); //too spammy...
                     }
                 }
                 else if (!ynv.Loaded)
@@ -2276,8 +2271,9 @@ namespace CodeWalker.GameFiles
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error loading file of type {req.Type}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error loading file {req.Name} of type {req.Type}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
 
                 string str = (req.Loaded ? "Loaded " : "Error loading ") + req.ToString();
 
