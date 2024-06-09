@@ -296,22 +296,22 @@ namespace CodeWalker.GameFiles
             {
                 foreach (var ptr in ParticleRuleDictionary.ParticleRules.data_items)
                 {
-                    if (ptr.Spawner1 != null)
+                    if (ptr.EffectSpawnerAtRatio != null)
                     {
-                        var efrhash = JenkHash.GenHash(ptr.Spawner1.EffectRuleName?.Value ?? "");
+                        var efrhash = JenkHash.GenHash(ptr.EffectSpawnerAtRatio.EffectRuleName?.Value ?? "");
                         if (efrdict.TryGetValue(efrhash, out ParticleEffectRule efr))
                         {
-                            ptr.Spawner1.EffectRule = efr;
+                            ptr.EffectSpawnerAtRatio.EffectRule = efr;
                         }
                         else if (efrhash != 0)
                         { }
                     }
-                    if (ptr.Spawner2 != null)
+                    if (ptr.EffectSpawnerOnCollision != null)
                     {
-                        var efrhash = JenkHash.GenHash(ptr.Spawner2.EffectRuleName?.Value ?? "");
+                        var efrhash = JenkHash.GenHash(ptr.EffectSpawnerOnCollision.EffectRuleName?.Value ?? "");
                         if (efrdict.TryGetValue(efrhash, out ParticleEffectRule efr))
                         {
-                            ptr.Spawner2.EffectRule = efr;
+                            ptr.EffectSpawnerOnCollision.EffectRule = efr;
                         }
                         else if (efrhash != 0)
                         { }
@@ -673,603 +673,321 @@ namespace CodeWalker.GameFiles
     {
         // pgBase
         // pgBaseRefCounted
-        // ptxParticleRule
         public override long BlockLength => 0x240;
 
         // structure data
         public uint VFT { get; set; }
-        public uint Unknown_4h = 1; // 0x00000001
-        public ulong Unknown_8h; // 0x0000000000000000
-        public uint Unknown_10h { get; set; }   // 2, 3, 4, 5, 6, 7, 10, 21
-        public uint Unknown_14h; //0x00000000
-        public ulong Unknown_18h; // 0x0000000000000000
-        public ParticleEffectSpawner Spawner1 { get; set; }
-        public ParticleEffectSpawner Spawner2 { get; set; }
-        public uint Unknown_100h { get; set; }  // 0, 1, 2
-        public uint Unknown_104h { get; set; }  // 0, 1, 7
-        public uint Unknown_108h { get; set; }  // 0, 1, 2
-        public uint Unknown_10Ch { get; set; }  // eg. 0x00010100
-        public uint Unknown_110h; // 0x00000000
-        public float Unknown_114h { get; set; } = 1.0f;
-        public uint Unknown_118h { get; set; } //index/id
-        public uint Unknown_11Ch { get; set; } //index/id
+        public uint padding00 { get; set; }
+        public ulong padding01 { get; set; }
+        public uint padding02 { get; set; }
+        public uint padding03 { get; set; }
+        public ulong UIData { get; set; }
+
+        // ptxParticleRule
+        public ParticleEffectSpawner EffectSpawnerAtRatio { get; set; }
+        public ParticleEffectSpawner EffectSpawnerOnCollision { get; set; }
+
+        // ptxRenderState
+        public int CullMode { get; set; }
+        public int BlendSet { get; set; }
+        public int LightingMode { get; set; }
+        public byte DepthWrite { get; set; }
+        public byte DepthTest { get; set; }
+        public byte AlphaBlend { get; set; }
+        public byte padding04 { get; set; }
+        public uint padding05 { get; set; }
+
+
+        public float FileVersion { get; set; }
+        public uint TexFrameIDMin { get; set; }
+        public uint TexFrameIDMax { get; set; }
         public ulong NamePointer { get; set; }
-        public ResourcePointerList64<ParticleBehaviour> BehaviourList1 { get; set; }
-        public ResourcePointerList64<ParticleBehaviour> BehaviourList2 { get; set; }
-        public ResourcePointerList64<ParticleBehaviour> BehaviourList3 { get; set; }
-        public ResourcePointerList64<ParticleBehaviour> BehaviourList4 { get; set; }
-        public ResourcePointerList64<ParticleBehaviour> BehaviourList5 { get; set; }
-        public ulong Unknown_178h; // 0x0000000000000000
-        public ulong Unknown_180h; // 0x0000000000000000
-        public ResourceSimpleList64<ParticleRuleUnknownItem> UnknownList1 { get; set; }
-        public ulong Unknown_198h; // 0x0000000000000000
-        public ulong Unknown_1A0h; // 0x0000000000000000
-        public ulong Unknown_1A8h; // 0x0000000000000000
-        public uint VFT2 { get; set; } = 0x40605c50; // 0x40605c50, 0x40607c70
-        public uint Unknown_1B4h = 1; // 0x00000001
-        public ulong FxcFilePointer { get; set; }
-        public ulong FxcTechniquePointer { get; set; }
-        public ulong Unknown_1C8h; // 0x0000000000000000
-        public uint Unknown_1D0h { get; set; } //index/id
-        public uint Unknown_1D4h; // 0x00000000
-        public uint VFT3 { get; set; } = 0x40605b48; // 0x40605b48, 0x40607b68
-        public uint Unknown_1DCh = 1; // 0x00000001
-        public uint Unknown_1E0h { get; set; }  // 0, 4
-        public uint Unknown_1E4h { get; set; }  // 0, 1
-        public uint Unknown_1E8h { get; set; }  // eg. 0x00000101
-        public uint Unknown_1ECh { get; set; }  // 0, 1
+        public ResourcePointerList64<ParticleBehaviour> AllBehaviours { get; set; }
+        public ResourcePointerList64<ParticleBehaviour> InitBehaviours { get; set; }
+        public ResourcePointerList64<ParticleBehaviour> UpdateBehaviours { get; set; }
+        public ResourcePointerList64<ParticleBehaviour> UpdateFinalizeBehaviours { get; set; }
+        public ResourcePointerList64<ParticleBehaviour> DrawBehaviours { get; set; }
+        public ulong ReleaseBehaviours1 { get; set; }
+        public ulong ReleaseBehaviours2 { get; set; }
+        public ResourceSimpleList64<ParticleRuleBiasLink> BiasLinks { get; set; }
+        public ulong PointPool { get; set; }
+        public ulong FuncTable_UNUSED1 { get; set; }
+        public ulong FuncTable_UNUSED2 { get; set; }
+
+        // ShaderInst
+        public uint VFT2 { get; set; } = 0x40605c50;
+        public uint padding06 { get; set; }
+        public ulong ShaderTemplateName { get; set; }
+        public ulong ShaderTemplateTechniqueName { get; set; }
+        public ulong ShaderTemplate { get; set; }
+        public uint ShaderTemplateTechniqueID { get; set; }
+        public uint padding07 { get; set; }
+
+        // TechniqueDesc
+        public uint VFT3 { get; set; } = 0x40605b48;
+        public uint padding08 { get; set; }
+        public uint DiffuseMode { get; set; }
+        public uint ProjectionMode { get; set; }
+        public byte IsLit { get; set; }
+        public byte IsSoft { get; set; }
+        public byte IsScreenSpace { get; set; }
+        public byte IsRefract { get; set; }
+        public byte IsNormalSpec { get; set; }
+        public byte padding09 { get; set; }
+        public short padding10 { get; set; }
+
+        // InstVars
         public ResourcePointerList64<ParticleShaderVar> ShaderVars { get; set; }
-        public ulong Unknown_200h = 1; // 0x0000000000000001
-        public MetaHash FxcFileHash { get; set; } // ptfx_sprite, ptfx_trail
-        public uint Unknown_20Ch; // 0x00000000
+        public byte IsDataInSync { get; set; }
+        public byte padding11 { get; set; }
+        public short padding12 { get; set; }
+        public uint padding13 { get; set; }
+        public MetaHash ShaderTemplateHashName { get; set; }
+        public uint padding14 { get; set; }
+
+
         public ResourceSimpleList64<ParticleDrawable> Drawables { get; set; }
-        public uint Unknown_220h { get; set; }  // eg. 0x00000202
-        public uint Unknown_224h; // 0x00000000
-        public ulong Unknown_228h; // 0x0000000000000000
-        public ulong Unknown_230h; // 0x0000000000000000
-        public ulong Unknown_238h; // 0x0000000000000000
+        public byte SortType { get; set; }
+        public byte DrawType { get; set; }
+        public byte Flags { get; set; }
+        public byte RuntimeFlags { get; set; }
+        public uint padding15 { get; set; }
+        public ulong unused00 { get; set; }
+        public ulong WindBehaviour { get; set; }
+        public ulong padding16 { get; set; }
 
         // reference data
         public string_r Name { get; set; }
         public MetaHash NameHash { get; set; }
-        public string_r FxcFile { get; set; } // ptfx_sprite, ptfx_trail
-        public string_r FxcTechnique { get; set; }
+        public string_r ShaderFile { get; set; }
+        public string_r ShaderTechnique { get; set; }
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            #region read data
 
             // read structure data
             VFT = reader.ReadUInt32();
-            Unknown_4h = reader.ReadUInt32();
-            Unknown_8h = reader.ReadUInt64();
-            Unknown_10h = reader.ReadUInt32();
-            Unknown_14h = reader.ReadUInt32();
-            Unknown_18h = reader.ReadUInt64();
-            Spawner1 = reader.ReadBlock<ParticleEffectSpawner>();
-            Spawner2 = reader.ReadBlock<ParticleEffectSpawner>();
-            Unknown_100h = reader.ReadUInt32();
-            Unknown_104h = reader.ReadUInt32();
-            Unknown_108h = reader.ReadUInt32();
-            Unknown_10Ch = reader.ReadUInt32();
-            Unknown_110h = reader.ReadUInt32();
-            Unknown_114h = reader.ReadSingle();
-            Unknown_118h = reader.ReadUInt32();
-            Unknown_11Ch = reader.ReadUInt32();
+            padding00 = reader.ReadUInt32();
+            padding01 = reader.ReadUInt64();
+            padding02 = reader.ReadUInt32();
+            padding03 = reader.ReadUInt32();
+            UIData = reader.ReadUInt64();
+
+            EffectSpawnerAtRatio = reader.ReadBlock<ParticleEffectSpawner>();
+            EffectSpawnerOnCollision = reader.ReadBlock<ParticleEffectSpawner>();
+
+
+            CullMode = reader.ReadInt32();
+            BlendSet = reader.ReadInt32();
+            LightingMode = reader.ReadInt32();
+            DepthWrite = reader.ReadByte();
+            DepthTest = reader.ReadByte();
+            AlphaBlend = reader.ReadByte();
+            padding04 = reader.ReadByte();
+            padding05 = reader.ReadUInt32();
+
+
+            FileVersion = reader.ReadSingle();
+            TexFrameIDMin = reader.ReadUInt32();
+            TexFrameIDMax = reader.ReadUInt32();
             NamePointer = reader.ReadUInt64();
-            BehaviourList1 = reader.ReadBlock<ResourcePointerList64<ParticleBehaviour>>();
-            BehaviourList2 = reader.ReadBlock<ResourcePointerList64<ParticleBehaviour>>();
-            BehaviourList3 = reader.ReadBlock<ResourcePointerList64<ParticleBehaviour>>();
-            BehaviourList4 = reader.ReadBlock<ResourcePointerList64<ParticleBehaviour>>();
-            BehaviourList5 = reader.ReadBlock<ResourcePointerList64<ParticleBehaviour>>();
-            Unknown_178h = reader.ReadUInt64();
-            Unknown_180h = reader.ReadUInt64();
-            UnknownList1 = reader.ReadBlock<ResourceSimpleList64<ParticleRuleUnknownItem>>();
-            Unknown_198h = reader.ReadUInt64();
-            Unknown_1A0h = reader.ReadUInt64();
-            Unknown_1A8h = reader.ReadUInt64();
+            AllBehaviours = reader.ReadBlock<ResourcePointerList64<ParticleBehaviour>>();
+            InitBehaviours = reader.ReadBlock<ResourcePointerList64<ParticleBehaviour>>();
+            UpdateBehaviours = reader.ReadBlock<ResourcePointerList64<ParticleBehaviour>>();
+            UpdateFinalizeBehaviours = reader.ReadBlock<ResourcePointerList64<ParticleBehaviour>>();
+            DrawBehaviours = reader.ReadBlock<ResourcePointerList64<ParticleBehaviour>>();
+            ReleaseBehaviours1 = reader.ReadUInt64();
+            ReleaseBehaviours2 = reader.ReadUInt64();
+            BiasLinks = reader.ReadBlock<ResourceSimpleList64<ParticleRuleBiasLink>>();
+            PointPool = reader.ReadUInt64();
+            FuncTable_UNUSED1 = reader.ReadUInt64();
+            FuncTable_UNUSED2 = reader.ReadUInt64();
+
+
             VFT2 = reader.ReadUInt32();
-            Unknown_1B4h = reader.ReadUInt32();
-            FxcFilePointer = reader.ReadUInt64();
-            FxcTechniquePointer = reader.ReadUInt64();
-            Unknown_1C8h = reader.ReadUInt64();
-            Unknown_1D0h = reader.ReadUInt32();
-            Unknown_1D4h = reader.ReadUInt32();
+            padding06 = reader.ReadUInt32();
+            ShaderTemplateName = reader.ReadUInt64();
+            ShaderTemplateTechniqueName = reader.ReadUInt64();
+            ShaderTemplate = reader.ReadUInt64();
+            ShaderTemplateTechniqueID = reader.ReadUInt32();
+            padding07 = reader.ReadUInt32();
+
+
             VFT3 = reader.ReadUInt32();
-            Unknown_1DCh = reader.ReadUInt32();
-            Unknown_1E0h = reader.ReadUInt32();
-            Unknown_1E4h = reader.ReadUInt32();
-            Unknown_1E8h = reader.ReadUInt32();
-            Unknown_1ECh = reader.ReadUInt32();
+            padding08 = reader.ReadUInt32();
+            DiffuseMode = reader.ReadUInt32();
+            ProjectionMode = reader.ReadUInt32();
+            IsLit = reader.ReadByte();
+            IsSoft = reader.ReadByte();
+            IsScreenSpace = reader.ReadByte();
+            IsRefract = reader.ReadByte();
+            IsNormalSpec = reader.ReadByte();
+            padding09 = reader.ReadByte();
+            padding10 = reader.ReadInt16();
+
+
             ShaderVars = reader.ReadBlock<ResourcePointerList64<ParticleShaderVar>>();
-            Unknown_200h = reader.ReadUInt64();
-            FxcFileHash = reader.ReadUInt32();
-            Unknown_20Ch = reader.ReadUInt32();
+            IsDataInSync = reader.ReadByte();
+            padding11 = reader.ReadByte();
+            padding12 = reader.ReadInt16();
+            padding13 = reader.ReadUInt32();
+            ShaderTemplateHashName = reader.ReadUInt32();
+            padding14 = reader.ReadUInt32();
+
+
             Drawables = reader.ReadBlock<ResourceSimpleList64<ParticleDrawable>>();
-            Unknown_220h = reader.ReadUInt32();
-            Unknown_224h = reader.ReadUInt32();
-            Unknown_228h = reader.ReadUInt64();
-            Unknown_230h = reader.ReadUInt64();
-            Unknown_238h = reader.ReadUInt64();
+            SortType = reader.ReadByte();
+            DrawType = reader.ReadByte();
+            Flags = reader.ReadByte();
+            RuntimeFlags = reader.ReadByte();
+            padding15 = reader.ReadUInt32();
+            unused00 = reader.ReadUInt64();
+            WindBehaviour = reader.ReadUInt64();
+            padding16 = reader.ReadUInt64();
 
             // read reference data
             Name = reader.ReadBlockAt<string_r>(NamePointer);
-            FxcFile = reader.ReadBlockAt<string_r>(FxcFilePointer);
-            FxcTechnique = reader.ReadBlockAt<string_r>(FxcTechniquePointer);
-
-            #endregion
+            ShaderFile = reader.ReadBlockAt<string_r>(ShaderTemplateName);
+            ShaderTechnique = reader.ReadBlockAt<string_r>(ShaderTemplateTechniqueName);
 
 
             if (!string.IsNullOrEmpty(Name?.Value))
             {
                 JenkIndex.Ensure(Name.Value);
             }
-
-            if ((Drawables?.data_items?.Length ?? 0) != 0)
-            { }
-
-
-            #region test
-
-            //var bl1 = BehaviourList1?.data_items?.ToList() ?? new List<ParticleBehaviour>();
-            //var bl2 = BehaviourList2?.data_items?.ToList() ?? new List<ParticleBehaviour>();
-            //var bl3 = BehaviourList3?.data_items?.ToList() ?? new List<ParticleBehaviour>();
-            //var bl4 = BehaviourList4?.data_items?.ToList() ?? new List<ParticleBehaviour>();
-            //var bl5 = BehaviourList5?.data_items?.ToList() ?? new List<ParticleBehaviour>();
-            //if (bl2.Count != bl3.Count)
-            //{ }//no hit
-            //foreach (var b in bl1)
-            //{
-            //    var t = b.Type;
-            //    var il2 = bl2.Contains(b);
-            //    var il3 = bl3.Contains(b);
-            //    var il4 = bl4.Contains(b);
-            //    var il5 = bl5.Contains(b);
-            //    var render = false;
-            //    var extra = false;
-            //    var extra2 = false;
-            //    switch (t)
-            //    {
-            //        case ParticleBehaviourType.Sprite:
-            //        case ParticleBehaviourType.Model:
-            //        case ParticleBehaviourType.Trail:
-            //            render = true;
-            //            break;
-            //    }
-            //    switch (t)
-            //    {
-            //        case ParticleBehaviourType.Collision:
-            //        case ParticleBehaviourType.Light:
-            //        case ParticleBehaviourType.Decal:
-            //        case ParticleBehaviourType.ZCull:
-            //        case ParticleBehaviourType.Trail:
-            //        case ParticleBehaviourType.FogVolume:
-            //        case ParticleBehaviourType.River:
-            //        case ParticleBehaviourType.DecalPool:
-            //        case ParticleBehaviourType.Liquid:
-            //            extra = true;
-            //            break;
-            //    }
-            //    switch (t)
-            //    {
-            //        case ParticleBehaviourType.Sprite:
-            //        case ParticleBehaviourType.Model:
-            //        case ParticleBehaviourType.Trail:
-            //        case ParticleBehaviourType.FogVolume:
-            //            extra2 = true;
-            //            break;
-            //    }
-            //    if (il2 != il3)
-            //    { }//no hit
-            //    if (il2 == render)
-            //    { }//no hit
-            //    if (il4 != extra)
-            //    { }//no hit
-            //    if (il5 != extra2)
-            //    { }//no hit
-            //}
-
-            //var blc1 = BehaviourList1?.data_items?.Length ?? 0;
-            //var blc2 = BehaviourList2?.data_items?.Length ?? 0;
-            //for (int i = 0; i < blc2; i++)
-            //{
-            //    var b = BehaviourList2.data_items[i];
-            //    if (!bl1.Contains(b))
-            //    { }//no hit
-            //}
-            //var blc3 = BehaviourList3?.data_items?.Length ?? 0;
-            //for (int i = 0; i < blc3; i++)
-            //{
-            //    var b = BehaviourList3.data_items[i];
-            //    if (!bl1.Contains(b))
-            //    { }//no hit
-            //}
-            //var blc4 = BehaviourList4?.data_items?.Length ?? 0;
-            //for (int i = 0; i < blc4; i++)
-            //{
-            //    var b = BehaviourList4.data_items[i];
-            //    if (!bl1.Contains(b))
-            //    { }//no hit
-            //}
-            //var blc5 = BehaviourList5?.data_items?.Length ?? 0;
-            //for (int i = 0; i < blc5; i++)
-            //{
-            //    var b = BehaviourList5.data_items[i];
-            //    if (!bl1.Contains(b))
-            //    { }//no hit
-            //}
-
-
-
-
-            //if (Unknown_4h != 1)
-            //{ }//no hit
-            //if (Unknown_8h != 0)
-            //{ }//no hit
-            //switch (Unknown_10h)
-            //{
-            //    case 4:
-            //    case 2:
-            //    case 3:
-            //    case 6:
-            //    case 7:
-            //    case 5:
-            //    case 10:
-            //    case 21:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_14h != 0)
-            //{ }//no hit
-            //if (Unknown_18h != 0)
-            //{ }//no hit
-            //switch (Unknown_100h)
-            //{
-            //    case 2:
-            //    case 0:
-            //    case 1:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_104h)
-            //{
-            //    case 0:
-            //    case 1:
-            //    case 7:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_108h)
-            //{
-            //    case 2:
-            //    case 1:
-            //    case 0:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_10Ch)
-            //{
-            //    case 0x00010100:
-            //    case 0x00010000:
-            //    case 0x00010101:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_110h != 0)
-            //{ }//no hit
-            //if (Unknown_114h != 1.0f)
-            //{ }//no hit
-            //switch (Unknown_118h)
-            //{
-            //    case 0:
-            //    case 8:
-            //    case 13:
-            //    case 15:
-            //    case 16:
-            //    case 1:
-            //    case 20:
-            //    case 9:
-            //    case 5:
-            //    case 11:
-            //    case 22:
-            //    case 2:
-            //    case 12:
-            //    case 10:
-            //    case 6:
-            //    case 14:
-            //    case 23:
-            //    case 3:
-            //    case 19:
-            //    case 18:
-            //    case 4:
-            //    case 7:
-            //    case 25:
-            //    case 26:
-            //    case 21:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_11Ch)
-            //{
-            //    case 2:
-            //    case 3:
-            //    case 14:
-            //    case 23:
-            //    case 48:
-            //    case 22:
-            //    case 1:
-            //    case 12:
-            //    case 11:
-            //    case 0:
-            //    case 25:
-            //    case 7:
-            //    case 8:
-            //    case 21:
-            //    case 15:
-            //    case 28:
-            //    case 18:
-            //    case 20:
-            //    case 33:
-            //    case 5:
-            //    case 26:
-            //    case 24:
-            //    case 9:
-            //    case 35:
-            //    case 10:
-            //    case 38:
-            //    case 27:
-            //    case 13:
-            //    case 16:
-            //    case 17:
-            //    case 36:
-            //    case 4:
-            //    case 19:
-            //    case 31:
-            //    case 47:
-            //    case 32:
-            //    case 34:
-            //    case 6:
-            //    case 30:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_178h != 0)
-            //{ }//no hit
-            //if (Unknown_180h != 0)
-            //{ }//no hit
-            //if (Unknown_198h != 0)
-            //{ }//no hit
-            //if (Unknown_1A0h != 0)
-            //{ }//no hit
-            //if (Unknown_1A8h != 0)
-            //{ }//no hit
-            //switch (VFT2)
-            //{
-            //    case 0x40605c50:
-            //    case 0x40607c70:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_1B4h != 1)
-            //{ }//no hit
-            //if (Unknown_1C8h != 0)
-            //{ }//no hit
-            //switch (Unknown_1D0h)
-            //{
-            //    case 5:
-            //    case 2:
-            //    case 8:
-            //    case 6:
-            //    case 13:
-            //    case 16:
-            //    case 20:
-            //    case 3:
-            //    case 12:
-            //    case 1:
-            //    case 14:
-            //    case 27:
-            //    case 21:
-            //    case 9:
-            //    case 4:
-            //    case 19:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_1D4h != 0)
-            //{ }//no hit
-            //switch (VFT3)
-            //{
-            //    case 0x40605b48:
-            //    case 0x40607b68:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_1DCh != 1)
-            //{ }//no hit
-            //switch (Unknown_1E0h)
-            //{
-            //    case 0:
-            //    case 4:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_1E4h)
-            //{
-            //    case 0:
-            //    case 1:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_1E8h)
-            //{
-            //    case 0x00000101:
-            //    case 1:
-            //    case 0x00010001:
-            //    case 0x01000000:
-            //    case 0x00000100:
-            //    case 0x01000100:
-            //    case 0:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_1ECh)
-            //{
-            //    case 0:
-            //    case 1:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_200h != 1)
-            //{ }//no hit
-            //switch (FxcFileHash) // .fxc shader file name
-            //{
-            //    case 0x0eb0d762: // ptfx_sprite
-            //    case 0xe7b0585f: // ptfx_trail
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (FxcFileHash != JenkHash.GenHash(FxcFile?.ToString() ?? ""))
-            //{ }//no hit
-            //if (Unknown_20Ch != 0)
-            //{ }//no hit
-            //switch (Unknown_220h)
-            //{
-            //    case 1:
-            //    case 2:
-            //    case 0:
-            //    case 0x00000202:
-            //    case 0x00000102:
-            //    case 0x00000101:
-            //    case 3:
-            //    case 4:
-            //    case 0x00000100:
-            //    case 0x00000103:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_224h != 0)
-            //{ }//no hit
-            //if (Unknown_228h != 0)
-            //{ }//no hit
-            //if (Unknown_230h != 0)
-            //{ }//no hit
-            //if (Unknown_238h != 0)
-            //{ }//no hit
-            #endregion
         }
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
             NamePointer = (ulong)(Name != null ? Name.FilePosition : 0);
-            FxcFilePointer = (ulong)(FxcFile != null ? FxcFile.FilePosition : 0);
-            FxcTechniquePointer = (ulong)(FxcTechnique != null ? FxcTechnique.FilePosition : 0);
+            ShaderTemplateName = (ulong)(ShaderFile != null ? ShaderFile.FilePosition : 0);
+            ShaderTemplateTechniqueName = (ulong)(ShaderTechnique != null ? ShaderTechnique.FilePosition : 0);
 
             // write structure data
             writer.Write(VFT);
-            writer.Write(Unknown_4h);
-            writer.Write(Unknown_8h);
-            writer.Write(Unknown_10h);
-            writer.Write(Unknown_14h);
-            writer.Write(Unknown_18h);
-            writer.WriteBlock(Spawner1);
-            writer.WriteBlock(Spawner2);
-            writer.Write(Unknown_100h);
-            writer.Write(Unknown_104h);
-            writer.Write(Unknown_108h);
-            writer.Write(Unknown_10Ch);
-            writer.Write(Unknown_110h);
-            writer.Write(Unknown_114h);
-            writer.Write(Unknown_118h);
-            writer.Write(Unknown_11Ch);
+            writer.Write(padding00);
+            writer.Write(padding01);
+            writer.Write(padding02);
+            writer.Write(padding03);
+            writer.Write(UIData);
+
+
+            writer.WriteBlock(EffectSpawnerAtRatio);
+            writer.WriteBlock(EffectSpawnerOnCollision);
+
+
+            writer.Write(CullMode);
+            writer.Write(BlendSet);
+            writer.Write(LightingMode);
+            writer.Write(DepthWrite);
+            writer.Write(DepthTest);
+            writer.Write(AlphaBlend);
+            writer.Write(padding04);
+            writer.Write(padding05);
+
+
+            writer.Write(FileVersion);
+            writer.Write(TexFrameIDMin);
+            writer.Write(TexFrameIDMax);
             writer.Write(NamePointer);
-            writer.WriteBlock(BehaviourList1);
-            writer.WriteBlock(BehaviourList2);
-            writer.WriteBlock(BehaviourList3);
-            writer.WriteBlock(BehaviourList4);
-            writer.WriteBlock(BehaviourList5);
-            writer.Write(Unknown_178h);
-            writer.Write(Unknown_180h);
-            writer.WriteBlock(UnknownList1);
-            writer.Write(Unknown_198h);
-            writer.Write(Unknown_1A0h);
-            writer.Write(Unknown_1A8h);
+            writer.WriteBlock(AllBehaviours);
+            writer.WriteBlock(InitBehaviours);
+            writer.WriteBlock(UpdateBehaviours);
+            writer.WriteBlock(UpdateFinalizeBehaviours);
+            writer.WriteBlock(DrawBehaviours);
+            writer.Write(ReleaseBehaviours1);
+            writer.Write(ReleaseBehaviours2);
+            writer.WriteBlock(BiasLinks);
+            writer.Write(PointPool);
+            writer.Write(FuncTable_UNUSED1);
+            writer.Write(FuncTable_UNUSED2);
+
+
             writer.Write(VFT2);
-            writer.Write(Unknown_1B4h);
-            writer.Write(FxcFilePointer);
-            writer.Write(FxcTechniquePointer);
-            writer.Write(Unknown_1C8h);
-            writer.Write(Unknown_1D0h);
-            writer.Write(Unknown_1D4h);
+            writer.Write(padding06);
+            writer.Write(ShaderTemplateName);
+            writer.Write(ShaderTemplateTechniqueName);
+            writer.Write(ShaderTemplate);
+            writer.Write(ShaderTemplateTechniqueID);
+            writer.Write(padding07);
+
+
             writer.Write(VFT3);
-            writer.Write(Unknown_1DCh);
-            writer.Write(Unknown_1E0h);
-            writer.Write(Unknown_1E4h);
-            writer.Write(Unknown_1E8h);
-            writer.Write(Unknown_1ECh);
+            writer.Write(padding08);
+            writer.Write(DiffuseMode);
+            writer.Write(ProjectionMode);
+            writer.Write(IsLit);
+            writer.Write(IsSoft);
+            writer.Write(IsScreenSpace);
+            writer.Write(IsRefract);
+            writer.Write(IsNormalSpec);
+            writer.Write(padding09);
+            writer.Write(padding10);
+
+
             writer.WriteBlock(ShaderVars);
-            writer.Write(Unknown_200h);
-            writer.Write(FxcFileHash);
-            writer.Write(Unknown_20Ch);
+            writer.Write(IsDataInSync);
+            writer.Write(padding11);
+            writer.Write(padding12);
+            writer.Write(padding13);
+            writer.Write(ShaderTemplateHashName);
+            writer.Write(padding14);
+
+
             writer.WriteBlock(Drawables);
-            writer.Write(Unknown_220h);
-            writer.Write(Unknown_224h);
-            writer.Write(Unknown_228h);
-            writer.Write(Unknown_230h);
-            writer.Write(Unknown_238h);
+            writer.Write(SortType);
+            writer.Write(DrawType);
+            writer.Write(Flags);
+            writer.Write(RuntimeFlags);
+            writer.Write(padding15);
+            writer.Write(unused00);
+            writer.Write(WindBehaviour);
+            writer.Write(padding16);
         }
         public void WriteXml(StringBuilder sb, int indent, string ddsfolder)
         {
             YptXml.StringTag(sb, indent, "Name", YptXml.XmlEscape(Name?.Value ?? ""));
-            YptXml.StringTag(sb, indent, "FxcFile", YptXml.XmlEscape(FxcFile?.Value ?? ""));
-            YptXml.StringTag(sb, indent, "FxcTechnique", YptXml.XmlEscape(FxcTechnique?.Value ?? ""));
-            YptXml.ValueTag(sb, indent, "Unknown10", Unknown_10h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown100", Unknown_100h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown104", Unknown_104h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown108", Unknown_108h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown10C", YptXml.UintString(Unknown_10Ch));
-            YptXml.ValueTag(sb, indent, "Unknown118", Unknown_118h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown11C", Unknown_11Ch.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown1D0", Unknown_1D0h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown1E0", Unknown_1E0h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown1E4", Unknown_1E4h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown1E8", YptXml.UintString(Unknown_1E8h));
-            YptXml.ValueTag(sb, indent, "Unknown1EC", Unknown_1ECh.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown220", YptXml.UintString(Unknown_220h));
-            if (Spawner1 != null)
+            YptXml.StringTag(sb, indent, "ShaderFile", YptXml.XmlEscape(ShaderFile?.Value ?? ""));
+            YptXml.StringTag(sb, indent, "ShaderTechnique", YptXml.XmlEscape(ShaderTechnique?.Value ?? ""));
+            YptXml.ValueTag(sb, indent, "CullMode", CullMode.ToString());
+            YptXml.ValueTag(sb, indent, "BlendSet", BlendSet.ToString());
+            YptXml.ValueTag(sb, indent, "LightingMode", LightingMode.ToString());
+            YptXml.ValueTag(sb, indent, "DepthWrite", DepthWrite.ToString());
+            YptXml.ValueTag(sb, indent, "DepthTest", DepthTest.ToString());
+            YptXml.ValueTag(sb, indent, "AlphaBlend", AlphaBlend.ToString());
+            YptXml.ValueTag(sb, indent, "TexFrameIDMin", TexFrameIDMin.ToString());
+            YptXml.ValueTag(sb, indent, "TexFrameIDMax", TexFrameIDMax.ToString());
+            YptXml.ValueTag(sb, indent, "ShaderTemplateTechniqueID", ShaderTemplateTechniqueID.ToString());
+            YptXml.ValueTag(sb, indent, "DiffuseMode", DiffuseMode.ToString());
+            YptXml.ValueTag(sb, indent, "ProjectionMode", ProjectionMode.ToString());
+            YptXml.ValueTag(sb, indent, "IsLit", IsLit.ToString());
+            YptXml.ValueTag(sb, indent, "IsSoft", IsSoft.ToString());
+            YptXml.ValueTag(sb, indent, "IsScreenSpace", IsScreenSpace.ToString());
+            YptXml.ValueTag(sb, indent, "IsRefract", IsRefract.ToString());
+            YptXml.ValueTag(sb, indent, "IsNormalSpec", IsNormalSpec.ToString());
+            YptXml.ValueTag(sb, indent, "SortType", SortType.ToString());
+            YptXml.ValueTag(sb, indent, "DrawType", DrawType.ToString());
+            YptXml.ValueTag(sb, indent, "Flags", Flags.ToString());
+            YptXml.ValueTag(sb, indent, "RuntimeFlags", RuntimeFlags.ToString());
+            if (EffectSpawnerAtRatio != null)
             {
-                YptXml.OpenTag(sb, indent, "Spawner1");
-                Spawner1.WriteXml(sb, indent + 1);
-                YptXml.CloseTag(sb, indent, "Spawner1");
+                YptXml.OpenTag(sb, indent, "EffectSpawnerAtRatio");
+                EffectSpawnerAtRatio.WriteXml(sb, indent + 1);
+                YptXml.CloseTag(sb, indent, "EffectSpawnerAtRatio");
             }
-            if (Spawner2 != null)
+            if (EffectSpawnerOnCollision != null)
             {
-                YptXml.OpenTag(sb, indent, "Spawner2");
-                Spawner2.WriteXml(sb, indent + 1);
-                YptXml.CloseTag(sb, indent, "Spawner2");
+                YptXml.OpenTag(sb, indent, "EffectSpawnerOnCollision");
+                EffectSpawnerOnCollision.WriteXml(sb, indent + 1);
+                YptXml.CloseTag(sb, indent, "EffectSpawnerOnCollision");
             }
-            if (BehaviourList1?.data_items?.Length > 0)
+            if (AllBehaviours?.data_items?.Length > 0)
             {
-                YptXml.WriteItemArray(sb, BehaviourList1.data_items, indent, "Behaviours");
+                YptXml.WriteItemArray(sb, AllBehaviours.data_items, indent, "AllBehaviours");
             }
-            if (UnknownList1?.data_items?.Length > 0)
+            if (BiasLinks?.data_items?.Length > 0)
             {
-                YptXml.WriteItemArray(sb, UnknownList1.data_items, indent, "UnknownList1");
+                YptXml.WriteItemArray(sb, BiasLinks.data_items, indent, "BiasLinks");
             }
             if (ShaderVars?.data_items?.Length > 0)
             {
@@ -1284,29 +1002,36 @@ namespace CodeWalker.GameFiles
         {
             Name = (string_r)Xml.GetChildInnerText(node, "Name"); if (Name.Value == null) Name = null;
             NameHash = JenkHash.GenHash(Name?.Value ?? "");
-            FxcFile = (string_r)Xml.GetChildInnerText(node, "FxcFile"); if (FxcFile.Value == null) FxcFile = null;
-            FxcTechnique = (string_r)Xml.GetChildInnerText(node, "FxcTechnique"); if (FxcTechnique.Value == null) FxcTechnique = null;
-            Unknown_10h = Xml.GetChildUIntAttribute(node, "Unknown10");
-            Unknown_100h = Xml.GetChildUIntAttribute(node, "Unknown100");
-            Unknown_104h = Xml.GetChildUIntAttribute(node, "Unknown104");
-            Unknown_108h = Xml.GetChildUIntAttribute(node, "Unknown108");
-            Unknown_10Ch = Xml.GetChildUIntAttribute(node, "Unknown10C");
-            Unknown_118h = Xml.GetChildUIntAttribute(node, "Unknown118");
-            Unknown_11Ch = Xml.GetChildUIntAttribute(node, "Unknown11C");
-            Unknown_1D0h = Xml.GetChildUIntAttribute(node, "Unknown1D0");
-            Unknown_1E0h = Xml.GetChildUIntAttribute(node, "Unknown1E0");
-            Unknown_1E4h = Xml.GetChildUIntAttribute(node, "Unknown1E4");
-            Unknown_1E8h = Xml.GetChildUIntAttribute(node, "Unknown1E8");
-            Unknown_1ECh = Xml.GetChildUIntAttribute(node, "Unknown1EC");
-            Unknown_220h = Xml.GetChildUIntAttribute(node, "Unknown220");
-            Spawner1 = new ParticleEffectSpawner();
-            Spawner1.ReadXml(node.SelectSingleNode("Spawner1"));
-            Spawner2 = new ParticleEffectSpawner();
-            Spawner2.ReadXml(node.SelectSingleNode("Spawner2"));
+            ShaderFile = (string_r)Xml.GetChildInnerText(node, "ShaderFile"); if (ShaderFile.Value == null) ShaderFile = null;
+            ShaderTechnique = (string_r)Xml.GetChildInnerText(node, "ShaderTechnique"); if (ShaderTechnique.Value == null) ShaderTechnique = null;
+            CullMode = Xml.GetChildIntAttribute(node, "CullMode");
+            BlendSet = Xml.GetChildIntAttribute(node, "BlendSet");
+            LightingMode = Xml.GetChildIntAttribute(node, "LightingMode");
+            DepthWrite = (byte)Xml.GetChildUIntAttribute(node, "DepthWrite");
+            DepthTest = (byte)Xml.GetChildUIntAttribute(node, "DepthTest");
+            AlphaBlend = (byte)Xml.GetChildUIntAttribute(node, "AlphaBlend");
+            TexFrameIDMin = Xml.GetChildUIntAttribute(node, "TexFrameIDMin");
+            TexFrameIDMax = Xml.GetChildUIntAttribute(node, "TexFrameIDMax");
+            ShaderTemplateTechniqueID = Xml.GetChildUIntAttribute(node, "ShaderTemplateTechniqueID");
+            DiffuseMode = Xml.GetChildUIntAttribute(node, "DiffuseMode");
+            ProjectionMode = Xml.GetChildUIntAttribute(node, "ProjectionMode");
+            IsLit = (byte)Xml.GetChildUIntAttribute(node, "IsLit");
+            IsSoft = (byte)Xml.GetChildUIntAttribute(node, "IsSoft");
+            IsScreenSpace = (byte)Xml.GetChildUIntAttribute(node, "IsScreenSpace");
+            IsRefract = (byte)Xml.GetChildUIntAttribute(node, "IsRefract");
+            IsNormalSpec = (byte)Xml.GetChildUIntAttribute(node, "IsNormalSpec");
+            SortType = (byte)Xml.GetChildUIntAttribute(node, "SortType");
+            DrawType = (byte)Xml.GetChildUIntAttribute(node, "DrawType");
+            Flags = (byte)Xml.GetChildUIntAttribute(node, "Flags");
+            RuntimeFlags = (byte)Xml.GetChildUIntAttribute(node, "RuntimeFlags");
+            EffectSpawnerAtRatio = new ParticleEffectSpawner();
+            EffectSpawnerAtRatio.ReadXml(node.SelectSingleNode("EffectSpawnerAtRatio"));
+            EffectSpawnerOnCollision = new ParticleEffectSpawner();
+            EffectSpawnerOnCollision.ReadXml(node.SelectSingleNode("EffectSpawnerOnCollision"));
 
 
 
-            var bnode = node.SelectSingleNode("Behaviours");
+            var bnode = node.SelectSingleNode("AllBehaviours");
             var blist = new List<ParticleBehaviour>();
             if (bnode != null)
             {
@@ -1325,8 +1050,8 @@ namespace CodeWalker.GameFiles
 
 
 
-            UnknownList1 = new ResourceSimpleList64<ParticleRuleUnknownItem>();
-            UnknownList1.data_items = XmlMeta.ReadItemArrayNullable<ParticleRuleUnknownItem>(node, "UnknownList1");
+            BiasLinks = new ResourceSimpleList64<ParticleRuleBiasLink>();
+            BiasLinks.data_items = XmlMeta.ReadItemArrayNullable<ParticleRuleBiasLink>(node, "BiasLinks");
 
 
             ResourcePointerList64<ParticleShaderVar> readShaderVars(string name)
@@ -1416,16 +1141,16 @@ namespace CodeWalker.GameFiles
                 }
             }
 
-            BehaviourList1 = new ResourcePointerList64<ParticleBehaviour>();
-            BehaviourList1.data_items = blist.ToArray();
-            BehaviourList2 = new ResourcePointerList64<ParticleBehaviour>();
-            BehaviourList2.data_items = blist2.ToArray();
-            BehaviourList3 = new ResourcePointerList64<ParticleBehaviour>();
-            BehaviourList3.data_items = blist3.ToArray();
-            BehaviourList4 = new ResourcePointerList64<ParticleBehaviour>();
-            BehaviourList4.data_items = blist4.ToArray();
-            BehaviourList5 = new ResourcePointerList64<ParticleBehaviour>();
-            BehaviourList5.data_items = blist5.ToArray();
+            AllBehaviours = new ResourcePointerList64<ParticleBehaviour>();
+            AllBehaviours.data_items = blist.ToArray();
+            InitBehaviours = new ResourcePointerList64<ParticleBehaviour>();
+            InitBehaviours.data_items = blist2.ToArray();
+            UpdateBehaviours = new ResourcePointerList64<ParticleBehaviour>();
+            UpdateBehaviours.data_items = blist3.ToArray();
+            UpdateFinalizeBehaviours = new ResourcePointerList64<ParticleBehaviour>();
+            UpdateFinalizeBehaviours.data_items = blist4.ToArray();
+            DrawBehaviours = new ResourcePointerList64<ParticleBehaviour>();
+            DrawBehaviours.data_items = blist5.ToArray();
 
 
         }
@@ -1435,22 +1160,22 @@ namespace CodeWalker.GameFiles
         {
             var list = new List<IResourceBlock>();
             if (Name != null) list.Add(Name);
-            if (FxcFile != null) list.Add(FxcFile);
-            if (FxcTechnique != null) list.Add(FxcTechnique);
+            if (ShaderFile != null) list.Add(ShaderFile);
+            if (ShaderTechnique != null) list.Add(ShaderTechnique);
             return list.ToArray();
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(88, Spawner1),
-                new Tuple<long, IResourceBlock>(96, Spawner2),
-                new Tuple<long, IResourceBlock>(0x128, BehaviourList1),
-                new Tuple<long, IResourceBlock>(0x138, BehaviourList2),
-                new Tuple<long, IResourceBlock>(0x148, BehaviourList3),
-                new Tuple<long, IResourceBlock>(0x158, BehaviourList4),
-                new Tuple<long, IResourceBlock>(0x168, BehaviourList5),
-                new Tuple<long, IResourceBlock>(0x188, UnknownList1),
+                new Tuple<long, IResourceBlock>(88, EffectSpawnerAtRatio),
+                new Tuple<long, IResourceBlock>(96, EffectSpawnerOnCollision),
+                new Tuple<long, IResourceBlock>(0x128, AllBehaviours),
+                new Tuple<long, IResourceBlock>(0x138, InitBehaviours),
+                new Tuple<long, IResourceBlock>(0x148, UpdateBehaviours),
+                new Tuple<long, IResourceBlock>(0x158, UpdateFinalizeBehaviours),
+                new Tuple<long, IResourceBlock>(0x168, DrawBehaviours),
+                new Tuple<long, IResourceBlock>(0x188, BiasLinks),
                 new Tuple<long, IResourceBlock>(0x1F0, ShaderVars),
                 new Tuple<long, IResourceBlock>(0x210, Drawables)
             };
@@ -1463,7 +1188,7 @@ namespace CodeWalker.GameFiles
     }
 
 
-    [TC(typeof(EXP))] public class ParticleRuleUnknownItem : ResourceSystemBlock, IMetaXmlItem
+    [TC(typeof(EXP))] public class ParticleRuleBiasLink : ResourceSystemBlock, IMetaXmlItem
     {
         public override long BlockLength => 0x58;
 
@@ -4741,7 +4466,8 @@ namespace CodeWalker.GameFiles
 
     }
 
-    [TC(typeof(EXP))] public class ParticleBehaviourAge : ParticleBehaviour
+    [TC(typeof(EXP))] 
+    public class ParticleBehaviourAge : ParticleBehaviour
     {
         // ptxu_Age
         public override long BlockLength => 0x30;
@@ -4859,7 +4585,8 @@ namespace CodeWalker.GameFiles
         }
     }
 
-    [TC(typeof(EXP))] public class ParticleBehaviourVelocity : ParticleBehaviour
+    [TC(typeof(EXP))] 
+    public class ParticleBehaviourVelocity : ParticleBehaviour
     {
         // ptxu_Velocity
         public override long BlockLength => 0x30;
@@ -5017,7 +4744,8 @@ namespace CodeWalker.GameFiles
         }
     }
 
-    [TC(typeof(EXP))] public class ParticleBehaviourSize : ParticleBehaviour
+    [TC(typeof(EXP))] 
+    public class ParticleBehaviourSize : ParticleBehaviour
     {
         // ptxu_Size
         public override long BlockLength => 0x280;
@@ -5306,7 +5034,8 @@ namespace CodeWalker.GameFiles
         }
     }
 
-    [TC(typeof(EXP))] public class ParticleBehaviourCollision : ParticleBehaviour
+    [TC(typeof(EXP))] 
+    public class ParticleBehaviourCollision : ParticleBehaviour
     {
         // ptxu_Collision
         public override long BlockLength => 0x170;
@@ -5622,7 +5351,8 @@ namespace CodeWalker.GameFiles
         }
     }
 
-    [TC(typeof(EXP))] public class ParticleBehaviourSprite : ParticleBehaviour
+    [TC(typeof(EXP))] 
+    public class ParticleBehaviourSprite : ParticleBehaviour
     {
         // ptxd_Sprite
         public override long BlockLength => 0x70;
