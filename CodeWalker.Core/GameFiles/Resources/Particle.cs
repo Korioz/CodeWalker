@@ -1197,95 +1197,62 @@ namespace CodeWalker.GameFiles
 
         // structure data
         public PsoChar32 Name { get; set; }
-        public ulong Unknown_20h; // 0x0000000000000000
-        public ulong Unknown_28h; // 0x0000000000000000
-        public ulong Unknown_30h; // 0x0000000000000000
-        public ulong Unknown_38h; // 0x0000000000000000
-        public ResourceSimpleList64_s<MetaHash> Unknown_40h { get; set; }
-        public uint Unknown_50h { get; set; }
-        public uint Unknown_54h; // 0x00000000
+        public ulong padding00 { get; set; }
+        public ulong padding01 { get; set; }
+        public ulong padding02 { get; set; }
+        public ulong padding03 { get; set; }
+        public ResourceSimpleList64_s<MetaHash> KeyframePropIDs { get; set; }
+        public byte RandomIndex { get; set; }
+        public byte padding05 { get; set; }
+        public short padding06 { get; set; }
+        public uint padding07 { get; set; }
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
             Name = reader.ReadStruct<PsoChar32>();
-            Unknown_20h = reader.ReadUInt64();
-            Unknown_28h = reader.ReadUInt64();
-            Unknown_30h = reader.ReadUInt64();
-            Unknown_38h = reader.ReadUInt64();
-            Unknown_40h = reader.ReadBlock<ResourceSimpleList64_s<MetaHash>>();
-            Unknown_50h = reader.ReadUInt32();
-            Unknown_54h = reader.ReadUInt32();
-
-            //if (Name.ToString() != "Bias Link Set_00")
-            //{ }//no hit
-            //if (Unknown_20h != 0)
-            //{ }//no hit
-            //if (Unknown_28h != 0)
-            //{ }//no hit
-            //if (Unknown_30h != 0)
-            //{ }//no hit
-            //if (Unknown_38h != 0)
-            //{ }//no hit
-            switch (Unknown_50h) // ..index?
-            {
-                case 0x000000f6:
-                case 0x000000f7:
-                case 0x000000d5:
-                case 0x000000f0:
-                case 0x000000f1:
-                case 0x000000f2:
-                case 0x000000f3:
-                case 0x000000f4:
-                case 0x000000ed:
-                case 0x000000a6:
-                case 0x000000a7:
-                case 0x000000e7:
-                case 0x00000081:
-                case 0x00000082:
-                case 0x00000083:
-                case 0x000000e5:
-                case 0x000000e6:
-                case 0x000000e8:
-                case 0x000000e9:
-                case 0x000000ea:
-                    break;
-                default:
-                    break;//more
-            }
-            //if (Unknown_54h != 0)
-            //{ }//no hit
+            padding00 = reader.ReadUInt64();
+            padding01 = reader.ReadUInt64();
+            padding02 = reader.ReadUInt64();
+            padding03 = reader.ReadUInt64();
+            KeyframePropIDs = reader.ReadBlock<ResourceSimpleList64_s<MetaHash>>();
+            RandomIndex = reader.ReadByte();
+            padding05 = reader.ReadByte();
+            padding06 = reader.ReadInt16();
+            padding07 = reader.ReadUInt32();
         }
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
             writer.WriteStruct(Name);
-            writer.Write(Unknown_20h);
-            writer.Write(Unknown_28h);
-            writer.Write(Unknown_30h);
-            writer.Write(Unknown_38h);
-            writer.WriteBlock(Unknown_40h);
-            writer.Write(Unknown_50h);
-            writer.Write(Unknown_54h);
+            writer.Write(padding00);
+            writer.Write(padding01);
+            writer.Write(padding02);
+            writer.Write(padding03);
+            writer.WriteBlock(KeyframePropIDs);
+            writer.Write(RandomIndex);
+            writer.Write(padding05);
+            writer.Write(padding06);
+            writer.Write(padding07);
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
             YptXml.StringTag(sb, indent, "Name", YptXml.XmlEscape(Name.ToString()));
-            YptXml.ValueTag(sb, indent, "Unknown50", Unknown_50h.ToString());
-            YptXml.WriteHashItemArray(sb, Unknown_40h?.data_items, indent, "Unknown40");
+            YptXml.ValueTag(sb, indent, "RandomIndex", RandomIndex.ToString());
+            YptXml.WriteHashItemArray(sb, KeyframePropIDs?.data_items, indent, "KeyframePropIDs");
         }
         public void ReadXml(XmlNode node)
         {
             Name = new PsoChar32(Xml.GetChildInnerText(node, "Name"));
-            Unknown_50h = Xml.GetChildUIntAttribute(node, "Unknown50");
-            Unknown_40h = new ResourceSimpleList64_s<MetaHash>();
-            Unknown_40h.data_items = XmlMeta.ReadHashItemArray(node, "Unknown40");
+            RandomIndex = (byte)Xml.GetChildUIntAttribute(node, "RandomIndex");
+            KeyframePropIDs = new ResourceSimpleList64_s<MetaHash>();
+            KeyframePropIDs.data_items = XmlMeta.ReadHashItemArray(node, "KeyframePropIDs");
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x40, Unknown_40h)
+                new Tuple<long, IResourceBlock>(0x40, KeyframePropIDs)
             };
         }
 
@@ -1306,27 +1273,34 @@ namespace CodeWalker.GameFiles
 
         // structure data
         public uint VFT { get; set; }
-        public uint Unknown_4h = 1; // 0x00000001
-        public ulong Unknown_8h; // 0x0000000000000000
-        public ulong Unknown_10h; // 0x0000000000000000
-        public float Unknown_18h { get; set; } // 0, 0.1f, 1.0f
-        public float Unknown_1Ch { get; set; } // 0, 0.8f, 1.0f, 1.1f, ...
-        public uint Unknown_20h { get; set; } // eg. 0xff736626 - colour?
-        public float Unknown_24h { get; set; } // 1.0f, 7.0f, 100.0f, ...
-        public uint Unknown_28h { get; set; }  // 0, 4, 8, 9, 10, 11, 12, 14     //index/id
-        public uint Unknown_2Ch; // 0x00000000
-        public ulong Unknown_30h; // 0x0000000000000000
-        public float Unknown_38h { get; set; } // 0, 0.1f, 0.3f, 1.0f
-        public float Unknown_3Ch { get; set; } // 0, 1.0f, 1.1f, 1.2f, 1.4f, 1.5f
-        public uint Unknown_40h { get; set; } // eg. 0xffffffff, 0xffffeca8  - colour?
-        public float Unknown_44h { get; set; } // 0, 0.4f, 1.0f, 100.0f, ....
-        public uint Unknown_48h { get; set; } // 0, 4, 8, 9, 10, 11, 12, 14     //index/id
-        public uint Unknown_4Ch; // 0x00000000
-        public ulong Unknown_50h; // 0x0000000000000000
+        public uint padding00 { get; set; }
+        public ulong padding01 { get; set; }
+        public ulong padding02 { get; set; }
+        public float DurationScalarMin { get; set; }
+        public float PlaybackRateScalarMin { get; set; }
+        public uint ColourTintScalarMin { get; set; }
+        public float ZoomScalarMin { get; set; }
+        public uint FlagsMin { get; set; }
+        public uint padding03 { get; set; }
+        public ulong padding04 { get; set; }
+
+
+        public float DurationScalarMax { get; set; }
+        public float PlaybackRateScalarMax { get; set; }
+        public uint ColourTintScalarMax { get; set; }
+        public float ZoomScalarMax { get; set; }
+        public uint FlagsMax { get; set; }
+        public uint padding05 { get; set; }
+        public ulong padding06 { get; set; }
+
+
         public ulong EffectRulePointer { get; set; }
         public ulong EffectRuleNamePointer { get; set; }
-        public float Unknown_68h { get; set; } // 0, 0.5f, 1.0f
-        public uint Unknown_6Ch { get; set; } // eg. 0x01010100
+        public float TriggerInfo { get; set; }
+        public byte InheritsPointLife { get; set; }
+        public byte TracksPointPos { get; set; }
+        public byte TracksPoinDir { get; set; }
+        public byte TracksPointNegDir { get; set; }
 
         // reference data
         public ParticleEffectRule EffectRule { get; set; }
@@ -1336,201 +1310,34 @@ namespace CodeWalker.GameFiles
         {
             // read structure data
             VFT = reader.ReadUInt32();
-            Unknown_4h = reader.ReadUInt32();
-            Unknown_8h = reader.ReadUInt64();
-            Unknown_10h = reader.ReadUInt64();
-            Unknown_18h = reader.ReadSingle();
-            Unknown_1Ch = reader.ReadSingle();
-            Unknown_20h = reader.ReadUInt32();
-            Unknown_24h = reader.ReadSingle();
-            Unknown_28h = reader.ReadUInt32();
-            Unknown_2Ch = reader.ReadUInt32();
-            Unknown_30h = reader.ReadUInt64();
-            Unknown_38h = reader.ReadSingle();
-            Unknown_3Ch = reader.ReadSingle();
-            Unknown_40h = reader.ReadUInt32();
-            Unknown_44h = reader.ReadSingle();
-            Unknown_48h = reader.ReadUInt32();
-            Unknown_4Ch = reader.ReadUInt32();
-            Unknown_50h = reader.ReadUInt64();
+            padding00 = reader.ReadUInt32();
+            padding01 = reader.ReadUInt64();
+            padding02 = reader.ReadUInt64();
+            DurationScalarMin = reader.ReadSingle();
+            PlaybackRateScalarMin = reader.ReadSingle();
+            ColourTintScalarMin = reader.ReadUInt32();
+            ZoomScalarMin = reader.ReadSingle();
+            FlagsMin = reader.ReadUInt32();
+            padding03 = reader.ReadUInt32();
+            padding04 = reader.ReadUInt64();
+            DurationScalarMax = reader.ReadSingle();
+            PlaybackRateScalarMax = reader.ReadSingle();
+            ColourTintScalarMax = reader.ReadUInt32();
+            ZoomScalarMax = reader.ReadSingle();
+            FlagsMax = reader.ReadUInt32();
+            padding05 = reader.ReadUInt32();
+            padding06 = reader.ReadUInt64();
             EffectRulePointer = reader.ReadUInt64();
             EffectRuleNamePointer = reader.ReadUInt64();
-            Unknown_68h = reader.ReadSingle();
-            Unknown_6Ch = reader.ReadUInt32();
+            TriggerInfo = reader.ReadSingle();
+            InheritsPointLife = reader.ReadByte();
+            TracksPointPos = reader.ReadByte();
+            TracksPoinDir = reader.ReadByte();
+            TracksPointNegDir = reader.ReadByte();
 
             // read reference data
             EffectRule = reader.ReadBlockAt<ParticleEffectRule>(EffectRulePointer);
             EffectRuleName = reader.ReadBlockAt<string_r>(EffectRuleNamePointer);
-
-            //if (EffectRuleName?.Value != (EffectRule?.Name?.Value ?? ""))
-            //{ }//no hit
-
-            //if (Unknown_4h != 1)
-            //{ }
-            //if (Unknown_8h != 0)
-            //{ }//no hit
-            //if (Unknown_10h != 0)
-            //{ }//no hit
-            //switch (Unknown_18h)
-            //{
-            //    case 0:
-            //    case 1.0f:
-            //    case 0.1f:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            switch (Unknown_1Ch)
-            {
-                case 0:
-                case 1.0f:
-                case 1.1f:
-                case 0.8f:
-                case 0.9f:
-                case 1.5f:
-                    break;
-                default:
-                    break;//more
-            }
-            //switch (Unknown_20h)
-            //{
-            //    case 0:
-            //    case 0xffffffff:
-            //    case 0x00ffffff:
-            //    case 0xff736626:
-            //    case 0xff404040:
-            //    case 0xfffaf7c8:
-            //    case 0xfffc42f9:
-            //    case 0xff4f3535:
-            //    case 0xff321a1a:
-            //    case 0xffffd591:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            switch (Unknown_24h)
-            {
-                case 0:
-                case 100.0f:
-                case 0.6f:
-                case 1.0f:
-                case 0.3f:
-                case 1.2f:
-                case 7.0f:
-                    break;
-                default:
-                    break;//more
-            }
-            //switch (Unknown_28h)
-            //{
-            //    case 0:
-            //    case 8:
-            //    case 11:
-            //    case 9:
-            //    case 12:
-            //    case 10:
-            //    case 14:
-            //    case 4:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_2Ch != 0)
-            //{ }//no hit
-            //if (Unknown_30h != 0)
-            //{ }//no hit
-            //switch (Unknown_38h)
-            //{
-            //    case 0:
-            //    case 1.0f:
-            //    case 0.1f:
-            //    case 0.3f:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_3Ch)
-            //{
-            //    case 0:
-            //    case 1.0f:
-            //    case 1.1f:
-            //    case 1.2f:
-            //    case 1.4f:
-            //    case 1.5f:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_40h)
-            //{
-            //    case 0:
-            //    case 0xffffffff:
-            //    case 0xffffeca8:
-            //    case 0xff8c7d2e:
-            //    case 0xffd1d1d1:
-            //    case 0xfff0dfb6:
-            //    case 0xffcc16b4:
-            //    case 0xff4c3434:
-            //    case 0xff24341a:
-            //    case 0xfffff1bd:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            switch (Unknown_44h)
-            {
-                case 0:
-                case 100.0f:
-                case 0.8f:
-                case 1.0f:
-                case 0.4f:
-                case 1.8f:
-                    break;
-                default:
-                    break;//more
-            }
-            //switch (Unknown_48h)
-            //{
-            //    case 0:
-            //    case 8:
-            //    case 11:
-            //    case 9:
-            //    case 12:
-            //    case 10:
-            //    case 14:
-            //    case 4:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_4Ch != 0)
-            //{ }//no hit
-            //if (Unknown_50h != 0)
-            //{ }//no hit
-            //switch (Unknown_68h)
-            //{
-            //    case 0:
-            //    case 1.0f:
-            //    case 0.5f:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_6Ch)
-            //{
-            //    case 0:
-            //    case 1:
-            //    case 0x00010000:
-            //    case 0x00000100:
-            //    case 0x00010101:
-            //    case 0x01010100:
-            //    case 0x00010100:
-            //    case 0x01010101:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-
         }
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
@@ -1540,64 +1347,69 @@ namespace CodeWalker.GameFiles
 
             // write structure data
             writer.Write(VFT);
-            writer.Write(Unknown_4h);
-            writer.Write(Unknown_8h);
-            writer.Write(Unknown_10h);
-            writer.Write(Unknown_18h);
-            writer.Write(Unknown_1Ch);
-            writer.Write(Unknown_20h);
-            writer.Write(Unknown_24h);
-            writer.Write(Unknown_28h);
-            writer.Write(Unknown_2Ch);
-            writer.Write(Unknown_30h);
-            writer.Write(Unknown_38h);
-            writer.Write(Unknown_3Ch);
-            writer.Write(Unknown_40h);
-            writer.Write(Unknown_44h);
-            writer.Write(Unknown_48h);
-            writer.Write(Unknown_4Ch);
-            writer.Write(Unknown_50h);
+            writer.Write(padding00);
+            writer.Write(padding01);
+            writer.Write(padding02);
+            writer.Write(DurationScalarMin);
+            writer.Write(PlaybackRateScalarMin);
+            writer.Write(ColourTintScalarMin);
+            writer.Write(ZoomScalarMin);
+            writer.Write(FlagsMin);
+            writer.Write(padding03);
+            writer.Write(padding04);
+            writer.Write(DurationScalarMax);
+            writer.Write(PlaybackRateScalarMax);
+            writer.Write(ColourTintScalarMax);
+            writer.Write(ZoomScalarMax);
+            writer.Write(FlagsMax);
+            writer.Write(padding05);
+            writer.Write(padding06);
             writer.Write(EffectRulePointer);
             writer.Write(EffectRuleNamePointer);
-            writer.Write(Unknown_68h);
-            writer.Write(Unknown_6Ch);
+            writer.Write(TriggerInfo);
+            writer.Write(InheritsPointLife);
+            writer.Write(TracksPointPos);
+            writer.Write(TracksPoinDir);
+            writer.Write(TracksPointNegDir);
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
-            //YptXml.StringTag(sb, indent, "EffectRuleName", YptXml.XmlEscape(EffectRuleName?.Value ?? ""));
             YptXml.StringTag(sb, indent, "EffectRule", EffectRule?.Name?.Value ?? "");
-            YptXml.ValueTag(sb, indent, "Unknown18", FloatUtil.ToString(Unknown_18h));
-            YptXml.ValueTag(sb, indent, "Unknown1C", FloatUtil.ToString(Unknown_1Ch));
-            YptXml.ValueTag(sb, indent, "Unknown20", YptXml.UintString(Unknown_20h));
-            YptXml.ValueTag(sb, indent, "Unknown24", FloatUtil.ToString(Unknown_24h));
-            YptXml.ValueTag(sb, indent, "Unknown28", Unknown_28h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown38", FloatUtil.ToString(Unknown_38h));
-            YptXml.ValueTag(sb, indent, "Unknown3C", FloatUtil.ToString(Unknown_3Ch));
-            YptXml.ValueTag(sb, indent, "Unknown40", YptXml.UintString(Unknown_40h));
-            YptXml.ValueTag(sb, indent, "Unknown44", FloatUtil.ToString(Unknown_44h));
-            YptXml.ValueTag(sb, indent, "Unknown48", Unknown_48h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown68", FloatUtil.ToString(Unknown_68h));
-            YptXml.ValueTag(sb, indent, "Unknown6C", YptXml.UintString(Unknown_6Ch));
+            YptXml.ValueTag(sb, indent, "DurationScalarMin", FloatUtil.ToString(DurationScalarMin));
+            YptXml.ValueTag(sb, indent, "PlaybackRateScalarMin", FloatUtil.ToString(PlaybackRateScalarMin));
+            YptXml.ValueTag(sb, indent, "ColourTintScalarMin", YptXml.UintString(ColourTintScalarMin));
+            YptXml.ValueTag(sb, indent, "ZoomScalarMin", FloatUtil.ToString(ZoomScalarMin));
+            YptXml.ValueTag(sb, indent, "FlagsMin", FlagsMin.ToString());
+            YptXml.ValueTag(sb, indent, "DurationScalarMax", FloatUtil.ToString(DurationScalarMax));
+            YptXml.ValueTag(sb, indent, "PlaybackRateScalarMax", FloatUtil.ToString(PlaybackRateScalarMax));
+            YptXml.ValueTag(sb, indent, "ColourTintScalarMax", YptXml.UintString(ColourTintScalarMax));
+            YptXml.ValueTag(sb, indent, "ZoomScalarMax", FloatUtil.ToString(ZoomScalarMax));
+            YptXml.ValueTag(sb, indent, "FlagsMax", FlagsMax.ToString());
+            YptXml.ValueTag(sb, indent, "TriggerInfo", FloatUtil.ToString(TriggerInfo));
+            YptXml.ValueTag(sb, indent, "InheritsPointLife", InheritsPointLife.ToString());
+            YptXml.ValueTag(sb, indent, "TracksPointPos", TracksPointPos.ToString());
+            YptXml.ValueTag(sb, indent, "TracksPoinDir", TracksPoinDir.ToString());
+            YptXml.ValueTag(sb, indent, "TracksPointNegDir", TracksPointNegDir.ToString());
         }
         public void ReadXml(XmlNode node)
         {
-            //EffectRuleName = (string_r)Xml.GetChildInnerText(node, "EffectRuleName"); if (EffectRuleName.Value == null) EffectRuleName = null;
             var ername = Xml.GetChildInnerText(node, "EffectRule");
             EffectRuleName = (string_r)(ername ?? "");
-            Unknown_18h = Xml.GetChildFloatAttribute(node, "Unknown18");
-            Unknown_1Ch = Xml.GetChildFloatAttribute(node, "Unknown1C");
-            Unknown_20h = Xml.GetChildUIntAttribute(node, "Unknown20");
-            Unknown_24h = Xml.GetChildFloatAttribute(node, "Unknown24");
-            Unknown_28h = Xml.GetChildUIntAttribute(node, "Unknown28");
-            Unknown_38h = Xml.GetChildFloatAttribute(node, "Unknown38");
-            Unknown_3Ch = Xml.GetChildFloatAttribute(node, "Unknown3C");
-            Unknown_40h = Xml.GetChildUIntAttribute(node, "Unknown40");
-            Unknown_44h = Xml.GetChildFloatAttribute(node, "Unknown44");
-            Unknown_48h = Xml.GetChildUIntAttribute(node, "Unknown48");
-            Unknown_68h = Xml.GetChildFloatAttribute(node, "Unknown68");
-            Unknown_6Ch = Xml.GetChildUIntAttribute(node, "Unknown6C");
-            if (!string.IsNullOrEmpty(ername))
-            { }
+            DurationScalarMin = Xml.GetChildFloatAttribute(node, "DurationScalarMin");
+            PlaybackRateScalarMin = Xml.GetChildFloatAttribute(node, "PlaybackRateScalarMin");
+            ColourTintScalarMin = Xml.GetChildUIntAttribute(node, "ColourTintScalarMin");
+            ZoomScalarMin = Xml.GetChildFloatAttribute(node, "ZoomScalarMin");
+            FlagsMin = Xml.GetChildUIntAttribute(node, "FlagsMin");
+            DurationScalarMax = Xml.GetChildFloatAttribute(node, "DurationScalarMax");
+            PlaybackRateScalarMax = Xml.GetChildFloatAttribute(node, "PlaybackRateScalarMax");
+            ColourTintScalarMax = Xml.GetChildUIntAttribute(node, "ColourTintScalarMax");
+            ZoomScalarMax = Xml.GetChildFloatAttribute(node, "ZoomScalarMax");
+            FlagsMax = Xml.GetChildUIntAttribute(node, "FlagsMax");
+            TriggerInfo = Xml.GetChildFloatAttribute(node, "TriggerInfo");
+            InheritsPointLife = (byte)Xml.GetChildUIntAttribute(node, "InheritsPointLife");
+            TracksPointPos = (byte)Xml.GetChildUIntAttribute(node, "TracksPointPos");
+            InheritsPointLife = (byte)Xml.GetChildUIntAttribute(node, "TracksPoinDir");
+            TracksPointNegDir = (byte)Xml.GetChildUIntAttribute(node, "TracksPointNegDir");
         }
 
 
@@ -1771,30 +1583,36 @@ namespace CodeWalker.GameFiles
 
         // structure data
         public uint VFT { get; set; }
-        public uint Unknown_4h = 1; // 0x00000001
-        public ulong Unknown_8h; // 0x0000000000000000
-        public ulong Unknown_10h = 1; // 0x0000000000000001
-        public float Unknown_18h { get; set; } = 4.2f;
-        public uint Unknown_1Ch; // 0x00000000
+        public uint Unknown_4h { get; set; }
+        public ulong Unknown_8h { get; set; }
+        public ulong Unknown_10h { get; set; }
+
+        // ptxEffectRule
+        public float FileVersion { get; set; }
+        public uint padding0 { get; set; }
         public ulong NamePointer { get; set; }
-        public ulong Unknown_28h { get; set; } = 0x0000000050000000; // 0x50000000 -> ".?AVptxFxList@rage@@" pointer to itself
-        public uint VFT2 { get; set; } = 0x4060e3e8; // 0x4060e3e8, 0x40610408
-        public uint Unknown_34h = 1; // 0x00000001
+        public ulong EffectList { get; set; } = 0x0000000050000000;
+
+        // pfxTimeline
+        public uint VFT2 { get; set; } = 0x4060e3e8;
+        public uint unused00 { get; set; }
         public ulong EventEmittersPointer { get; set; }
         public ushort EventEmittersCount { get; set; }
         public ushort EventEmittersCapacity { get; set; } = 32; //always 32
-        public uint Unknown_44h; // 0x00000000
-        public ulong UnknownData1Pointer { get; set; }
-        public int NumLoops { get; set; } // 0, 0xffffffff
+        public uint Unused01 { get; set; }
+
+
+        public ulong EvolutionListPointer { get; set; }
+        public int NumLoops { get; set; }
         public byte SortEventsByDistance { get; set; }
         public byte DrawListID { get; set; }
         public byte IsShortLived { get; set; }
         public byte HasNoShadows { get; set; }
-        public ulong padding00;
+        public ulong padding00 { get; set; }
         public Vector3 VRandomOffsetPos { get; set; }
-        public uint padding01 { get; set; } = 0x7f800001;
+        public uint padding01 { get; set; }
         public float PreUpdateTime { get; set; }
-        public float PreUpdateTimeInterval { get; set; } // 0, 0.1f, 0.25f, 1.0f
+        public float PreUpdateTimeInterval { get; set; }
         public float DurationMin { get; set; }
         public float DurationMax { get; set; }
         public float PlaybackRateScalarMin { get; set; }
@@ -1820,30 +1638,30 @@ namespace CodeWalker.GameFiles
         public byte ShareEntityCollisions { get; set; }
         public byte OnlyUseBVHCollisions { get; set; }
         public byte GameFlags { get; set; }
-        public ParticleKeyframeProp KeyframeProp0 { get; set; }
-        public ParticleKeyframeProp KeyframeProp1 { get; set; }
-        public ParticleKeyframeProp KeyframeProp2 { get; set; }
-        public ParticleKeyframeProp KeyframeProp3 { get; set; }
-        public ParticleKeyframeProp KeyframeProp4 { get; set; }
-        public ulong KeyframePropsPointer { get; set; } //pointer to a list, which is pointing back to above items
+        public ParticleKeyframeProp ColourTintMinKFP { get; set; }
+        public ParticleKeyframeProp ColourTintMaxKFP { get; set; }
+        public ParticleKeyframeProp ZoomScalarKFP { get; set; }
+        public ParticleKeyframeProp DataSphereKFP { get; set; }
+        public ParticleKeyframeProp DataCapsuleKFP { get; set; }
+        public ulong KeyframePropsPointer { get; set; } // KeyframePropList
         public ushort KeyframePropsCount { get; set; } = 5; //always 5
         public ushort KeyframePropsCapacity { get; set; } = 16; //always 16
-        public uint Unknown_39Ch; // 0x00000000
+        public uint unused02 { get; set; }
         public byte ColourTintMaxEnable { get; set; }
         public byte UseDataVolume { get; set; }
         public byte DataVolumeType { get; set; }
         public byte padding03 { get; set; }
-        public uint Unknown_3A4h; // 0x00000000
+        public uint NumActiveInstances { get; set; }
         public float ZoomLevel { get; set; }
-        public uint Unknown_3ACh { get; set; } // 0x00000000
-        public ulong Unknown_3B0h { get; set; } // 0x0000000000000000
-        public ulong Unknown_3B8h { get; set; } // 0x0000000000000000
+        public uint padding04 { get; set; }
+        public ulong padding05 { get; set; }
+        public ulong padding06 { get; set; }
 
         // reference data
         public string_r Name { get; set; }
         public MetaHash NameHash { get; set; }
         public ResourcePointerArray64<ParticleEventEmitter> EventEmitters { get; set; }
-        public ParticleEvolutionList UnknownData { get; set; }
+        public ParticleEvolutionList EvolutionList { get; set; }
         public ResourcePointerArray64<ParticleKeyframeProp> KeyframeProps { get; set; } // these just point to the 5x embedded KeyframeProps, padded to 16 items
 
 
@@ -1856,17 +1674,17 @@ namespace CodeWalker.GameFiles
             Unknown_4h = reader.ReadUInt32();
             Unknown_8h = reader.ReadUInt64();
             Unknown_10h = reader.ReadUInt64();
-            Unknown_18h = reader.ReadSingle();
-            Unknown_1Ch = reader.ReadUInt32();
+            FileVersion = reader.ReadSingle();
+            padding0 = reader.ReadUInt32();
             NamePointer = reader.ReadUInt64();
-            Unknown_28h = reader.ReadUInt64();
+            EffectList = reader.ReadUInt64();
             VFT2 = reader.ReadUInt32();
-            Unknown_34h = reader.ReadUInt32();
+            unused00 = reader.ReadUInt32();
             EventEmittersPointer = reader.ReadUInt64();
             EventEmittersCount = reader.ReadUInt16();
             EventEmittersCapacity = reader.ReadUInt16();
-            Unknown_44h = reader.ReadUInt32();
-            UnknownData1Pointer = reader.ReadUInt64();
+            Unused01 = reader.ReadUInt32();
+            EvolutionListPointer = reader.ReadUInt64();
             NumLoops = reader.ReadInt32();
             SortEventsByDistance = reader.ReadByte();
             DrawListID = reader.ReadByte();
@@ -1902,29 +1720,29 @@ namespace CodeWalker.GameFiles
             ShareEntityCollisions = reader.ReadByte();
             OnlyUseBVHCollisions = reader.ReadByte();
             GameFlags = reader.ReadByte();
-            KeyframeProp0 = reader.ReadBlock<ParticleKeyframeProp>();
-            KeyframeProp1 = reader.ReadBlock<ParticleKeyframeProp>();
-            KeyframeProp2 = reader.ReadBlock<ParticleKeyframeProp>();
-            KeyframeProp3 = reader.ReadBlock<ParticleKeyframeProp>();
-            KeyframeProp4 = reader.ReadBlock<ParticleKeyframeProp>();
+            ColourTintMinKFP = reader.ReadBlock<ParticleKeyframeProp>();
+            ColourTintMaxKFP = reader.ReadBlock<ParticleKeyframeProp>();
+            ZoomScalarKFP = reader.ReadBlock<ParticleKeyframeProp>();
+            DataSphereKFP = reader.ReadBlock<ParticleKeyframeProp>();
+            DataCapsuleKFP = reader.ReadBlock<ParticleKeyframeProp>();
             KeyframePropsPointer = reader.ReadUInt64();
             KeyframePropsCount = reader.ReadUInt16();
             KeyframePropsCapacity = reader.ReadUInt16();
-            Unknown_39Ch = reader.ReadUInt32();
+            unused02 = reader.ReadUInt32();
             ColourTintMaxEnable = reader.ReadByte();
             UseDataVolume = reader.ReadByte();
             DataVolumeType = reader.ReadByte();
             padding03 = reader.ReadByte();
-            Unknown_3A4h = reader.ReadUInt32();
+            NumActiveInstances = reader.ReadUInt32();
             ZoomLevel = reader.ReadSingle();
-            Unknown_3ACh = reader.ReadUInt32();
-            Unknown_3B0h = reader.ReadUInt64();
-            Unknown_3B8h = reader.ReadUInt64();
+            padding04 = reader.ReadUInt32();
+            padding05 = reader.ReadUInt64();
+            padding06 = reader.ReadUInt64();
 
             // read reference data
             Name = reader.ReadBlockAt<string_r>(NamePointer);
             EventEmitters = reader.ReadBlockAt<ResourcePointerArray64<ParticleEventEmitter>>(EventEmittersPointer, EventEmittersCapacity);
-            UnknownData = reader.ReadBlockAt<ParticleEvolutionList>(UnknownData1Pointer);
+            EvolutionList = reader.ReadBlockAt<ParticleEvolutionList>(EvolutionListPointer);
             KeyframeProps = reader.ReadBlockAt<ResourcePointerArray64<ParticleKeyframeProp>>(KeyframePropsPointer, KeyframePropsCapacity);
 
             if (!string.IsNullOrEmpty(Name?.Value))
@@ -1934,323 +1752,13 @@ namespace CodeWalker.GameFiles
             }
 
             #endregion
-
-
-            #region testing
-
-            //for (int i = 0; i < (EventEmitters?.data_items?.Length??0); i++)
-            //{
-            //    if (EventEmitters.data_items[i].Index != i)
-            //    { }//no hit
-            //}
-
-            //if (EventEmittersCount2 != 32)
-            //{ }//no hit
-            //if (KeyframePropsCount2 != 16)
-            //{ }//no hit
-            //if (KeyframePropsCount1 != 5)
-            //{ }//no hit
-
-            //if (Unknown_4h != 1)
-            //{ }//no hit
-            //if (Unknown_8h != 0)
-            //{ }//no hit
-            //if (Unknown_10h != 1)
-            //{ }//no hit
-            //if (Unknown_18h != 4.2f)
-            //{ }//no hit
-            //if (Unknown_1Ch != 0)
-            //{ }//no hit
-            //switch (Unknown_28h)
-            //{
-            //    case 0x0000000050000000:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (VFT2) //some VFT
-            //{
-            //    case 0x4060e3e8: 
-            //    case 0x40610408:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_34h != 1)
-            //{ }//no hit
-            //if (Unknown_44h != 0)
-            //{ }//no hit
-            //switch (Unknown_50h)
-            //{
-            //    case 0xffffffff:
-            //    case 0:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_54h)
-            //{
-            //    case 0x01000000:
-            //    case 0x01010001:
-            //    case 0x01010200:
-            //    case 0x01010000:
-            //    case 0x01000200:
-            //    case 0x01000001:
-            //    case 0x01000201:
-            //    case 0x01000100:
-            //        break;
-            //    default:
-            //        break;//more
-            //}
-            //if (Unknown_58h != 0)
-            //{ }//no hit
-            //if (Unknown_60h != 0)
-            //{ }//no hit
-            //if ((Unknown_68h != 0) && (Unknown_68h != 0x80000000))//float?
-            //{ }//no hit
-            //if (Unknown_6Ch != 0x7f800001)
-            //{ }//no hit
-            //switch (Unknown_70h)
-            //{
-            //    case 0:
-            //    case 1.0f:
-            //    case 0.5f:
-            //    case 0.2f:
-            //    case 0.1f:
-            //        break;
-            //    default:
-            //        break;//more
-            //}
-            //switch (Unknown_74h)
-            //{
-            //    case 0.25f:
-            //    case 0:
-            //    case 1.0f:
-            //    case 0.1f:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_78h)
-            //{
-            //    case 0.2f:
-            //    case 0.5f:
-            //    case 1.0f:
-            //        break;
-            //    default:
-            //        break;//more
-            //}
-            //switch (Unknown_7Ch)
-            //{
-            //    case 0.2f:
-            //    case 0.5f:
-            //    case 1.0f:
-            //        break;
-            //    default:
-            //        break;//more
-            //}
-            //switch (Unknown_80h)
-            //{
-            //    case 1.0f:
-            //    case 2.0f:
-            //    case 1.2f:
-            //    case 1.5f:
-            //        break;
-            //    default:
-            //        break;//more
-            //}
-            //switch (Unknown_84h)
-            //{
-            //    case 1.0f:
-            //    case 2.0f:
-            //        break;
-            //    default:
-            //        break;//more
-            //}
-            //switch (Unknown_88h)
-            //{
-            //    case 0x01010100:
-            //    case 0x01010101:
-            //    case 0x00010004:
-            //    case 0x01010002:
-            //    case 0x00000003:
-            //    case 0x01010105:
-            //    case 0x00010105:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_8Ch)
-            //{
-            //    case 0x00010004:
-            //    case 0x01010101:
-            //    case 0x01010100:
-            //    case 0x01010002:
-            //    case 0x00000003:
-            //    case 0x00010105:
-            //    case 0x00000005:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //switch (Unknown_90h)
-            //{
-            //    case 0:
-            //    case 1.1f:
-            //    case 1.5f:
-            //    case 1.2f:
-            //    case 6.0f:
-            //        break;
-            //    default:
-            //        break;//more
-            //}
-            //switch (Unknown_94h)
-            //{
-            //    case 0:
-            //    case 1.8f:
-            //    case 10.0f:
-            //    case 0.4f:
-            //    case -1.0f:
-            //    case -9.0f:
-            //        break;
-            //    default:
-            //        break;//more
-            //}
-            //switch (Unknown_98h)
-            //{
-            //    case 0:
-            //    case 5.0f:
-            //    case 1.5f:
-            //    case -1.0f:
-            //    case 0.5f:
-            //    case 0.2f:
-            //    case 1.0f:
-            //    case 12.0f:
-            //        break;
-            //    default:
-            //        break;//more
-            //}
-            //if (Unknown_9Ch != 0x7f800001)
-            //{ }//no hit
-            //switch (Unknown_A0h)
-            //{
-            //    case 0:
-            //    case 4.5f:
-            //    case 11.0f:
-            //    case 5.0f:
-            //        break;
-            //    default:
-            //        break;//and more
-            //}
-            //switch (Unknown_A4h)
-            //{
-            //    case 38.0f:
-            //    case 25.0f:
-            //        break;
-            //    default:
-            //        break;//and more
-            //}
-            //switch (Unknown_A8h)
-            //{
-            //    case 40.0f:
-            //    case 30.0f:
-            //        break;
-            //    default:
-            //        break;//and more
-            //}
-            //switch (Unknown_ACh)
-            //{
-            //    case 15.0f:
-            //    case 4.0f:
-            //        break;
-            //    default:
-            //        break;//and more
-            //}
-            //switch (Unknown_B0h)
-            //{
-            //    case 40.0f:
-            //    case 12.0f:
-            //        break;
-            //    default:
-            //        break;//and more
-            //}
-            //switch (Unknown_B4h)
-            //{
-            //    case 3.0f:
-            //    case 0:
-            //    case 0.500002f:
-            //    case 1.5f:
-            //        break;
-            //    default:
-            //        break;//more
-            //}
-            //switch (Unknown_B8h)
-            //{
-            //    case 2.0f:
-            //    case 0:
-            //    case 1.5f:
-            //    case 1.0f:
-            //    case 3.0f:
-            //    case 5.0f:
-            //    case 9.0f:
-            //        break;
-            //    default:
-            //        break;//more
-            //}
-            //switch (Unknown_BCh)
-            //{
-            //    case 0x00010103:
-            //    case 0:
-            //    case 0x01000000:
-            //    case 0x01010003:
-            //    case 0x00000103:
-            //    case 0x00000002:
-            //    case 0x00000003:
-            //    case 0x00010100:
-            //    case 0x01000002:
-            //    case 0x00010002:
-            //    case 0x01010002:
-            //        break;
-            //    default:
-            //        break;//more
-            //}
-            //if (Unknown_39Ch != 0)
-            //{ }//no hit
-            //switch (Unknown_3A0h)
-            //{
-            //    case 0:
-            //    case 1:
-            //    case 0x00000100:
-            //    case 0x00010100:
-            //    case 0x00020100:
-            //    case 0x00080000:
-            //    case 0x00090100:
-            //    case 0x000b0100:
-            //    case 0x000c0100: //setting the 5th digit to C (eg 0x000C0000) for Unknown3A0 in EffectRuleDictionary enables damage for volumetric particles -Monika
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_3A4h != 0)
-            //{ }//no hit
-            //if (Unknown_3A8h != 100.0f)
-            //{ }//no hit
-            //if (Unknown_3ACh != 0)
-            //{ }//no hit
-            //if (Unknown_3B0h != 0)
-            //{ }//no hit
-            //if (Unknown_3B8h != 0)
-            //{ }//no hit
-
-            #endregion
-
         }
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
             NamePointer = (ulong)(Name != null ? Name.FilePosition : 0);
             EventEmittersPointer = (ulong)(EventEmitters != null ? EventEmitters.FilePosition : 0);
-            UnknownData1Pointer = (ulong)(UnknownData != null ? UnknownData.FilePosition : 0);
+            EvolutionListPointer = (ulong)(EvolutionList != null ? EvolutionList.FilePosition : 0);
             KeyframePropsPointer = (ulong)(KeyframeProps != null ? KeyframeProps.FilePosition : 0);
 
             // write structure data
@@ -2258,17 +1766,17 @@ namespace CodeWalker.GameFiles
             writer.Write(Unknown_4h);
             writer.Write(Unknown_8h);
             writer.Write(Unknown_10h);
-            writer.Write(Unknown_18h);
-            writer.Write(Unknown_1Ch);
+            writer.Write(FileVersion);
+            writer.Write(padding0);
             writer.Write(NamePointer);
-            writer.Write(Unknown_28h);
+            writer.Write(EffectList);
             writer.Write(VFT2);
-            writer.Write(Unknown_34h);
+            writer.Write(unused00);
             writer.Write(EventEmittersPointer);
             writer.Write(EventEmittersCount);
             writer.Write(EventEmittersCapacity);
-            writer.Write(Unknown_44h);
-            writer.Write(UnknownData1Pointer);
+            writer.Write(Unused01);
+            writer.Write(EvolutionListPointer);
             writer.Write(NumLoops);
             writer.Write(SortEventsByDistance);
             writer.Write(DrawListID);
@@ -2304,28 +1812,29 @@ namespace CodeWalker.GameFiles
             writer.Write(ShareEntityCollisions);
             writer.Write(OnlyUseBVHCollisions);
             writer.Write(GameFlags);
-            writer.WriteBlock(KeyframeProp0);
-            writer.WriteBlock(KeyframeProp1);
-            writer.WriteBlock(KeyframeProp2);
-            writer.WriteBlock(KeyframeProp3);
-            writer.WriteBlock(KeyframeProp4);
+            writer.WriteBlock(ColourTintMinKFP);
+            writer.WriteBlock(ColourTintMaxKFP);
+            writer.WriteBlock(ZoomScalarKFP);
+            writer.WriteBlock(DataSphereKFP);
+            writer.WriteBlock(DataCapsuleKFP);
             writer.Write(KeyframePropsPointer);
             writer.Write(KeyframePropsCount);
             writer.Write(KeyframePropsCapacity);
-            writer.Write(Unknown_39Ch);
+            writer.Write(unused02);
             writer.Write(ColourTintMaxEnable);
             writer.Write(UseDataVolume);
             writer.Write(DataVolumeType);
             writer.Write(padding03);
-            writer.Write(Unknown_3A4h);
+            writer.Write(NumActiveInstances);
             writer.Write(ZoomLevel);
-            writer.Write(Unknown_3ACh);
-            writer.Write(Unknown_3B0h);
-            writer.Write(Unknown_3B8h);
+            writer.Write(padding04);
+            writer.Write(padding05);
+            writer.Write(padding06);
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
             YptXml.StringTag(sb, indent, "Name", YptXml.XmlEscape(Name?.Value ?? ""));
+            YptXml.ValueTag(sb, indent, "FileVersion", FloatUtil.ToString(FileVersion));
             YptXml.ValueTag(sb, indent, "NumLoops", YptXml.UintString((uint)NumLoops));
             YptXml.ValueTag(sb, indent, "SortEventsByDistance", FloatUtil.ToString(SortEventsByDistance));
             YptXml.ValueTag(sb, indent, "DrawListID", FloatUtil.ToString(DrawListID));
@@ -2372,19 +1881,20 @@ namespace CodeWalker.GameFiles
             {
                 var kp = new ParticleKeyframeProp[KeyframePropsCount];//trim the unused items from this array
                 Array.Copy(KeyframeProps.data_items, 0, kp, 0, KeyframePropsCount);
-                YptXml.WriteItemArray(sb, kp, indent, "KeyframeProperties");
+                YptXml.WriteItemArray(sb, kp, indent, "KeyframeProps");
             }
-            if (UnknownData != null)
+            if (EvolutionList != null)
             {
-                YptXml.OpenTag(sb, indent, "UnknownData");
-                UnknownData.WriteXml(sb, indent + 1);
-                YptXml.CloseTag(sb, indent, "UnknownData");
+                YptXml.OpenTag(sb, indent, "EvolutionList");
+                EvolutionList.WriteXml(sb, indent + 1);
+                YptXml.CloseTag(sb, indent, "EvolutionList");
             }
         }
         public void ReadXml(XmlNode node)
         {
             Name = (string_r)Xml.GetChildInnerText(node, "Name"); if (Name.Value == null) Name = null;
             NameHash = JenkHash.GenHash(Name?.Value ?? "");
+            FileVersion = Xml.GetChildFloatAttribute(node, "FileVersion");
             NumLoops = (int)Xml.GetChildUIntAttribute(node, "NumLoops");
             SortEventsByDistance = (byte)Xml.GetChildFloatAttribute(node, "SortEventsByDistance");
             DrawListID = (byte)Xml.GetChildFloatAttribute(node, "DrawListID");
@@ -2436,12 +1946,12 @@ namespace CodeWalker.GameFiles
             }
 
 
-            var kflist = XmlMeta.ReadItemArray<ParticleKeyframeProp>(node, "KeyframeProperties")?.ToList() ?? new List<ParticleKeyframeProp>();
-            KeyframeProp0 = (kflist.Count > 0) ? kflist[0] : new ParticleKeyframeProp();
-            KeyframeProp1 = (kflist.Count > 1) ? kflist[1] : new ParticleKeyframeProp();
-            KeyframeProp2 = (kflist.Count > 2) ? kflist[2] : new ParticleKeyframeProp();
-            KeyframeProp3 = (kflist.Count > 3) ? kflist[3] : new ParticleKeyframeProp();
-            KeyframeProp4 = (kflist.Count > 4) ? kflist[4] : new ParticleKeyframeProp();
+            var kflist = XmlMeta.ReadItemArray<ParticleKeyframeProp>(node, "KeyframeProps")?.ToList() ?? new List<ParticleKeyframeProp>();
+            ColourTintMinKFP = (kflist.Count > 0) ? kflist[0] : new ParticleKeyframeProp();
+            ColourTintMaxKFP = (kflist.Count > 1) ? kflist[1] : new ParticleKeyframeProp();
+            ZoomScalarKFP = (kflist.Count > 2) ? kflist[2] : new ParticleKeyframeProp();
+            DataSphereKFP = (kflist.Count > 3) ? kflist[3] : new ParticleKeyframeProp();
+            DataCapsuleKFP = (kflist.Count > 4) ? kflist[4] : new ParticleKeyframeProp();
             for (int i = kflist.Count; i < 16; i++) kflist.Add(null);
             KeyframeProps = new ResourcePointerArray64<ParticleKeyframeProp>();
             KeyframeProps.data_items = kflist.ToArray();
@@ -2449,11 +1959,11 @@ namespace CodeWalker.GameFiles
             KeyframePropsCount = 5;//this should always be 5.......
             KeyframePropsCapacity = 16;//should always be 16...
 
-            var udnode = node.SelectSingleNode("UnknownData");
+            var udnode = node.SelectSingleNode("EvolutionList");
             if (udnode != null)
             {
-                UnknownData = new ParticleEvolutionList();
-                UnknownData.ReadXml(udnode);
+                EvolutionList = new ParticleEvolutionList();
+                EvolutionList.ReadXml(udnode);
             }
 
         }
@@ -2463,7 +1973,7 @@ namespace CodeWalker.GameFiles
             var list = new List<IResourceBlock>();
             if (Name != null) list.Add(Name);
             if (EventEmitters != null) list.Add(EventEmitters);
-            if (UnknownData != null) list.Add(UnknownData);
+            if (EvolutionList != null) list.Add(EvolutionList);
             if (KeyframeProps != null)
             {
                 KeyframeProps.ManualReferenceOverride = true;
@@ -2475,11 +1985,11 @@ namespace CodeWalker.GameFiles
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(192, KeyframeProp0),
-                new Tuple<long, IResourceBlock>(336, KeyframeProp1),
-                new Tuple<long, IResourceBlock>(480, KeyframeProp2),
-                new Tuple<long, IResourceBlock>(624, KeyframeProp3),
-                new Tuple<long, IResourceBlock>(768, KeyframeProp4)
+                new Tuple<long, IResourceBlock>(192, ColourTintMinKFP),
+                new Tuple<long, IResourceBlock>(336, ColourTintMaxKFP),
+                new Tuple<long, IResourceBlock>(480, ZoomScalarKFP),
+                new Tuple<long, IResourceBlock>(624, DataSphereKFP),
+                new Tuple<long, IResourceBlock>(768, DataCapsuleKFP)
             };
         }
 
@@ -2989,34 +2499,38 @@ namespace CodeWalker.GameFiles
         public ulong Unknown_8h; // 0x0000000000000000
         public uint Unknown_10h { get; set; } // 2, 3, 4, 5, 6, 10, 21
         public uint Unknown_14h; // 0x00000000
-        public float Unknown_18h { get; set; } = 4.1f; // 4.1f
-        public uint Unknown_1Ch; // 0x00000000
+
+
+        public float FileVersion { get; set; }
+        public uint padding02 { get; set; }
         public ulong NamePointer { get; set; }
-        public ulong Unknown_28h; // 0x0000000000000000
-        public ulong Unknown_30h; // 0x0000000000000000
-        public ulong Domain1Pointer { get; set; }
-        public ulong Unknown_40h; // 0x0000000000000000
-        public ulong Domain2Pointer { get; set; }
-        public ulong Unknown_50h; // 0x0000000000000000
-        public ulong Domain3Pointer { get; set; }
-        public ulong Unknown_60h; // 0x0000000000000000
-        public ulong Unknown_68h; // 0x0000000000000000
-        public ulong Unknown_70h; // 0x0000000000000000
-        public ParticleKeyframeProp[] KeyframeProps1 { get; set; } = new ParticleKeyframeProp[10];
-        public ulong KeyframeProps2Pointer { get; set; }
-        public ushort KeyframePropsCount1 = 10; // 10
-        public ushort KeyframePropsCount2 = 10; // 10
-        public uint Unknown_624h; // 0x00000000
-        public uint Unknown_628h { get; set; } // 0, 1
-        public uint Unknown_62Ch; // 0x00000000
+        public ulong LastEvoList_UNUSED { get; set; }
+        public ulong UIData { get; set; }
+        public ulong CreationDomainObjPointer { get; set; }
+        public ulong padding03 { get; set; }
+        public ulong TargetDomainObjPointer { get; set; }
+        public ulong padding04 { get; set; }
+        public ulong AttractorDomainObjPointer { get; set; }
+        public ulong padding05 { get; set; }
+        public ulong padding06 { get; set; }
+        public ulong padding07 { get; set; }
+        public ParticleKeyframeProp[] KeyframeProps { get; set; } = new ParticleKeyframeProp[10];
+        public ulong KeyframePropListPointer { get; set; }
+        public ushort KeyframePropsCount1 = 10;
+        public ushort KeyframePropsCount2 = 10;
+        public uint padding08 { get; set; }
+        public byte IsOneShot { get; set; }
+        public byte padding09 { get; set; }
+        public short padding10 { get; set; }
+        public uint padding11 { get; set; }
 
         // reference data
         public string_r Name { get; set; }
         public MetaHash NameHash { get; set; }
-        public ParticleDomain Domain1 { get; set; }
-        public ParticleDomain Domain2 { get; set; }
-        public ParticleDomain Domain3 { get; set; }
-        public ResourcePointerArray64<ParticleKeyframeProp> KeyframeProps2 { get; set; }//just pointers to KeyframeProps1
+        public ParticleDomain CreationDomainObj { get; set; }
+        public ParticleDomain TargetDomainObj { get; set; }
+        public ParticleDomain AttractorDomainObj { get; set; }
+        public ResourcePointerArray64<ParticleKeyframeProp> KeyframePropList { get; set; }//just pointers to KeyframeProps1
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
@@ -3026,129 +2540,53 @@ namespace CodeWalker.GameFiles
             Unknown_8h = reader.ReadUInt64();
             Unknown_10h = reader.ReadUInt32();
             Unknown_14h = reader.ReadUInt32();
-            Unknown_18h = reader.ReadSingle();
-            Unknown_1Ch = reader.ReadUInt32();
+            FileVersion = reader.ReadSingle();
+            padding02 = reader.ReadUInt32();
             NamePointer = reader.ReadUInt64();
-            Unknown_28h = reader.ReadUInt64();
-            Unknown_30h = reader.ReadUInt64();
-            Domain1Pointer = reader.ReadUInt64();
-            Unknown_40h = reader.ReadUInt64();
-            Domain2Pointer = reader.ReadUInt64();
-            Unknown_50h = reader.ReadUInt64();
-            Domain3Pointer = reader.ReadUInt64();
-            Unknown_60h = reader.ReadUInt64();
-            Unknown_68h = reader.ReadUInt64();
-            Unknown_70h = reader.ReadUInt64();
+            LastEvoList_UNUSED = reader.ReadUInt64();
+            UIData = reader.ReadUInt64();
+            CreationDomainObjPointer = reader.ReadUInt64();
+            padding03 = reader.ReadUInt64();
+            TargetDomainObjPointer = reader.ReadUInt64();
+            padding04 = reader.ReadUInt64();
+            AttractorDomainObjPointer = reader.ReadUInt64();
+            padding05 = reader.ReadUInt64();
+            padding06 = reader.ReadUInt64();
+            padding07 = reader.ReadUInt64();
             for (int i = 0; i < 10; i++)
             {
-                KeyframeProps1[i] = reader.ReadBlock<ParticleKeyframeProp>();
+                KeyframeProps[i] = reader.ReadBlock<ParticleKeyframeProp>();
             }
-            KeyframeProps2Pointer = reader.ReadUInt64();
+            KeyframePropListPointer = reader.ReadUInt64();
             KeyframePropsCount1 = reader.ReadUInt16();
             KeyframePropsCount2 = reader.ReadUInt16();
-            Unknown_624h = reader.ReadUInt32();
-            Unknown_628h = reader.ReadUInt32();
-            Unknown_62Ch = reader.ReadUInt32();
+            padding08 = reader.ReadUInt32();
+            IsOneShot = reader.ReadByte();
+            padding09 = reader.ReadByte();
+            padding10 = reader.ReadInt16();
+            padding11 = reader.ReadUInt32();
 
             // read reference data
             Name = reader.ReadBlockAt<string_r>(NamePointer);
-            Domain1 = reader.ReadBlockAt<ParticleDomain>(Domain1Pointer);
-            Domain2 = reader.ReadBlockAt<ParticleDomain>(Domain2Pointer);
-            Domain3 = reader.ReadBlockAt<ParticleDomain>(Domain3Pointer);
-            KeyframeProps2 = reader.ReadBlockAt<ResourcePointerArray64<ParticleKeyframeProp>>(KeyframeProps2Pointer, KeyframePropsCount2);
+            CreationDomainObj = reader.ReadBlockAt<ParticleDomain>(CreationDomainObjPointer);
+            TargetDomainObj = reader.ReadBlockAt<ParticleDomain>(TargetDomainObjPointer);
+            AttractorDomainObj = reader.ReadBlockAt<ParticleDomain>(AttractorDomainObjPointer);
+            KeyframePropList = reader.ReadBlockAt<ResourcePointerArray64<ParticleKeyframeProp>>(KeyframePropListPointer, KeyframePropsCount2);
 
 
             if (!string.IsNullOrEmpty(Name?.Value))
             {
                 JenkIndex.Ensure(Name.Value);
             }
-
-            //if ((Domain1 != null) && (Domain1.Index != 0))
-            //{ }//no hit
-            //if ((Domain2 != null) && (Domain2.Index != 1))
-            //{ }//no hit
-            //if ((Domain3 != null) && (Domain3.Index != 2))
-            //{ }//no hit
-
-            //if (KeyframeProps2?.data_items != null)
-            //{
-            //    if (KeyframeProps2.data_items.Length != 10)
-            //    { }//no hit
-            //    else
-            //    {
-            //        for (int i = 0; i < 10; i++)
-            //        {
-            //            if (KeyframeProps2.data_items[i] != KeyframeProps1[i])
-            //            { }//no hit
-            //        }
-            //    }
-            //}
-            //else
-            //{ }//no hit
-
-            //if (Unknown_4h != 1)
-            //{ }//no hit
-            //if (Unknown_8h != 0)
-            //{ }//no hit
-            //switch (Unknown_10h)
-            //{
-            //    case 3:
-            //    case 2:
-            //    case 4:
-            //    case 5:
-            //    case 10:
-            //    case 21:
-            //    case 6:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_14h != 0)
-            //{ }//no hit
-            //if (Unknown_18h != 4.1f)
-            //{ }//no hit
-            //if (Unknown_1Ch != 0)
-            //{ }//no hit
-            //if (Unknown_28h != 0)
-            //{ }//no hit
-            //if (Unknown_30h != 0)
-            //{ }//no hit
-            //if (Unknown_40h != 0)
-            //{ }//no hit
-            //if (Unknown_50h != 0)
-            //{ }//no hit
-            //if (Unknown_60h != 0)
-            //{ }//no hit
-            //if (Unknown_68h != 0)
-            //{ }//no hit
-            //if (Unknown_70h != 0)
-            //{ }//no hit
-            //if (KeyframePropsCount1 != 10)
-            //{ }//no hit
-            //if (KeyframePropsCount2 != 10)
-            //{ }//no hit
-            //if (Unknown_624h != 0)
-            //{ }//no hit
-            //switch (Unknown_628h)
-            //{
-            //    case 0:
-            //    case 1:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_62Ch != 0)
-            //{ }//no hit
         }
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
             NamePointer = (ulong)(Name != null ? Name.FilePosition : 0);
-            Domain1Pointer = (ulong)(Domain1 != null ? Domain1.FilePosition : 0);
-            Domain2Pointer = (ulong)(Domain2 != null ? Domain2.FilePosition : 0);
-            Domain3Pointer = (ulong)(Domain3 != null ? Domain3.FilePosition : 0);
-            KeyframeProps2Pointer = (ulong)(KeyframeProps2 != null ? KeyframeProps2.FilePosition : 0);
-            //refcnt2 = (ushort)(refs != null ? refs.Count : 0);
+            CreationDomainObjPointer = (ulong)(CreationDomainObj != null ? CreationDomainObj.FilePosition : 0);
+            TargetDomainObjPointer = (ulong)(TargetDomainObj != null ? TargetDomainObj.FilePosition : 0);
+            AttractorDomainObjPointer = (ulong)(AttractorDomainObj != null ? AttractorDomainObj.FilePosition : 0);
+            KeyframePropListPointer = (ulong)(KeyframePropList != null ? KeyframePropList.FilePosition : 0);
 
 
             // write structure data
@@ -3157,76 +2595,76 @@ namespace CodeWalker.GameFiles
             writer.Write(Unknown_8h);
             writer.Write(Unknown_10h);
             writer.Write(Unknown_14h);
-            writer.Write(Unknown_18h);
-            writer.Write(Unknown_1Ch);
+            writer.Write(FileVersion);
+            writer.Write(padding02);
             writer.Write(NamePointer);
-            writer.Write(Unknown_28h);
-            writer.Write(Unknown_30h);
-            writer.Write(Domain1Pointer);
-            writer.Write(Unknown_40h);
-            writer.Write(Domain2Pointer);
-            writer.Write(Unknown_50h);
-            writer.Write(Domain3Pointer);
-            writer.Write(Unknown_60h);
-            writer.Write(Unknown_68h);
-            writer.Write(Unknown_70h);
+            writer.Write(LastEvoList_UNUSED);
+            writer.Write(UIData);
+            writer.Write(CreationDomainObjPointer);
+            writer.Write(padding03);
+            writer.Write(TargetDomainObjPointer);
+            writer.Write(padding04);
+            writer.Write(AttractorDomainObjPointer);
+            writer.Write(padding05);
+            writer.Write(padding06);
+            writer.Write(padding07);
             for (int i = 0; i < 10; i++)
             {
-                writer.WriteBlock(KeyframeProps1[i]);
+                writer.WriteBlock(KeyframeProps[i]);
             }
-            writer.Write(KeyframeProps2Pointer);
+            writer.Write(KeyframePropListPointer);
             writer.Write(KeyframePropsCount1);
             writer.Write(KeyframePropsCount2);
-            writer.Write(Unknown_624h);
-            writer.Write(Unknown_628h);
-            writer.Write(Unknown_62Ch);
+            writer.Write(padding08);
+            writer.Write(IsOneShot);
+            writer.Write(padding09);
+            writer.Write(padding10);
+            writer.Write(padding11);
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
             YptXml.StringTag(sb, indent, "Name", YptXml.XmlEscape(Name?.Value ?? ""));
-            YptXml.ValueTag(sb, indent, "Unknown10", Unknown_10h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown628", Unknown_628h.ToString());
-            ParticleDomain.WriteXmlNode(Domain1, sb, indent, "Domain1");
-            ParticleDomain.WriteXmlNode(Domain2, sb, indent, "Domain2");
-            ParticleDomain.WriteXmlNode(Domain3, sb, indent, "Domain3");
-            if (KeyframeProps1 != null)
+            YptXml.ValueTag(sb, indent, "IsOneShot", IsOneShot.ToString());
+            ParticleDomain.WriteXmlNode(CreationDomainObj, sb, indent, "CreationDomainObj");
+            ParticleDomain.WriteXmlNode(TargetDomainObj, sb, indent, "TargetDomainObj");
+            ParticleDomain.WriteXmlNode(AttractorDomainObj, sb, indent, "AttractorDomainObj");
+            if (KeyframeProps != null)
             {
-                YptXml.WriteItemArray(sb, KeyframeProps1, indent, "KeyframeProperties");
+                YptXml.WriteItemArray(sb, KeyframeProps, indent, "KeyframeProps");
             }
         }
         public void ReadXml(XmlNode node)
         {
             Name = (string_r)Xml.GetChildInnerText(node, "Name"); if (Name.Value == null) Name = null;
             NameHash = JenkHash.GenHash(Name?.Value ?? "");
-            Unknown_10h = Xml.GetChildUIntAttribute(node, "Unknown10");
-            Unknown_628h = Xml.GetChildUIntAttribute(node, "Unknown628");
-            Domain1 = ParticleDomain.ReadXmlNode(node.SelectSingleNode("Domain1")); if (Domain1 != null) Domain1.Index = 0;
-            Domain2 = ParticleDomain.ReadXmlNode(node.SelectSingleNode("Domain2")); if (Domain2 != null) Domain2.Index = 1;
-            Domain3 = ParticleDomain.ReadXmlNode(node.SelectSingleNode("Domain3")); if (Domain3 != null) Domain3.Index = 2;
+            IsOneShot = (byte)Xml.GetChildUIntAttribute(node, "IsOneShot");
+            CreationDomainObj = ParticleDomain.ReadXmlNode(node.SelectSingleNode("CreationDomainObj")); if (CreationDomainObj != null) CreationDomainObj.Index = 0;
+            TargetDomainObj = ParticleDomain.ReadXmlNode(node.SelectSingleNode("TargetDomainObj")); if (TargetDomainObj != null) TargetDomainObj.Index = 1;
+            AttractorDomainObj = ParticleDomain.ReadXmlNode(node.SelectSingleNode("AttractorDomainObj")); if (AttractorDomainObj != null) AttractorDomainObj.Index = 2;
 
-            var kflist = XmlMeta.ReadItemArray<ParticleKeyframeProp>(node, "KeyframeProperties")?.ToList() ?? new List<ParticleKeyframeProp>();
-            KeyframeProps1 = new ParticleKeyframeProp[10];
+            var kflist = XmlMeta.ReadItemArray<ParticleKeyframeProp>(node, "KeyframeProps")?.ToList() ?? new List<ParticleKeyframeProp>();
+            KeyframeProps = new ParticleKeyframeProp[10];
             for (int i = 0; i < 10; i++)
             {
-                KeyframeProps1[i] = (i < kflist.Count) ? kflist[i] : new ParticleKeyframeProp();
+                KeyframeProps[i] = (i < kflist.Count) ? kflist[i] : new ParticleKeyframeProp();
             }
 
-            KeyframeProps2 = new ResourcePointerArray64<ParticleKeyframeProp>();
-            KeyframeProps2.data_items = KeyframeProps1;
-            KeyframeProps2.ManualReferenceOverride = true;
+            KeyframePropList = new ResourcePointerArray64<ParticleKeyframeProp>();
+            KeyframePropList.data_items = KeyframeProps;
+            KeyframePropList.ManualReferenceOverride = true;
         }
 
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
             if (Name != null) list.Add(Name);
-            if (Domain1 != null) list.Add(Domain1);
-            if (Domain2 != null) list.Add(Domain2);
-            if (Domain3 != null) list.Add(Domain3);
-            if (KeyframeProps2 != null)
+            if (CreationDomainObj != null) list.Add(CreationDomainObj);
+            if (TargetDomainObj != null) list.Add(TargetDomainObj);
+            if (AttractorDomainObj != null) list.Add(AttractorDomainObj);
+            if (KeyframePropList != null)
             {
-                KeyframeProps2.ManualReferenceOverride = true;
-                list.Add(KeyframeProps2);
+                KeyframePropList.ManualReferenceOverride = true;
+                list.Add(KeyframePropList);
             }
             return list.ToArray();
         }
@@ -3234,16 +2672,16 @@ namespace CodeWalker.GameFiles
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(120, KeyframeProps1[0]),
-                new Tuple<long, IResourceBlock>(264, KeyframeProps1[1]),
-                new Tuple<long, IResourceBlock>(408, KeyframeProps1[2]),
-                new Tuple<long, IResourceBlock>(552, KeyframeProps1[3]),
-                new Tuple<long, IResourceBlock>(696, KeyframeProps1[4]),
-                new Tuple<long, IResourceBlock>(840, KeyframeProps1[5]),
-                new Tuple<long, IResourceBlock>(984, KeyframeProps1[6]),
-                new Tuple<long, IResourceBlock>(1128, KeyframeProps1[7]),
-                new Tuple<long, IResourceBlock>(1272, KeyframeProps1[8]),
-                new Tuple<long, IResourceBlock>(1416, KeyframeProps1[9]),
+                new Tuple<long, IResourceBlock>(120, KeyframeProps[0]),
+                new Tuple<long, IResourceBlock>(264, KeyframeProps[1]),
+                new Tuple<long, IResourceBlock>(408, KeyframeProps[2]),
+                new Tuple<long, IResourceBlock>(552, KeyframeProps[3]),
+                new Tuple<long, IResourceBlock>(696, KeyframeProps[4]),
+                new Tuple<long, IResourceBlock>(840, KeyframeProps[5]),
+                new Tuple<long, IResourceBlock>(984, KeyframeProps[6]),
+                new Tuple<long, IResourceBlock>(1128, KeyframeProps[7]),
+                new Tuple<long, IResourceBlock>(1272, KeyframeProps[8]),
+                new Tuple<long, IResourceBlock>(1416, KeyframeProps[9]),
             };
         }
 
@@ -3315,144 +2753,83 @@ namespace CodeWalker.GameFiles
 
         // structure data
         public uint VFT { get; set; }
-        public uint Unknown_4h = 1; // 0x00000001
-        public ulong Unknown_8h; // 0x0000000000000000
-        public ulong Unknown_10h; // 0x0000000000000000
-        public ulong Unknown_18h; // 0x0000000000000000
-        public ulong Unknown_20h; // 0x0000000000000000
-        public ulong Unknown_28h; // 0x0000000000000000
-        public ulong Unknown_30h; // 0x0000000000000000
-        public ulong Unknown_38h; // 0x0000000000000000
-        public ulong Unknown_40h; // 0x0000000000000000
-        public ulong Unknown_48h; // 0x0000000000000000
-        public ulong Unknown_50h; // 0x0000000000000000
-        public ulong Unknown_58h; // 0x0000000000000000
-        public ulong Unknown_60h; // 0x0000000000000000
-        public ParticleKeyframePropName Name { get; set; } // name hash?
-        public uint Unknown_6Ch { get; set; } //offset..?
+        public uint padding00 { get; set; }
+        public ulong EvolvedKeyframeProp { get; set; } // padding 01 - 11 are duplicates of this
+        public ulong padding01 { get; set; }
+        public ulong padding02 { get; set; }
+        public ulong padding03 { get; set; }
+        public ulong padding04 { get; set; }
+        public ulong padding05 { get; set; }
+        public ulong padding06 { get; set; }
+        public ulong padding07 { get; set; }
+        public ulong padding08 { get; set; }
+        public ulong padding09 { get; set; }
+        public ulong padding10 { get; set; }
+        public ulong padding11 { get; set; }
+        public ParticleKeyframePropName Name { get; set; }
+        public byte InvertBiasLink { get; set; }
+        public byte RandomIndex { get; set; }
+        public short unused00 { get; set; }
         public ResourceSimpleList64<ParticleKeyframePropValue> Values { get; set; }
-        public ulong Unknown_80h; // 0x0000000000000000
-        public ulong Unknown_88h; // 0x0000000000000000
+        public ulong padding12 { get; set; }
+        public ulong padding13 { get; set; }
 
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
             VFT = reader.ReadUInt32();
-            Unknown_4h = reader.ReadUInt32();
-            Unknown_8h = reader.ReadUInt64();
-            Unknown_10h = reader.ReadUInt64();
-            Unknown_18h = reader.ReadUInt64();
-            Unknown_20h = reader.ReadUInt64();
-            Unknown_28h = reader.ReadUInt64();
-            Unknown_30h = reader.ReadUInt64();
-            Unknown_38h = reader.ReadUInt64();
-            Unknown_40h = reader.ReadUInt64();
-            Unknown_48h = reader.ReadUInt64();
-            Unknown_50h = reader.ReadUInt64();
-            Unknown_58h = reader.ReadUInt64();
-            Unknown_60h = reader.ReadUInt64();
+            padding00 = reader.ReadUInt32();
+            EvolvedKeyframeProp = reader.ReadUInt64();
+            padding01 = reader.ReadUInt64();
+            padding02 = reader.ReadUInt64();
+            padding03 = reader.ReadUInt64();
+            padding04 = reader.ReadUInt64();
+            padding05 = reader.ReadUInt64();
+            padding06 = reader.ReadUInt64();
+            padding07 = reader.ReadUInt64();
+            padding08 = reader.ReadUInt64();
+            padding09 = reader.ReadUInt64();
+            padding10 = reader.ReadUInt64();
+            padding11 = reader.ReadUInt64();
             Name = reader.ReadUInt32();
-            Unknown_6Ch = reader.ReadUInt32();
+            InvertBiasLink = reader.ReadByte();
+            RandomIndex = reader.ReadByte();
+            unused00 = reader.ReadInt16();
             Values = reader.ReadBlock<ResourceSimpleList64<ParticleKeyframePropValue>>();
-            Unknown_80h = reader.ReadUInt64();
-            Unknown_88h = reader.ReadUInt64();
-
-
-            //if (Unknown_4h != 1)
-            //{ }//no hit
-            //if (Unknown_8h != 0)
-            //{ }//no hit
-            //if (Unknown_10h != 0)
-            //{ }//no hit
-            //if (Unknown_18h != 0)
-            //{ }//no hit
-            //if (Unknown_20h != 0)
-            //{ }//no hit
-            //if (Unknown_28h != 0)
-            //{ }//no hit
-            //if (Unknown_30h != 0)
-            //{ }//no hit
-            //if (Unknown_38h != 0)
-            //{ }//no hit
-            //if (Unknown_40h != 0)
-            //{ }//no hit
-            //if (Unknown_48h != 0)
-            //{ }//no hit
-            //if (Unknown_50h != 0)
-            //{ }//no hit
-            //if (Unknown_58h != 0)
-            //{ }//no hit
-            //if (Unknown_60h != 0)
-            //{ }//no hit
-            switch (Unknown_6Ch)//some offset..?
-            {
-                case 0x00007a00:
-                case 0x00007b00:
-                case 0x00007c00:
-                case 0x00007d00:
-                case 0x00007e00:
-                case 0x00007f00:
-                case 0x00008000:
-                case 0x00008100:
-                case 0x00008200:
-                case 0x00008300:
-                case 0x0000e400:
-                case 0x0000e500:
-                case 0x0000e600:
-                case 0x0000e700:
-                case 0x0000e800:
-                case 0x0000e900:
-                case 0x0000ea00:
-                case 0x0000eb00:
-                case 0x0000ec00:
-                case 0x0000ed00:
-                case 0x0000ee00:
-                case 0x0000ef00:
-                case 0x0000f000:
-                case 0x0000f100:
-                case 0x0000f200:
-                case 0x0000f300:
-                case 0x0000f400:
-                case 0x00000600:
-                case 0x00000700:
-                case 0x00000800:
-                    break;
-                default:
-                    break;///and more......
-            }
-            //if (Unknown_80h != 0)
-            //{ }//no hit
-            //if (Unknown_88h != 0)
-            //{ }//no hit
+            padding12 = reader.ReadUInt64();
+            padding13 = reader.ReadUInt64();
         }
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
             writer.Write(VFT);
-            writer.Write(Unknown_4h);
-            writer.Write(Unknown_8h);
-            writer.Write(Unknown_10h);
-            writer.Write(Unknown_18h);
-            writer.Write(Unknown_20h);
-            writer.Write(Unknown_28h);
-            writer.Write(Unknown_30h);
-            writer.Write(Unknown_38h);
-            writer.Write(Unknown_40h);
-            writer.Write(Unknown_48h);
-            writer.Write(Unknown_50h);
-            writer.Write(Unknown_58h);
-            writer.Write(Unknown_60h);
+            writer.Write(padding00);
+            writer.Write(EvolvedKeyframeProp);
+            writer.Write(padding01);
+            writer.Write(padding02);
+            writer.Write(padding03);
+            writer.Write(padding04);
+            writer.Write(padding05);
+            writer.Write(padding06);
+            writer.Write(padding07);
+            writer.Write(padding08);
+            writer.Write(padding09);
+            writer.Write(padding10);
+            writer.Write(padding11);
             writer.Write(Name);
-            writer.Write(Unknown_6Ch);
+            writer.Write(InvertBiasLink);
+            writer.Write(RandomIndex);
+            writer.Write(unused00);
             writer.WriteBlock(Values);
-            writer.Write(Unknown_80h);
-            writer.Write(Unknown_88h);
+            writer.Write(padding12);
+            writer.Write(padding13);
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
             YptXml.StringTag(sb, indent, "Name", Name.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown6C", Unknown_6Ch.ToString());
+            YptXml.ValueTag(sb, indent, "InvertBiasLink", InvertBiasLink.ToString());
+            YptXml.ValueTag(sb, indent, "RandomIndex", RandomIndex.ToString());
 
             if (Values?.data_items != null)
             {
@@ -3463,7 +2840,8 @@ namespace CodeWalker.GameFiles
         public void ReadXml(XmlNode node)
         {
             Name = Xml.GetChildInnerText(node, "Name");
-            Unknown_6Ch = Xml.GetChildUIntAttribute(node, "Unknown6C");
+            InvertBiasLink = (byte)Xml.GetChildUIntAttribute(node, "InvertBiasLink");
+            RandomIndex = (byte)Xml.GetChildUIntAttribute(node, "RandomIndex");
 
             Values = new ResourceSimpleList64<ParticleKeyframePropValue>();
             Values.data_items = XmlMeta.ReadItemArray<ParticleKeyframePropValue>(node, "Keyframes");
@@ -3638,198 +3016,147 @@ namespace CodeWalker.GameFiles
 
         // structure data
         public uint VFT { get; set; }
-        public uint Unknown_4h = 1; // 0x00000001
+        public uint padding00 { get; set; }
         public uint Index { get; set; } // 0, 1, 2   - index of this domain in the ParticleEmitterRule
         public ParticleDomainType DomainType { get; set; }
-        public byte Unknown_Dh; // 0x00
-        public ushort Unknown_Eh; // 0x0000
-        public uint Unknown_10h { get; set; } // eg. 0x00010100
-        public uint Unknown_14h; // 0x00000000
-        public ParticleKeyframeProp KeyframeProp0 { get; set; }
-        public ParticleKeyframeProp KeyframeProp1 { get; set; }
-        public ParticleKeyframeProp KeyframeProp2 { get; set; }
-        public ParticleKeyframeProp KeyframeProp3 { get; set; }
-        public float Unknown_258h { get; set; } // -1.0f, 2.0f, 2.1f
-        public uint Unknown_25Ch; // 0x00000000
+        public byte padding01 { get; set; }
+        public ushort padding02 { get; set; }
+        public byte IsWorldSpace { get; set; }
+        public byte IsPointRelative { get; set; }
+        public byte IsCreationRelative { get; set; }
+        public byte IsTargetRelatve { get; set; }
+        public uint padding03 { get; set; }
+        public ParticleKeyframeProp PositionKFP { get; set; }
+        public ParticleKeyframeProp RotationKFP { get; set; }
+        public ParticleKeyframeProp SizeOuterKFP { get; set; }
+        public ParticleKeyframeProp SizeInnerKFP { get; set; }
+        public float FileVersion { get; set; }
+        public uint padding04 { get; set; }
         public ResourcePointerList64<ParticleKeyframeProp> KeyframeProps { get; set; }
-        public ulong Unknown_270h; // 0x0000000000000000
-        public ulong Unknown_278h; // 0x0000000000000000
+        public ulong padding05 { get; set; }
+        public ulong oadding06 { get; set; }
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
             VFT = reader.ReadUInt32();
-            Unknown_4h = reader.ReadUInt32();
+            padding00 = reader.ReadUInt32();
             Index = reader.ReadUInt32();
             DomainType = (ParticleDomainType)reader.ReadByte();
-            Unknown_Dh = reader.ReadByte();
-            Unknown_Eh = reader.ReadUInt16();
-            Unknown_10h = reader.ReadUInt32();
-            Unknown_14h = reader.ReadUInt32();
-            KeyframeProp0 = reader.ReadBlock<ParticleKeyframeProp>();
-            KeyframeProp1 = reader.ReadBlock<ParticleKeyframeProp>();
-            KeyframeProp2 = reader.ReadBlock<ParticleKeyframeProp>();
-            KeyframeProp3 = reader.ReadBlock<ParticleKeyframeProp>();
-            Unknown_258h = reader.ReadSingle();
-            Unknown_25Ch = reader.ReadUInt32();
+            padding01 = reader.ReadByte();
+            padding02 = reader.ReadUInt16();
+            IsWorldSpace = reader.ReadByte();
+            IsPointRelative = reader.ReadByte();
+            IsCreationRelative = reader.ReadByte();
+            IsTargetRelatve = reader.ReadByte();
+            padding03 = reader.ReadUInt32();
+            PositionKFP = reader.ReadBlock<ParticleKeyframeProp>();
+            RotationKFP = reader.ReadBlock<ParticleKeyframeProp>();
+            SizeOuterKFP = reader.ReadBlock<ParticleKeyframeProp>();
+            SizeInnerKFP = reader.ReadBlock<ParticleKeyframeProp>();
+            FileVersion = reader.ReadSingle();
+            padding04 = reader.ReadUInt32();
             KeyframeProps = reader.ReadBlock<ResourcePointerList64<ParticleKeyframeProp>>();
-            Unknown_270h = reader.ReadUInt64();
-            Unknown_278h = reader.ReadUInt64();
-
-
-            //if (KeyframeProps?.data_items?.Length != 4)
-            //{ }//no hit
-            //else
-            //{
-            //    if (KeyframeProps.data_items[0] != KeyframeProp0)
-            //    { }//no hit
-            //    if (KeyframeProps.data_items[1] != KeyframeProp1)
-            //    { }//no hit
-            //    if (KeyframeProps.data_items[3] != KeyframeProp2)
-            //    { }//no hit - note stupid ordering
-            //    if (KeyframeProps.data_items[2] != KeyframeProp3)
-            //    { }//no hit - note stupid ordering
-            //}
-            //if (KeyframeProps?.EntriesCapacity != 16)
-            //{ }//no hit  ... how to handle this when saving???
-
-
-
-            //if (Unknown_4h != 1)
-            //{ }//no hit
-            //switch (Index)
-            //{
-            //    case 0:
-            //    case 1:
-            //    case 2:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_Dh != 0)
-            //{ }//no hit
-            //if (Unknown_Eh != 0)
-            //{ }//no hit
-            //switch (Unknown_10h)
-            //{
-            //    case 0:
-            //    case 0x00000100:
-            //    case 0x00000101:
-            //    case 1:
-            //    case 0x00010001:
-            //    case 0x00010000:
-            //    case 0x00010100:
-            //    case 0x00010101:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_14h != 0)
-            //{ }//no hit
-            //switch (Unknown_258h)
-            //{
-            //    case 2.0f:
-            //    case 2.1f:
-            //    case -1.0f:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_25Ch != 0)
-            //{ }//no hit
-            //if (Unknown_270h != 0)
-            //{ }//no hit
-            //if (Unknown_278h != 0)
-            //{ }//no hit
+            padding05 = reader.ReadUInt64();
+            oadding06 = reader.ReadUInt64();
 
         }
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
             writer.Write(VFT);
-            writer.Write(Unknown_4h);
+            writer.Write(padding00);
             writer.Write(Index);
             writer.Write((byte)DomainType);
-            writer.Write(Unknown_Dh);
-            writer.Write(Unknown_Eh);
-            writer.Write(Unknown_10h);
-            writer.Write(Unknown_14h);
-            writer.WriteBlock(KeyframeProp0);
-            writer.WriteBlock(KeyframeProp1);
-            writer.WriteBlock(KeyframeProp2);
-            writer.WriteBlock(KeyframeProp3);
-            writer.Write(Unknown_258h);
-            writer.Write(Unknown_25Ch);
+            writer.Write(padding01);
+            writer.Write(padding02);
+            writer.Write(IsWorldSpace);
+            writer.Write(IsPointRelative);
+            writer.Write(IsCreationRelative);
+            writer.Write(IsTargetRelatve);
+            writer.Write(padding03);
+            writer.WriteBlock(PositionKFP);
+            writer.WriteBlock(RotationKFP);
+            writer.WriteBlock(SizeOuterKFP);
+            writer.WriteBlock(SizeInnerKFP);
+            writer.Write(FileVersion);
+            writer.Write(padding04);
             writer.WriteBlock(KeyframeProps);
-            writer.Write(Unknown_270h);
-            writer.Write(Unknown_278h);
+            writer.Write(padding05);
+            writer.Write(oadding06);
         }
         public virtual void WriteXml(StringBuilder sb, int indent)
         {
-            YptXml.ValueTag(sb, indent, "Type", DomainType.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown10", YptXml.UintString(Unknown_10h));
-            YptXml.ValueTag(sb, indent, "Unknown258", FloatUtil.ToString(Unknown_258h));
-            if (KeyframeProp0 != null)
+            YptXml.ValueTag(sb, indent, "DomainType", DomainType.ToString());
+            YptXml.ValueTag(sb, indent, "IsWorldSpace", IsWorldSpace.ToString());
+            YptXml.ValueTag(sb, indent, "IsPointRelative", IsPointRelative.ToString());
+            YptXml.ValueTag(sb, indent, "IsCreationRelative", IsCreationRelative.ToString());
+            YptXml.ValueTag(sb, indent, "IsTargetRelatve", IsTargetRelatve.ToString());
+            YptXml.ValueTag(sb, indent, "FileVersion", FloatUtil.ToString(FileVersion));
+            if (PositionKFP != null)
             {
-                YptXml.OpenTag(sb, indent, "KeyframeProperty0");
-                KeyframeProp0.WriteXml(sb, indent + 1);
-                YptXml.CloseTag(sb, indent, "KeyframeProperty0");
+                YptXml.OpenTag(sb, indent, "PositionKFP");
+                PositionKFP.WriteXml(sb, indent + 1);
+                YptXml.CloseTag(sb, indent, "PositionKFP");
             }
-            if (KeyframeProp1 != null)
+            if (RotationKFP != null)
             {
-                YptXml.OpenTag(sb, indent, "KeyframeProperty1");
-                KeyframeProp1.WriteXml(sb, indent + 1);
-                YptXml.CloseTag(sb, indent, "KeyframeProperty1");
+                YptXml.OpenTag(sb, indent, "RotationKFP");
+                RotationKFP.WriteXml(sb, indent + 1);
+                YptXml.CloseTag(sb, indent, "RotationKFP");
             }
-            if (KeyframeProp2 != null)
+            if (SizeOuterKFP != null)
             {
-                YptXml.OpenTag(sb, indent, "KeyframeProperty2");
-                KeyframeProp2.WriteXml(sb, indent + 1);
-                YptXml.CloseTag(sb, indent, "KeyframeProperty2");
+                YptXml.OpenTag(sb, indent, "SizeOuterKFP");
+                SizeOuterKFP.WriteXml(sb, indent + 1);
+                YptXml.CloseTag(sb, indent, "SizeOuterKFP");
             }
-            if (KeyframeProp3 != null)
+            if (SizeInnerKFP != null)
             {
-                YptXml.OpenTag(sb, indent, "KeyframeProperty3");
-                KeyframeProp3.WriteXml(sb, indent + 1);
-                YptXml.CloseTag(sb, indent, "KeyframeProperty3");
+                YptXml.OpenTag(sb, indent, "SizeInnerKFP");
+                SizeInnerKFP.WriteXml(sb, indent + 1);
+                YptXml.CloseTag(sb, indent, "SizeInnerKFP");
             }
         }
         public virtual void ReadXml(XmlNode node)
         {
-            DomainType = Xml.GetEnumValue<ParticleDomainType>(Xml.GetChildStringAttribute(node, "Type"));
-            Unknown_10h = Xml.GetChildUIntAttribute(node, "Unknown10");
-            Unknown_258h = Xml.GetChildFloatAttribute(node, "Unknown258");
+            DomainType = Xml.GetEnumValue<ParticleDomainType>(Xml.GetChildStringAttribute(node, "DomainType"));
+            IsWorldSpace = (byte)Xml.GetChildUIntAttribute(node, "IsWorldSpace");
+            IsPointRelative = (byte)Xml.GetChildUIntAttribute(node, "IsPointRelative");
+            IsCreationRelative = (byte)Xml.GetChildUIntAttribute(node, "IsCreationRelative");
+            IsTargetRelatve = (byte)Xml.GetChildUIntAttribute(node, "IsTargetRelatve");
+            FileVersion = Xml.GetChildFloatAttribute(node, "FileVersion");
 
-            KeyframeProp0 = new ParticleKeyframeProp();
-            var pnode0 = node.SelectSingleNode("KeyframeProperty0");
+            PositionKFP = new ParticleKeyframeProp();
+            var pnode0 = node.SelectSingleNode("PositionKFP");
             if (pnode0 != null)
             {
-                KeyframeProp0.ReadXml(pnode0);
+                PositionKFP.ReadXml(pnode0);
             }
 
-            KeyframeProp1 = new ParticleKeyframeProp();
-            var pnode1 = node.SelectSingleNode("KeyframeProperty1");
+            RotationKFP = new ParticleKeyframeProp();
+            var pnode1 = node.SelectSingleNode("RotationKFP");
             if (pnode1 != null)
             {
-                KeyframeProp1.ReadXml(pnode1);
+                RotationKFP.ReadXml(pnode1);
             }
 
-            KeyframeProp2 = new ParticleKeyframeProp();
-            var pnode2 = node.SelectSingleNode("KeyframeProperty2");
+            SizeOuterKFP = new ParticleKeyframeProp();
+            var pnode2 = node.SelectSingleNode("SizeOuterKFP");
             if (pnode2 != null)
             {
-                KeyframeProp2.ReadXml(pnode2);
+                SizeOuterKFP.ReadXml(pnode2);
             }
 
-            KeyframeProp3 = new ParticleKeyframeProp();
-            var pnode3 = node.SelectSingleNode("KeyframeProperty3");
+            SizeInnerKFP = new ParticleKeyframeProp();
+            var pnode3 = node.SelectSingleNode("SizeInnerKFP");
             if (pnode3 != null)
             {
-                KeyframeProp3.ReadXml(pnode3);
+                SizeInnerKFP.ReadXml(pnode3);
             }
 
             KeyframeProps = new ResourcePointerList64<ParticleKeyframeProp>();
-            KeyframeProps.data_items = new[] { KeyframeProp0, KeyframeProp1, KeyframeProp3, KeyframeProp2, null, null, null, null, null, null, null, null, null, null, null, null };
+            KeyframeProps.data_items = new[] { PositionKFP, RotationKFP, SizeInnerKFP, SizeOuterKFP, null, null, null, null, null, null, null, null, null, null, null, null };
 
         }
         public static void WriteXmlNode(ParticleDomain d, StringBuilder sb, int indent, string name)
@@ -3865,10 +3192,10 @@ namespace CodeWalker.GameFiles
             KeyframeProps.EntriesCapacity = 16;
 
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(24, KeyframeProp0),
-                new Tuple<long, IResourceBlock>(168, KeyframeProp1),
-                new Tuple<long, IResourceBlock>(312, KeyframeProp2),
-                new Tuple<long, IResourceBlock>(456, KeyframeProp3),
+                new Tuple<long, IResourceBlock>(24, PositionKFP),
+                new Tuple<long, IResourceBlock>(168, RotationKFP),
+                new Tuple<long, IResourceBlock>(312, SizeOuterKFP),
+                new Tuple<long, IResourceBlock>(456, SizeInnerKFP),
                 new Tuple<long, IResourceBlock>(0x260, KeyframeProps)
             };
         }
@@ -6582,143 +5909,84 @@ namespace CodeWalker.GameFiles
 
     }
 
-    [TC(typeof(EXP))] public class ParticleShaderVarVector : ParticleShaderVar
+    [TC(typeof(EXP))]
+    public class ParticleShaderVarVector : ParticleShaderVar
     {
         // ptxShaderVarVector
         public override long BlockLength => 0x40;
 
         // structure data
-        public uint Unknown_18h { get; set; } // 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 18, 19, 21, 22, 32       //shader var index..?
-        public uint Unknown_1Ch; // 0x00000000
-        public uint Unknown_20h; // 0x00000000
-        public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
-        public float Unknown_30h { get; set; } // 0, 0.1f, 0.2f, ..., 1.0f, 2.0f, ...
-        public float Unknown_34h { get; set; } // 0, 0.5f, 0.996f, 1.0f
-        public float Unknown_38h { get; set; } // 0, 0.1f, 0.2f, ..., 1.0f, ...
-        public uint Unknown_3Ch; // 0x00000000
+        public uint ShaderVarID { get; set; }
+        public byte IsKeyFrameable { get; set; }
+        public byte OwnsInfo { get; set; }
+        public short padding00 { get; set; }
+        public uint Unknown_20h { get; set; }
+        public uint Unknown_24h { get; set; }
+        public uint Unknown_28h { get; set; }
+        public uint Unknown_2Ch { get; set; }
+        public float VectorX { get; set; }
+        public float VectorY { get; set; }
+        public float VectorZ { get; set; }
+        public float VectorW { get; set; }
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             base.Read(reader, parameters);
 
             // read structure data
-            Unknown_18h = reader.ReadUInt32();
-            Unknown_1Ch = reader.ReadUInt32();
+            ShaderVarID = reader.ReadUInt32();
+            IsKeyFrameable = reader.ReadByte();
+            OwnsInfo = reader.ReadByte();
+            padding00 = reader.ReadInt16();
             Unknown_20h = reader.ReadUInt32();
             Unknown_24h = reader.ReadUInt32();
             Unknown_28h = reader.ReadUInt32();
             Unknown_2Ch = reader.ReadUInt32();
-            Unknown_30h = reader.ReadSingle();
-            Unknown_34h = reader.ReadSingle();
-            Unknown_38h = reader.ReadSingle();
-            Unknown_3Ch = reader.ReadUInt32();
-
-            //switch (Unknown_18h) //shader var index..?
-            //{
-            //    case 32:
-            //    case 22:
-            //    case 21:
-            //    case 19:
-            //    case 18:
-            //    case 14:
-            //    case 13:
-            //    case 12:
-            //    case 11:
-            //    case 10:
-            //    case 9:
-            //    case 8:
-            //    case 7:
-            //    case 6:
-            //    case 5:
-            //    case 4:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_1Ch != 0)
-            //{ }//no hit
-            //if (Unknown_20h != 0)
-            //{ }//no hit
-            //if (Unknown_24h != 0)
-            //{ }//no hit
-            //if (Unknown_28h != 0)
-            //{ }//no hit
-            //if (Unknown_2Ch != 0)
-            //{ }//no hit
-            switch (Unknown_30h)
-            {
-                case 1.0f:
-                case 0.1f:
-                case 0.2f:
-                case 0.02f:
-                case 0.01f:
-                case 2.0f:
-                case 0.4f:
-                case 0:
-                    break;
-                default:
-                    break;//and more..
-            }
-            //switch (Unknown_34h)
-            //{
-            //    case 0:
-            //    case 1.0f:
-            //    case 0.5f:
-            //    case 0.996f:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            switch (Unknown_38h)
-            {
-                case 0:
-                case 1.0f:
-                case 0.5f:
-                case 0.1f:
-                case 0.2f:
-                case 0.7f:
-                    break;
-                default:
-                    break;//more
-            }
-            //if (Unknown_3Ch != 0)
-            //{ }//no hit
+            VectorX = reader.ReadSingle();
+            VectorY = reader.ReadSingle();
+            VectorZ = reader.ReadSingle();
+            VectorW = reader.ReadSingle();
         }
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             base.Write(writer, parameters);
 
             // write structure data
-            writer.Write(Unknown_18h);
-            writer.Write(Unknown_1Ch);
+            writer.Write(ShaderVarID);
+            writer.Write(IsKeyFrameable);
+            writer.Write(OwnsInfo);
+            writer.Write(padding00);
             writer.Write(Unknown_20h);
             writer.Write(Unknown_24h);
             writer.Write(Unknown_28h);
             writer.Write(Unknown_2Ch);
-            writer.Write(Unknown_30h);
-            writer.Write(Unknown_34h);
-            writer.Write(Unknown_38h);
-            writer.Write(Unknown_3Ch);
+            writer.Write(VectorX);
+            writer.Write(VectorY);
+            writer.Write(VectorZ);
+            writer.Write(VectorW);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
             base.WriteXml(sb, indent);
-            YptXml.ValueTag(sb, indent, "Unknown18", Unknown_18h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown30", FloatUtil.ToString(Unknown_30h));
-            YptXml.ValueTag(sb, indent, "Unknown34", FloatUtil.ToString(Unknown_34h));
-            YptXml.ValueTag(sb, indent, "Unknown38", FloatUtil.ToString(Unknown_38h));
+            YptXml.ValueTag(sb, indent, "ShaderVarID", ShaderVarID.ToString());
+            YptXml.ValueTag(sb, indent, "IsKeyFrameable", IsKeyFrameable.ToString());
+            YptXml.ValueTag(sb, indent, "VectorX", FloatUtil.ToString(VectorX));
+            YptXml.ValueTag(sb, indent, "VectorY", FloatUtil.ToString(VectorY));
+            YptXml.ValueTag(sb, indent, "VectorZ", FloatUtil.ToString(VectorZ));
+            YptXml.ValueTag(sb, indent, "VectorW", FloatUtil.ToString(VectorW));
         }
         public override void ReadXml(XmlNode node)
         {
             base.ReadXml(node);
-            Unknown_18h = Xml.GetChildUIntAttribute(node, "Unknown18");
-            Unknown_30h = Xml.GetChildFloatAttribute(node, "Unknown30");
-            Unknown_34h = Xml.GetChildFloatAttribute(node, "Unknown34");
-            Unknown_38h = Xml.GetChildFloatAttribute(node, "Unknown38");
+            ShaderVarID = Xml.GetChildUIntAttribute(node, "ShaderVarID");
+            IsKeyFrameable = (byte)Xml.GetChildUIntAttribute(node, "IsKeyFrameable");
+            VectorX = Xml.GetChildFloatAttribute(node, "VectorX");
+            VectorY = Xml.GetChildFloatAttribute(node, "VectorY");
+            VectorZ = Xml.GetChildFloatAttribute(node, "VectorZ");
+            VectorW = Xml.GetChildFloatAttribute(node, "VectorW");
         }
     }
+
 
     [TC(typeof(EXP))] public class ParticleShaderVarTexture : ParticleShaderVar
     {
@@ -6726,14 +5994,20 @@ namespace CodeWalker.GameFiles
         public override long BlockLength => 0x40;
 
         // structure data
-        public uint Unknown_18h { get; set; } // 3, 4, 6, 7       //shader var index..?
-        public uint Unknown_1Ch; // 0x00000000
-        public uint Unknown_20h; // 0x00000000
-        public uint Unknown_24h; // 0x00000000
+        public uint ShaderVarID { get; set; }
+        public byte IsKeyframeable { get; set; }
+        public byte OwnsInfo { get; set; }
+        public short padding00 { get; set; }
+        public uint padding01 { get; set; }
+        public uint padding02 { get; set; }
+
+
         public ulong TexturePointer { get; set; }
         public ulong TextureNamePointer { get; set; }
         public MetaHash TextureNameHash { get; set; }
-        public uint Unknown_3Ch { get; set; } // 0, 1
+        public byte ExternalReference { get; set; }
+        public byte padding05 { get; set; }
+        public short padding06 { get; set; }
 
         // reference data
         public Texture Texture { get; set; }
@@ -6744,55 +6018,22 @@ namespace CodeWalker.GameFiles
             base.Read(reader, parameters);
 
             // read structure data
-            Unknown_18h = reader.ReadUInt32();
-            Unknown_1Ch = reader.ReadUInt32();
-            Unknown_20h = reader.ReadUInt32();
-            Unknown_24h = reader.ReadUInt32();
+            ShaderVarID = reader.ReadUInt32();
+            IsKeyframeable = reader.ReadByte();
+            OwnsInfo = reader.ReadByte();
+            padding00 = reader.ReadInt16();
+            padding01 = reader.ReadUInt32();
+            padding02 = reader.ReadUInt32();
             TexturePointer = reader.ReadUInt64();
             TextureNamePointer = reader.ReadUInt64();
             TextureNameHash = reader.ReadUInt32();
-            Unknown_3Ch = reader.ReadUInt32();
+            ExternalReference = reader.ReadByte();
+            padding05 = reader.ReadByte();
+            padding06 = reader.ReadInt16();
 
             // read reference data
             Texture = reader.ReadBlockAt<Texture>(TexturePointer);
             TextureName = reader.ReadBlockAt<string_r>(TextureNamePointer);
-
-
-            //switch (Unknown_18h) //shader var index..?
-            //{
-            //    case 7:
-            //    case 6:
-            //    case 4:
-            //    case 3:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_1Ch != 0)
-            //{ }//no hit
-            //if (Unknown_20h != 0)
-            //{ }//no hit
-            //if (Unknown_24h != 0)
-            //{ }//no hit
-            //switch (TextureNameHash)
-            //{
-            //    case 0:
-            //    case 0xda1c24ad: // ptfx_gloop
-            //    case 0xc4e50054: // ptfx_water_splashes_sheet
-            //        break;
-            //    default:
-            //        break;//and more...
-            //}
-            //if (TextureNameHash != JenkHash.GenHash(TextureName?.ToString() ?? ""))
-            //{ }//no hit
-            //switch (Unknown_3Ch)
-            //{
-            //    case 0:
-            //    case 1:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
         }
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
@@ -6803,27 +6044,33 @@ namespace CodeWalker.GameFiles
             TextureNamePointer = (ulong)(TextureName != null ? TextureName.FilePosition : 0);
 
             // write structure data
-            writer.Write(Unknown_18h);
-            writer.Write(Unknown_1Ch);
-            writer.Write(Unknown_20h);
-            writer.Write(Unknown_24h);
+            writer.Write(ShaderVarID);
+            writer.Write(IsKeyframeable);
+            writer.Write(OwnsInfo);
+            writer.Write(padding00);
+            writer.Write(padding01);
+            writer.Write(padding02);
             writer.Write(TexturePointer);
             writer.Write(TextureNamePointer);
             writer.Write(TextureNameHash);
-            writer.Write(Unknown_3Ch);
+            writer.Write(ExternalReference);
+            writer.Write(padding05);
+            writer.Write(padding06);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
             base.WriteXml(sb, indent);
-            YptXml.ValueTag(sb, indent, "Unknown18", Unknown_18h.ToString());
-            YptXml.ValueTag(sb, indent, "Unknown3C", Unknown_3Ch.ToString());
+            YptXml.ValueTag(sb, indent, "ShaderVarID", ShaderVarID.ToString());
+            YptXml.ValueTag(sb, indent, "IsKeyframeable", IsKeyframeable.ToString());
+            YptXml.ValueTag(sb, indent, "ExternalReference", ExternalReference.ToString());
             YptXml.StringTag(sb, indent, "TextureName", YptXml.XmlEscape(TextureName?.Value ?? ""));
         }
         public override void ReadXml(XmlNode node)
         {
             base.ReadXml(node);
-            Unknown_18h = Xml.GetChildUIntAttribute(node, "Unknown18");
-            Unknown_3Ch = Xml.GetChildUIntAttribute(node, "Unknown3C");
+            ShaderVarID = Xml.GetChildUIntAttribute(node, "ShaderVarID");
+            IsKeyframeable = (byte)Xml.GetChildUIntAttribute(node, "IsKeyframeable");
+            ExternalReference = (byte)Xml.GetChildUIntAttribute(node, "ExternalReference");
             TextureName = (string_r)Xml.GetChildInnerText(node, "TextureName"); if (TextureName.Value == null) TextureName = null;
             TextureNameHash = JenkHash.GenHash(TextureName?.Value ?? "");
         }
@@ -6843,51 +6090,30 @@ namespace CodeWalker.GameFiles
         public override long BlockLength => 0x50;
 
         // structure data
-        public uint Unknown_18h { get; set; } // 9, 14, 15, 16, 17, 20, 23, 31       //shader var index..?
-        public uint Unknown_1Ch = 1; // 0x00000001
-        public ulong Unknown_20h; // 0x0000000000000000
+        public uint ShaderVarID { get; set; }
+        public byte IsKeyframeable { get; set; }
+        public byte OwnsInfo { get; set; }
+        public short padding00 { get; set; }
+        public ulong padding01 { get; set; }
         public ResourceSimpleList64<ParticleShaderVarKeyframeItem> Items { get; set; }
-        public ulong Unknown_38h; // 0x0000000000000000
-        public ulong Unknown_40h; // 0x0000000000000000
-        public ulong Unknown_48h; // 0x0000000000000000
+        public ulong padding02 { get; set; }
+        public ulong padding03 { get; set; }
+        public ulong padding04 { get; set; }
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             base.Read(reader, parameters);
 
             // read structure data
-            Unknown_18h = reader.ReadUInt32();
-            Unknown_1Ch = reader.ReadUInt32();
-            Unknown_20h = reader.ReadUInt64();
+            ShaderVarID = reader.ReadUInt32();
+            IsKeyframeable = reader.ReadByte();
+            OwnsInfo = reader.ReadByte();
+            padding00 = reader.ReadInt16();
+            padding01 = reader.ReadUInt64();
             Items = reader.ReadBlock<ResourceSimpleList64<ParticleShaderVarKeyframeItem>>();
-            Unknown_38h = reader.ReadUInt64();
-            Unknown_40h = reader.ReadUInt64();
-            Unknown_48h = reader.ReadUInt64();
-
-            //switch (Unknown_18h) //shader var index..?
-            //{
-            //    case 31:
-            //    case 23:
-            //    case 20:
-            //    case 17:
-            //    case 16:
-            //    case 15:
-            //    case 14:
-            //    case 9:
-            //        break;
-            //    default:
-            //        break;//no hit
-            //}
-            //if (Unknown_1Ch != 1)
-            //{ }//no hit
-            //if (Unknown_20h != 0)
-            //{ }//no hit
-            //if (Unknown_38h != 0)
-            //{ }//no hit
-            //if (Unknown_40h != 0)
-            //{ }//no hit
-            //if (Unknown_48h != 0)
-            //{ }//no hit
+            padding02 = reader.ReadUInt64();
+            padding03 = reader.ReadUInt64();
+            padding04 = reader.ReadUInt64();
 
         }
         public override void Write(ResourceDataWriter writer, params object[] parameters)
@@ -6895,24 +6121,28 @@ namespace CodeWalker.GameFiles
             base.Write(writer, parameters);
 
             // write structure data
-            writer.Write(Unknown_18h);
-            writer.Write(Unknown_1Ch);
-            writer.Write(Unknown_20h);
+            writer.Write(ShaderVarID);
+            writer.Write(IsKeyframeable);
+            writer.Write(OwnsInfo);
+            writer.Write(padding00);
+            writer.Write(padding01);
             writer.WriteBlock(Items);
-            writer.Write(Unknown_38h);
-            writer.Write(Unknown_40h);
-            writer.Write(Unknown_48h);
+            writer.Write(padding02);
+            writer.Write(padding03);
+            writer.Write(padding04);
         }
         public override void WriteXml(StringBuilder sb, int indent)
         {
             base.WriteXml(sb, indent);
-            YptXml.ValueTag(sb, indent, "Unknown18", Unknown_18h.ToString());
+            YptXml.ValueTag(sb, indent, "ShaderVarID", ShaderVarID.ToString());
+            YptXml.ValueTag(sb, indent, "IsKeyframeable", IsKeyframeable.ToString());
             YptXml.WriteItemArray(sb, Items?.data_items, indent, "Items");
         }
         public override void ReadXml(XmlNode node)
         {
             base.ReadXml(node);
-            Unknown_18h = Xml.GetChildUIntAttribute(node, "Unknown18");
+            ShaderVarID = Xml.GetChildUIntAttribute(node, "ShaderVarID");
+            IsKeyframeable = (byte)Xml.GetChildUIntAttribute(node, "IsKeyframeable");
             Items = new ResourceSimpleList64<ParticleShaderVarKeyframeItem>();
             Items.data_items = XmlMeta.ReadItemArray<ParticleShaderVarKeyframeItem>(node, "Items");
         }
@@ -6946,47 +6176,6 @@ namespace CodeWalker.GameFiles
             Unknown_10h = reader.ReadSingle();
             Unknown_14h = reader.ReadUInt32();
             Unknown_18h = reader.ReadUInt64();
-
-            switch (Unknown_0h)
-            {
-                case 0:
-                case 0.2f:
-                case 1.0f:
-                case 0.149759f:
-                case 0.63285f:
-                    break;
-                default:
-                    break;//and more..
-            }
-            switch (Unknown_4h)
-            {
-                case 0:
-                case 5.0f:
-                case 1.25f:
-                case 6.67739534f:
-                case 2.07000327f:
-                    break;
-                default:
-                    break;//and more..
-            }
-            //if (Unknown_8h != 0)
-            //{ }//no hit
-            switch (Unknown_10h)
-            {
-                case 20.0f:
-                case 1.0f:
-                case 0.2f:
-                case 0.8f:
-                case 1.080267f:
-                case 0:
-                    break;
-                default:
-                    break;//and more..
-            }
-            //if (Unknown_14h != 0)
-            //{ }//no hit
-            //if (Unknown_18h != 0)
-            //{ }//no hit
         }
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
@@ -7011,13 +6200,4 @@ namespace CodeWalker.GameFiles
             Unknown_10h = Xml.GetChildFloatAttribute(node, "Unknown10");
         }
     }
-
-
-
-
-
-
-
-
-
 }
