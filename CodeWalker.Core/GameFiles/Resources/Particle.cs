@@ -1434,15 +1434,15 @@ namespace CodeWalker.GameFiles
         public override long BlockLength => 0x30;
 
         // structure data
-        public float Unknown_0h { get; set; }
-        public float Unknown_4h { get; set; }
-        public float Unknown_8h { get; set; }
-        public float Unknown_Ch { get; set; }
+        public float BoundBoxWidth { get; set; }
+        public float BoundBoxHeight { get; set; }
+        public float BoundBoxDepth { get; set; }
+        public float BoundingSphereRadius { get; set; }
         public ulong NamePointer { get; set; }
         public ulong DrawablePointer { get; set; }
         public MetaHash NameHash { get; set; }
-        public uint Unknown_24h { get; set; } // 0x00000000
-        public ulong Unknown_28h; // 0x0000000000000000
+        public uint padding00 { get; set; }
+        public ulong padding01 { get; set; }
 
         // reference data
         public string_r Name { get; set; }
@@ -1451,15 +1451,15 @@ namespace CodeWalker.GameFiles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            Unknown_0h = reader.ReadSingle();
-            Unknown_4h = reader.ReadSingle();
-            Unknown_8h = reader.ReadSingle();
-            Unknown_Ch = reader.ReadSingle();
+            BoundBoxWidth = reader.ReadSingle();
+            BoundBoxHeight = reader.ReadSingle();
+            BoundBoxDepth = reader.ReadSingle();
+            BoundingSphereRadius = reader.ReadSingle();
             NamePointer = reader.ReadUInt64();
             DrawablePointer = reader.ReadUInt64();
             NameHash = reader.ReadUInt32();
-            Unknown_24h = reader.ReadUInt32();
-            Unknown_28h = reader.ReadUInt64();
+            padding00 = reader.ReadUInt32();
+            padding01 = reader.ReadUInt64();
 
             // read reference data
             Name = reader.ReadBlockAt<string_r>(NamePointer);
@@ -1469,49 +1469,6 @@ namespace CodeWalker.GameFiles
             {
                 JenkIndex.Ensure(Name.Value);
             }
-
-            switch (Unknown_0h)
-            {
-                case 0.355044f:
-                case 1.0f:
-                case 0.308508f:
-                    break;
-                default:
-                    break;//more
-            }
-            switch (Unknown_4h)
-            {
-                case 0.894308f:
-                case 1.0f:
-                case 0.127314f:
-                    break;
-                default:
-                    break;//more
-            }
-            switch (Unknown_8h)
-            {
-                case 0.894308f:
-                case 1.0f:
-                case 0.127314f:
-                    break;
-                default:
-                    break;//more
-            }
-            switch (Unknown_Ch)
-            {
-                case 0.4f:
-                case 0.5f:
-                case 0.178602f:
-                    break;
-                default:
-                    break;//more
-            }
-            if (NameHash != JenkHash.GenHash(Name?.Value ?? ""))
-            { }//no hit
-            //if (Unknown_24h != 0)
-            //{ }//no hit
-            //if (Unknown_28h != 0)
-            //{ }//no hit
         }
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
@@ -1520,23 +1477,23 @@ namespace CodeWalker.GameFiles
             DrawablePointer = (ulong)(Drawable != null ? Drawable.FilePosition : 0);
 
             // write structure data
-            writer.Write(Unknown_0h);
-            writer.Write(Unknown_4h);
-            writer.Write(Unknown_8h);
-            writer.Write(Unknown_Ch);
+            writer.Write(BoundBoxWidth);
+            writer.Write(BoundBoxHeight);
+            writer.Write(BoundBoxDepth);
+            writer.Write(BoundingSphereRadius);
             writer.Write(NamePointer);
             writer.Write(DrawablePointer);
             writer.Write(NameHash);
-            writer.Write(Unknown_24h);
-            writer.Write(Unknown_28h);
+            writer.Write(padding00);
+            writer.Write(padding01);
         }
         public void WriteXml(StringBuilder sb, int indent)
         {
             YptXml.StringTag(sb, indent, "Name", YptXml.XmlEscape(Name?.Value ?? ""));
-            YptXml.ValueTag(sb, indent, "Unknown0", FloatUtil.ToString(Unknown_0h));
-            YptXml.ValueTag(sb, indent, "Unknown4", FloatUtil.ToString(Unknown_4h));
-            YptXml.ValueTag(sb, indent, "Unknown8", FloatUtil.ToString(Unknown_8h));
-            YptXml.ValueTag(sb, indent, "UnknownC", FloatUtil.ToString(Unknown_Ch));
+            YptXml.ValueTag(sb, indent, "BoundBoxWidth", FloatUtil.ToString(BoundBoxWidth));
+            YptXml.ValueTag(sb, indent, "BoundBoxHeight", FloatUtil.ToString(BoundBoxHeight));
+            YptXml.ValueTag(sb, indent, "BoundBoxDepth", FloatUtil.ToString(BoundBoxDepth));
+            YptXml.ValueTag(sb, indent, "BoundingSphereRadius", FloatUtil.ToString(BoundingSphereRadius));
             if (Drawable != null)
             {
             }
@@ -1545,10 +1502,10 @@ namespace CodeWalker.GameFiles
         {
             Name = (string_r)Xml.GetChildInnerText(node, "Name"); if (Name.Value == null) Name = null;
             NameHash = JenkHash.GenHash(Name?.Value ?? "");
-            Unknown_0h = Xml.GetChildFloatAttribute(node, "Unknown0");
-            Unknown_4h = Xml.GetChildFloatAttribute(node, "Unknown4");
-            Unknown_8h = Xml.GetChildFloatAttribute(node, "Unknown8");
-            Unknown_Ch = Xml.GetChildFloatAttribute(node, "UnknownC");
+            BoundBoxWidth = Xml.GetChildFloatAttribute(node, "BoundBoxWidth");
+            BoundBoxHeight = Xml.GetChildFloatAttribute(node, "BoundBoxHeight");
+            BoundBoxDepth = Xml.GetChildFloatAttribute(node, "BoundBoxDepth");
+            BoundingSphereRadius = Xml.GetChildFloatAttribute(node, "BoundingSphereRadius");
         }
 
         public override IResourceBlock[] GetReferences()
