@@ -677,11 +677,11 @@ namespace CodeWalker.GameFiles
 
         // structure data
         public uint VFT { get; set; }
-        public uint padding00 { get; set; }
-        public ulong padding01 { get; set; }
-        public uint padding02 { get; set; }
-        public uint padding03 { get; set; }
-        public ulong UIData { get; set; }
+        public uint padding00 = 1;
+        public ulong padding01;
+        public uint RefCount { get; set; }
+        public uint padding03;
+        public ulong UIData;
 
         // ptxParticleRule
         public ParticleEffectSpawner EffectSpawnerAtRatio { get; set; }
@@ -716,7 +716,7 @@ namespace CodeWalker.GameFiles
 
         // ShaderInst
         public uint VFT2 { get; set; } = 0x40605c50;
-        public uint padding06 { get; set; }
+        public uint padding06 = 1;
         public ulong ShaderTemplateName { get; set; }
         public ulong ShaderTemplateTechniqueName { get; set; }
         public ulong ShaderTemplate { get; set; }
@@ -725,7 +725,7 @@ namespace CodeWalker.GameFiles
 
         // TechniqueDesc
         public uint VFT3 { get; set; } = 0x40605b48;
-        public uint padding08 { get; set; }
+        public uint padding08 = 1;
         public uint DiffuseMode { get; set; }
         public uint ProjectionMode { get; set; }
         public byte IsLit { get; set; }
@@ -769,7 +769,7 @@ namespace CodeWalker.GameFiles
             VFT = reader.ReadUInt32();
             padding00 = reader.ReadUInt32();
             padding01 = reader.ReadUInt64();
-            padding02 = reader.ReadUInt32();
+            RefCount = reader.ReadUInt32();
             padding03 = reader.ReadUInt32();
             UIData = reader.ReadUInt64();
 
@@ -867,7 +867,7 @@ namespace CodeWalker.GameFiles
             writer.Write(VFT);
             writer.Write(padding00);
             writer.Write(padding01);
-            writer.Write(padding02);
+            writer.Write(RefCount);
             writer.Write(padding03);
             writer.Write(UIData);
 
@@ -947,6 +947,7 @@ namespace CodeWalker.GameFiles
         public void WriteXml(StringBuilder sb, int indent, string ddsfolder)
         {
             YptXml.StringTag(sb, indent, "Name", YptXml.XmlEscape(Name?.Value ?? ""));
+            YptXml.ValueTag(sb, indent, "RefCount", RefCount.ToString());
             YptXml.StringTag(sb, indent, "ShaderFile", YptXml.XmlEscape(ShaderFile?.Value ?? ""));
             YptXml.StringTag(sb, indent, "ShaderTechnique", YptXml.XmlEscape(ShaderTechnique?.Value ?? ""));
             YptXml.ValueTag(sb, indent, "CullMode", CullMode.ToString());
@@ -1002,6 +1003,7 @@ namespace CodeWalker.GameFiles
         {
             Name = (string_r)Xml.GetChildInnerText(node, "Name"); if (Name.Value == null) Name = null;
             NameHash = JenkHash.GenHash(Name?.Value ?? "");
+            RefCount = Xml.GetChildUIntAttribute(node, "RefCount");
             ShaderFile = (string_r)Xml.GetChildInnerText(node, "ShaderFile"); if (ShaderFile.Value == null) ShaderFile = null;
             ShaderTechnique = (string_r)Xml.GetChildInnerText(node, "ShaderTechnique"); if (ShaderTechnique.Value == null) ShaderTechnique = null;
             CullMode = Xml.GetChildIntAttribute(node, "CullMode");
@@ -1273,7 +1275,7 @@ namespace CodeWalker.GameFiles
 
         // structure data
         public uint VFT { get; set; }
-        public uint padding00 { get; set; }
+        public uint padding00 = 1;
         public ulong padding01 { get; set; }
         public ulong padding02 { get; set; }
         public float DurationScalarMin { get; set; }
@@ -1540,9 +1542,9 @@ namespace CodeWalker.GameFiles
 
         // structure data
         public uint VFT { get; set; }
-        public uint Unknown_4h { get; set; }
+        public uint Unknown_4h = 1;
         public ulong Unknown_8h { get; set; }
-        public ulong Unknown_10h { get; set; }
+        public ulong RefCount { get; set; }
 
         // ptxEffectRule
         public float FileVersion { get; set; }
@@ -1552,7 +1554,7 @@ namespace CodeWalker.GameFiles
 
         // pfxTimeline
         public uint VFT2 { get; set; } = 0x4060e3e8;
-        public uint unused00 { get; set; }
+        public uint unused00 = 1;
         public ulong EventEmittersPointer { get; set; }
         public ushort EventEmittersCount { get; set; }
         public ushort EventEmittersCapacity { get; set; } = 32; //always 32
@@ -1630,7 +1632,7 @@ namespace CodeWalker.GameFiles
             VFT = reader.ReadUInt32();
             Unknown_4h = reader.ReadUInt32();
             Unknown_8h = reader.ReadUInt64();
-            Unknown_10h = reader.ReadUInt64();
+            RefCount = reader.ReadUInt64();
             FileVersion = reader.ReadSingle();
             padding0 = reader.ReadUInt32();
             NamePointer = reader.ReadUInt64();
@@ -1722,7 +1724,7 @@ namespace CodeWalker.GameFiles
             writer.Write(VFT);
             writer.Write(Unknown_4h);
             writer.Write(Unknown_8h);
-            writer.Write(Unknown_10h);
+            writer.Write(RefCount);
             writer.Write(FileVersion);
             writer.Write(padding0);
             writer.Write(NamePointer);
@@ -1791,6 +1793,7 @@ namespace CodeWalker.GameFiles
         public void WriteXml(StringBuilder sb, int indent)
         {
             YptXml.StringTag(sb, indent, "Name", YptXml.XmlEscape(Name?.Value ?? ""));
+            YptXml.ValueTag(sb, indent, "RefCount", RefCount.ToString());
             YptXml.ValueTag(sb, indent, "FileVersion", FloatUtil.ToString(FileVersion));
             YptXml.ValueTag(sb, indent, "NumLoops", YptXml.UintString((uint)NumLoops));
             YptXml.ValueTag(sb, indent, "SortEventsByDistance", FloatUtil.ToString(SortEventsByDistance));
@@ -1851,6 +1854,7 @@ namespace CodeWalker.GameFiles
         {
             Name = (string_r)Xml.GetChildInnerText(node, "Name"); if (Name.Value == null) Name = null;
             NameHash = JenkHash.GenHash(Name?.Value ?? "");
+            RefCount = Xml.GetChildUIntAttribute(node, "RefCount");
             FileVersion = Xml.GetChildFloatAttribute(node, "FileVersion");
             NumLoops = (int)Xml.GetChildUIntAttribute(node, "NumLoops");
             SortEventsByDistance = (byte)Xml.GetChildFloatAttribute(node, "SortEventsByDistance");
@@ -1965,7 +1969,7 @@ namespace CodeWalker.GameFiles
 
         // structure data
         public uint VFT { get; set; }
-        public uint padding00 { get; set; }
+        public uint padding00 = 1;
         public uint Index { get; set; }
         public uint EventType { get; set; }
         public float StartRatio { get; set; }
@@ -2452,10 +2456,10 @@ namespace CodeWalker.GameFiles
 
         // structure data
         public uint VFT { get; set; }
-        public uint Unknown_4h = 1; // 0x00000001
-        public ulong Unknown_8h; // 0x0000000000000000
-        public uint Unknown_10h { get; set; } // 2, 3, 4, 5, 6, 10, 21
-        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_4h = 1;
+        public ulong Unknown_8h;
+        public uint RefCount { get; set; }
+        public uint Unknown_14h;
 
 
         public float FileVersion { get; set; }
@@ -2495,7 +2499,7 @@ namespace CodeWalker.GameFiles
             VFT = reader.ReadUInt32();
             Unknown_4h = reader.ReadUInt32();
             Unknown_8h = reader.ReadUInt64();
-            Unknown_10h = reader.ReadUInt32();
+            RefCount = reader.ReadUInt32();
             Unknown_14h = reader.ReadUInt32();
             FileVersion = reader.ReadSingle();
             padding02 = reader.ReadUInt32();
@@ -2550,7 +2554,7 @@ namespace CodeWalker.GameFiles
             writer.Write(VFT);
             writer.Write(Unknown_4h);
             writer.Write(Unknown_8h);
-            writer.Write(Unknown_10h);
+            writer.Write(RefCount);
             writer.Write(Unknown_14h);
             writer.Write(FileVersion);
             writer.Write(padding02);
@@ -2581,6 +2585,7 @@ namespace CodeWalker.GameFiles
         public void WriteXml(StringBuilder sb, int indent)
         {
             YptXml.StringTag(sb, indent, "Name", YptXml.XmlEscape(Name?.Value ?? ""));
+            YptXml.ValueTag(sb, indent, "RefCount", RefCount.ToString());
             YptXml.ValueTag(sb, indent, "IsOneShot", IsOneShot.ToString());
             ParticleDomain.WriteXmlNode(CreationDomainObj, sb, indent, "CreationDomainObj");
             ParticleDomain.WriteXmlNode(TargetDomainObj, sb, indent, "TargetDomainObj");
@@ -2594,6 +2599,7 @@ namespace CodeWalker.GameFiles
         {
             Name = (string_r)Xml.GetChildInnerText(node, "Name"); if (Name.Value == null) Name = null;
             NameHash = JenkHash.GenHash(Name?.Value ?? "");
+            RefCount = Xml.GetChildUIntAttribute(node, "RefCount");
             IsOneShot = (byte)Xml.GetChildUIntAttribute(node, "IsOneShot");
             CreationDomainObj = ParticleDomain.ReadXmlNode(node.SelectSingleNode("CreationDomainObj")); if (CreationDomainObj != null) CreationDomainObj.Index = 0;
             TargetDomainObj = ParticleDomain.ReadXmlNode(node.SelectSingleNode("TargetDomainObj")); if (TargetDomainObj != null) TargetDomainObj.Index = 1;
@@ -2973,7 +2979,7 @@ namespace CodeWalker.GameFiles
 
         // structure data
         public uint VFT { get; set; }
-        public uint padding00 { get; set; }
+        public uint padding00 = 1;
         public uint Index { get; set; } // 0, 1, 2   - index of this domain in the ParticleEmitterRule
         public ParticleDomainType DomainType { get; set; }
         public byte padding01 { get; set; }
